@@ -9,7 +9,7 @@
 
 int main(void)
 {
-init_printf();
-// Your code here !!
-return 0;
+    init_printf();
+    
+    return 0;
 }
