@@ -19,12 +19,12 @@ void init_serial(unsigned long int speed){
     UCSR0C = (1<<UCSZ01 | 1<<UCSZ00);
 }
 
-void send_serial(char c){
+void send_serial(uint8_t c){
     loop_until_bit_is_set(UCSR0A, UDRE0);
     UDR0 = c;
 }
 
-char get_serial(void){
+uint8_t get_serial(void){
     loop_until_bit_is_set(UCSR0A, RXC0);
     return UDR0;
 }
