@@ -19,12 +19,12 @@ void init_serial(unsigned long int speed){
     UCSR0C = (1<<UCSZ01 | 1<<UCSZ00);
 }
 
-void send_serial(uint8_t c){
+void send_serial(char c){
     loop_until_bit_is_set(UCSR0A, UDRE0);
     UDR0 = c;
 }
 
-uint8_t get_serial(void){
+char get_serial(void){
     loop_until_bit_is_set(UCSR0A, RXC0);
     return UDR0;
 }
@@ -38,4 +38,14 @@ static int send_serial_printf(char c,FILE *stream){
     if(c=='\n') send_serial('\r');
     send_serial(c);
     return 0;
+}
+
+void send_packet(char id_group, char action, char value){
+
+    send_serial(220);
+    
+    // blabla
+    
+    send_serial(220);
+
 }
