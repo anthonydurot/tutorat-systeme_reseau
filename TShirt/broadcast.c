@@ -31,7 +31,7 @@ int main(void)
         }
         
         forger_trame(&trame, v_capteurs);
-        envoyer_trame(&trame);  
+        envoyer_trame(&trame);
     }
     
     return 0;

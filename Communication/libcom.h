@@ -8,3 +8,6 @@
 /**** Constantes ****/
 
 /**** Fonctions ****/
+
+int initialisationServeur(char *);
+int boucleServeur(int, void (*)(int));
