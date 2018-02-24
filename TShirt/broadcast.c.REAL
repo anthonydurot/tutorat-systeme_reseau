@@ -1,8 +1,11 @@
+#include <avr/io.h>
+#include <util/delay.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdint.h>
 
+#include "serial.h"
+#include "analog.h"
 #include "broadcast.h"
 
 #define MAC_SIZE	 6
@@ -31,7 +34,7 @@ void forger_trameUDP(TrameUDP* trame, uint8_t* v_capteurs) {
 	data.accel_z = v_capteurs[2];
 	data.temp = v_capteurs[3];
 	
-	trame->data = data;
+	trame->data = data;		
 
 }
 
@@ -64,15 +67,6 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 
 }
 
-void afficher_trame(TrameIP* trame) { // Fonction de test
-
-	printf("TOS : %d\n",trame->TOS);
-	printf("TOS : %d\n",trame->TTL);
-	printf("IP_S : %d.%d.%d.%d\n",trame->adr_source[0],trame->adr_source[1],trame->adr_source[2],trame->adr_source[3]);
-	printf("PORT_SOURCE : %d\n",(trame->data).port_source);
-	printf("DATA (TEMP): %d\n",((trame->data).data).temp);
-}
-
 
 int main(void) {
 
@@ -84,7 +78,6 @@ int main(void) {
     v_capteurs[2] = 189;
     v_capteurs[3] = 254;
     forger_trameIP(&trame, v_capteurs);
-    afficher_trame(&trame);
     
     
     //init_trame(&trame);

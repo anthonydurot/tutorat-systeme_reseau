@@ -1,6 +1,7 @@
 // Définition des structures
 
-#pragma pack(1)
+#pragma pack(push, 1)
+
 typedef struct dataUDP {
 
     uint8_t 	id_tshirt;
@@ -10,21 +11,17 @@ typedef struct dataUDP {
     uint8_t 	temp;
 
 } DataUDP;
-#pragma pack()
 
-#pragma pack(1)
 typedef struct trameUDP {
 
     uint16_t 	port_source;
     uint16_t 	port_destination;
     uint16_t 	longueur;
-    uint8_t 	checksum;
+    uint16_t 	checksum;
     DataUDP	    data;
 
 } TrameUDP;
-#pragma pack()
 
-#pragma pack(1)
 typedef struct trameIP {
 
     uint8_t		version_longueur_entete;
@@ -40,4 +37,5 @@ typedef struct trameIP {
     TrameUDP 	data;
 
 } TrameIP;
-#pragma pack()
+
+#pragma pack(pop)
