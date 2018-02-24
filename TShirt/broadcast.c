@@ -1,13 +1,12 @@
-//#include <avr/io.h>
-//#include <util/delay.h>
+#include <avr/io.h>
+#include <util/delay.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <arpa/inet.h>
 
-//#include "serial.h"
-//#include "analog.h"
+#include "serial.h"
+#include "analog.h"
 #include "broadcast.h"
 
 #define MAC_SIZE	 6
@@ -21,14 +20,24 @@
 
 #define ID_TSHIRT    3
 
+#define END			 0xC0	
+#define ESC			 0xDB
+#define ESC_END		 0xDC	
+#define ESC_ESC      0xDD
+
+uint16_t swap_uint16(uint16_t val) 
+{
+    return (val << 8) | (val >> 8 );
+}
+
 void forger_trameUDP(TrameUDP* trame, uint8_t* v_capteurs) {
 
 	DataUDP data;
 	
-	trame->port_source = htons((uint16_t)PORT_SOURCE);
-	trame->port_destination = htons((uint16_t)PORT_DEST);
-	trame->longueur = htons(0x000D);
-	trame->checksum = htons(0x0000);
+	trame->port_source = swap_uint16((uint16_t)PORT_SOURCE);
+	trame->port_destination = swap_uint16((uint16_t)PORT_DEST);
+	trame->longueur = swap_uint16((uint16_t)sizeof(TrameUDP));
+	trame->checksum = swap_uint16(0x0000);
 	
 	data.id_tshirt = (uint8_t)ID_TSHIRT;
 	data.accel_x = v_capteurs[0];
@@ -44,12 +53,12 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 
 	trame->version_longueur_entete = 0x45;
 	trame->TOS = 0x00;
-	trame->longueur_totale = htons(0x0021);
-	trame->identificateur = htons(0x0000);
-	trame->flags_offset = htons(0x4000);
+	trame->longueur_totale = swap_uint16((uint16_t)sizeof(TrameIP));
+	trame->identificateur = swap_uint16(0x0000);
+	trame->flags_offset = swap_uint16(0x4000);
 	trame->TTL = 0x40;
 	trame->protocole = 0x11;
-	trame->checksum = htons(0x0000);
+	trame->checksum = swap_uint16(0x0000);
 	
 	char* ips = strdup(IP_SOURCE); 
 	char* ipd = strdup(IP_DEST);
@@ -69,25 +78,32 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 
 }
 
-void envoyer_trame(TrameIP* trame) { // Fonction de test
+void envoyer_trame(TrameIP* trame) {
 	
-	uint8_t c;
-	FILE* f = fopen("temp", "w+");
-	fwrite(trame, sizeof(TrameIP), 1, f);
-	rewind(f);
-	uint8_t cpt = 1;
-	while((c = fgetc(f)) != (uint8_t)EOF) {
-		printf("%d => %c\n",cpt,c); // A remplacer par un send_serial()
-		cpt++;
+	uint8_t* buffer = (uint8_t*)trame;
+	uint8_t i;
+	send_serial(END);
+	for(i = 0; i < sizeof(TrameIP); buffer++,i++) {
+		if(*buffer == END) {
+			send_serial(ESC);
+			send_serial(ESC_END);
+		}
+		else if(*buffer == ESC) {
+			send_serial(ESC);
+			send_serial(ESC_ESC);			
+		}
+		else {
+			send_serial(*buffer);
+		}
 	}
-	fclose(f);
+	send_serial(END);
 }
 
 
 int main(void) {
 
-    //init_printf();
-    //init_serial(9600);
+    init_printf();
+    init_serial(9600);
     uint8_t v_capteurs[4];
     TrameIP trame;
     v_capteurs[0] = 26;
@@ -96,9 +112,6 @@ int main(void) {
     v_capteurs[3] = 75;
     forger_trameIP(&trame, v_capteurs);
     envoyer_trame(&trame);
-    
-    
-    //init_trame(&trame);
 
 /*
    

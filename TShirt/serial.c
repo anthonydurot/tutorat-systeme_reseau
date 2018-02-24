@@ -39,13 +39,3 @@ static int send_serial_printf(char c,FILE *stream){
     send_serial(c);
     return 0;
 }
-
-void send_packet(char id_group, char action, char value){
-
-    send_serial(220);
-    
-    // blabla
-    
-    send_serial(220);
-
-}
