@@ -112,13 +112,20 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 void calcul_checksum_ip(TrameIP* trame){
     uint32_t somme = 0;
     uint32_t resultat = 0;
-    somme += trame->c0 + trame->c1 + trame->c2 + trame->c3 + trame->c4 + trame->c6 + trame->c7 + trame->c8 + trame->c9;
-    resultat = somme & 0x0fff;
-    while(((resultat & 0xf000)>>12) != 0x0){
-        resultat += resultat + ((somme & 0xf000)>>12); 
+    uint16_t* ptr = (uint16_t*)trame;
+    uint8_t i = 0;
+    for(i=0;i<((sizeof(TrameIP)-sizeof(TrameUDP))/sizeof(uint16_t));i++){
+            if(i!=5){
+                somme += *ptr;
+            }
+            ptr++;
     }
+    resultat = somme & 0x0000ffff;
+    do{
+        resultat += resultat + ((somme & 0xffff0000)>>16); 
+    }while(((resultat & 0xffff0000)>>16) != 0x0000);
     resultat = ~resultat;
-    trame->c5 = resultat;
+    trame->c5 = (uint16_t)resultat;
 }
 
 void envoyer_trame(TrameIP* trame) {
