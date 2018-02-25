@@ -125,7 +125,7 @@ void calcul_checksum_ip(TrameIP* trame){
         resultat += resultat + ((somme & 0xffff0000)>>16); 
     }while(((resultat & 0xffff0000)>>16) != 0x0000);
     resultat = ~resultat;
-    trame->c5 = resultat;
+    trame->c5 = (uint16_t)resultat;
 }
 
 void envoyer_trame(TrameIP* trame) {
