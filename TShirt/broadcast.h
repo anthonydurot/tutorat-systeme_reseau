@@ -22,18 +22,18 @@ typedef struct trameUDP {
 
 } TrameUDP;
 
-typedef struct trameIP {
+typedef struct trameIP { // Sur 16 bits pour faciliter le checksum
 
-    uint8_t		version_longueur_entete;
-    uint8_t		TOS;
-    uint16_t 	longueur_totale;
-    uint16_t 	identificateur;
-    uint16_t 	flags_offset;
-    uint8_t		TTL;
-    uint8_t		protocole;
-    uint16_t 	checksum;
-    uint8_t 	adr_source[4];
-    uint8_t		adr_destination[4];
+    uint16_t 	c0;
+    uint16_t 	c1;
+    uint16_t 	c2;
+    uint16_t 	c3;
+    uint16_t 	c4;
+    uint16_t 	c5;
+    uint16_t 	c6;
+    uint16_t 	c7;
+    uint16_t 	c8;
+    uint16_t 	c9;
     TrameUDP 	data;
 
 } TrameIP;
