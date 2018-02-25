@@ -14,6 +14,7 @@
 
 #define IP_SOURCE    "172.26.79.205"
 #define IP_DEST      "172.26.79.204"
+#define VERSION 	 0x04
 
 #define PORT_SOURCE  4269
 #define PORT_DEST    80
