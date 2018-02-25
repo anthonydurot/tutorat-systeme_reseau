@@ -9,18 +9,25 @@
 #include "analog.h"
 #include "broadcast.h"
 
-#define MAC_SIZE	 6
-#define IPV4_SIZE	 4
+#define ID_TSHIRT    3
 
+// Define pour IP
+#define VERSION 	 0x04
+#define L_ENTETE     0x05
+#define TOS			 0x00
+#define ID			 0x0000
+#define FLAGS        0x02
+#define OFFSET       0x0000
+#define TTL          0x40
+#define PROTOCOLE    0x11	
 #define IP_SOURCE    "172.26.79.205"
 #define IP_DEST      "172.26.79.204"
-#define VERSION 	 0x04
 
+// Define pour UDP
 #define PORT_SOURCE  4269
 #define PORT_DEST    80
 
-#define ID_TSHIRT    3
-
+// Define pour SLIP
 #define END			 0xC0	
 #define ESC			 0xDB
 #define ESC_END		 0xDC	
@@ -52,30 +59,52 @@ void forger_trameUDP(TrameUDP* trame, uint8_t* v_capteurs) {
 
 void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 
-	trame->version_longueur_entete = 0x45;
-	trame->TOS = 0x00;
-	trame->longueur_totale = swap_uint16((uint16_t)sizeof(TrameIP));
-	trame->identificateur = swap_uint16(0x0000);
-	trame->flags_offset = swap_uint16(0x4000);
-	trame->TTL = 0x40;
-	trame->protocole = 0x11;
-	trame->checksum = swap_uint16(0x0000);
+	trame->c0 = (uint16_t)TOS;
+	uint16_t vl = (uint16_t)L_ENTETE | (uint16_t)VERSION<<4;
+	trame->c0 = (trame->c0) | vl<<8;
+	trame->c1 = (uint16_t)sizeof(TrameIP);
+	trame->c2 = (uint16_t)ID;
+	trame->c3 = (uint16_t)OFFSET;
+	trame->c3 = (trame->c3) | (uint16_t)FLAGS<<13;
+	trame->c4 = (uint16_t)PROTOCOLE | (uint16_t)TTL<<8;
+	trame->c5 = 0x0000; // Futur checksum
 	
 	char* ips = strdup(IP_SOURCE); 
 	char* ipd = strdup(IP_DEST);
 	char *token1, *token2;
-	uint8_t i = 0;
+	uint8_t adr_source[4], adr_destination[4], i = 0;
 
 	while((token1 = strtok_r(ips, ".", &ips)) && (token2 = strtok_r(ipd, ".", &ipd)))
 	{
-		trame->adr_source[i] = (uint8_t)atoi(token1);
-		trame->adr_destination[i] = (uint8_t)atoi(token2);
+		adr_source[i] = (uint8_t)atoi(token1);
+		adr_destination[i] = (uint8_t)atoi(token2);
 		i++;
 	}
 	
+	trame->c6 = (uint16_t)adr_source[1] | (uint16_t)adr_source[0]<<8;
+	trame->c7 = (uint16_t)adr_source[3] | (uint16_t)adr_source[2]<<8;
+	trame->c8 = (uint16_t)adr_destination[1] | (uint16_t)adr_destination[0]<<8;
+	trame->c9 = (uint16_t)adr_destination[3] | (uint16_t)adr_destination[2]<<8;
+	
+	
+	// Ici on calculera le checksum
+	
+	
+	// Little Endian to Big Endian 
+	trame->c0 = swap_uint16(trame->c0);
+	trame->c1 = swap_uint16(trame->c1);
+	trame->c2 = swap_uint16(trame->c2);
+	trame->c3 = swap_uint16(trame->c3);
+	trame->c4 = swap_uint16(trame->c4);
+	trame->c5 = swap_uint16(trame->c5);
+	trame->c6 = swap_uint16(trame->c6);
+	trame->c7 = swap_uint16(trame->c7);
+	trame->c8 = swap_uint16(trame->c8);
+	trame->c9 = swap_uint16(trame->c9);
+	
 	TrameUDP trameU;
 	forger_trameUDP(&trameU, v_capteurs);
-	trame->data = trameU;	
+	trame->data = trameU;
 
 }
 
@@ -103,7 +132,7 @@ void envoyer_trame(TrameIP* trame) {
 
 int main(void) {
 
-    init_printf();
+    //init_printf();
     init_serial(9600);
     uint8_t v_capteurs[4];
     TrameIP trame;
