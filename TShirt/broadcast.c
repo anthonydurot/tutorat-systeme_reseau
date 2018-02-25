@@ -89,7 +89,8 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 	
 	// Ici on calculera le checksum
 	
-	
+    	calcul_checksum_ip(trame);
+
 	// Little Endian to Big Endian 
 	trame->c0 = swap_uint16(trame->c0);
 	trame->c1 = swap_uint16(trame->c1);
@@ -106,6 +107,18 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 	forger_trameUDP(&trameU, v_capteurs);
 	trame->data = trameU;
 
+}
+
+void calcul_checksum_ip(TrameIP* trame){
+    uint32_t somme = 0;
+    uint32_t resultat = 0;
+    somme += trame->c0 + trame->c1 + trame->c2 + trame->c3 + trame->c4 + trame->c6 + trame->c7 + trame->c8 + trame->c9;
+    resultat = somme & 0x0fff;
+    while(((resultat & 0xf000)>>12) != 0x0){
+        resultat += resultat + ((somme & 0xf000)>>12); 
+    }
+    resultat = ~resultat;
+    trame->c5 = resultat;
 }
 
 void envoyer_trame(TrameIP* trame) {

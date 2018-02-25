@@ -1,3 +1,5 @@
+#ifndef BROADCAST_H
+#define BROADCAST_H
 // Définition des structures
 
 #pragma pack(push, 1)
@@ -39,3 +41,10 @@ typedef struct trameIP { // Sur 16 bits pour faciliter le checksum
 } TrameIP;
 
 #pragma pack(pop)
+
+void calcul_checksum_ip(TrameIP* trame);
+uint16_t swap_uint16(uint16_t val);
+void forger_trameUDP(TrameUDP* trame, uint8_t* v_capteurs);
+void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs);
+void envoyer_trame(TrameIP* trame);
+#endif

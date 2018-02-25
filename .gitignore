@@ -1,0 +1,19 @@
+*
+!*.*
+
+#Object files
+
+*.o
+*.elf
+
+#Libraries
+
+*.a
+
+#Shared objects
+
+*.so
+
+#Executables
+
+*.out
