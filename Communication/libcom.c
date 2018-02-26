@@ -32,6 +32,8 @@
 
 /**** Variables globales *****/
 
+extern int socket_udp;
+
 /**** Prototype des fonctions locales *****/
 
 /**** Fonctions de gestion des sockets ****/
@@ -99,3 +101,34 @@ int boucleServeur(int ecoute,int (*traitement)(int))
     }
 }
 
+
+void serveurMessages(char* service, void (*traitement_udp)(unsigned char *, int)){
+    struct sockaddr_in adresseServeur;
+    socklen_t tailleServeur = sizeof(adresseServeur);
+    socket_udp = socket(AF_INET,SOCK_DGRAM,0);
+    if(socket_udp<0){
+        perror("initialisationServeur.socket");
+        exit(-1);
+    }
+    memset((char*)&adresseServeur,0,sizeof(adresseServeur));
+    adresseServeur.sin_family=AF_INET; //IPV4
+    adresseServeur.sin_addr.s_addr=htonl(INADDR_ANY); //0.0.0.0
+    adresseServeur.sin_port=htons(*(short*)service); //Car port > 255, envoie en short
+    if(bind(socket_udp, (struct sockaddr*)&adresseServeur, tailleServeur) == -1){
+        perror("bind");
+        exit(-1);
+    }
+ while(1){
+     struct sockaddr_in adresseClient;
+     socklen_t tailleClient = sizeof(adresseClient);
+     int nboctets;
+     char message[MAX_UDP_MESSAGE];
+     nboctets = recvfrom(socket_udp, message, MAX_TAMPON-1, 0, (struct sockaddr*)&adresseClient,&tailleClient);
+     message[nboctets] = '\0';
+     printf("Données recues : %s\n",message);
+     if(traitement(message,nboctets)<0){
+        /* TODO : Fonction traitement du message */
+        break;
+     }
+ }
+}
