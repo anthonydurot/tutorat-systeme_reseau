@@ -24,6 +24,8 @@
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <fcntl.h>
+#include <pthread.h>
+#include "../Threads/libthrd.h"
 
 //#include "libcom.h"
 
@@ -38,10 +40,11 @@
 
 /**** Fonctions de gestion des sockets ****/
 
+
 char* traiter_options(int argc, char** argv) {
 
     int ch, port_n;
-    char* port_s = malloc(6*sizeof(char));
+    char* port_s = (char*)malloc(6*sizeof(char));
 
     static struct option long_options[] =
     {
@@ -129,7 +132,8 @@ int initialisationServeur(char *service) {
 
 }
 
-int boucleServeur(int ecoute,int (*traitement)(int)) {
+
+int boucleServeur(int ecoute,int (*traitement)(int)) { //Apelle un wrapper de LanceThread pour lancer la fonction de gestion clients
 
     int dialogue;
 
@@ -144,10 +148,10 @@ int boucleServeur(int ecoute,int (*traitement)(int)) {
     }
 }
 
-int gestionClient(int s) {
-
+void* gestionClient(void* s) { //Fonction effective de gestion des clients qui va être threaded
+    int socket = *((int*)(((thread_param_t*)s)->arg));
     /* Obtient une structure de fichier */
-    FILE *dialogue = fdopen(s,"a+");
+    FILE *dialogue = fdopen(socket,"a+");
     if(dialogue == NULL){ perror("gestionClient.fdopen"); exit(EXIT_FAILURE); }
 
     /* Echo */
@@ -160,9 +164,18 @@ int gestionClient(int s) {
     }
     /* Termine la connexion */
     fclose(dialogue);
-
+    free(((thread_param_t*)s)->arg);
+    free(s);
     return 0;
 }
+
+int Tcp_connexion(int socket){
+    int* arg = (int*)malloc(sizeof(int));
+    *arg = socket;
+    return lanceThread(gestionClient, (void*)arg, sizeof(int));
+}
+
+
 
 int main(int argc, char *argv[]) {
 
@@ -176,7 +189,7 @@ int main(int argc, char *argv[]) {
     }
 
     /* Lancement de la boucle d'ecoute */
-    if(boucleServeur(s,gestionClient) <= 0) {
+    if(boucleServeur(s,Tcp_connexion) <= 0) {
         fprintf(stderr,"Connexion avec le client impossible\n");
         exit(-1);
     }
