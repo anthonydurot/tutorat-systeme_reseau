@@ -86,10 +86,12 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 	trame->c8 = (uint16_t)adr_destination[1] | (uint16_t)adr_destination[0]<<8;
 	trame->c9 = (uint16_t)adr_destination[3] | (uint16_t)adr_destination[2]<<8;
 	
+	free(ips);
+	free(ipd);
 	
 	// Ici on calculera le checksum
 	
-    	calcul_checksum_ip(trame);
+    calcul_checksum_ip(trame);
 
 	// Little Endian to Big Endian 
 	trame->c0 = swap_uint16(trame->c0);
