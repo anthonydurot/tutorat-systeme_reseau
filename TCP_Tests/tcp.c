@@ -16,6 +16,7 @@
 #include <netdb.h>
 #include <string.h>
 #include <getopt.h>
+#include <stdint.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -41,10 +42,21 @@
 /**** Fonctions de gestion des sockets ****/
 
 
-char* traiter_options(int argc, char** argv) {
+int traiter_options(int argc, char** argv) {
 
     int ch, port_n;
-    char* port_s = (char*)malloc(6*sizeof(char));
+	uint8_t option_presente = 0;
+
+	for(uint8_t i = 0; i < argc; i++) {
+		if(*argv[i] == '-') {
+			option_presente = 1;
+		}
+	}
+	
+	if(!option_presente) {
+        fprintf(stderr,"Usage du programme : %s [-p port] [--port port]\n",argv[0]);
+        exit(-1);
+	}
 
     static struct option long_options[] =
     {
@@ -69,20 +81,22 @@ char* traiter_options(int argc, char** argv) {
                 }
                 break;
             case ':':
-                fprintf(stderr, "%s : le parametre '-%c' requiert un argument\n",argv[0], optopt);
+                fprintf(stderr, "%s: le parametre '-%c' requiert un argument\n",argv[0], optopt);
                 exit(-1);
+            case '?':
+            	fprintf(stderr, "Usage du programme: %s [-p port] [--port port]\n", argv[0]);
+            	exit(-1);
             default:
-                fprintf(stderr, "%s : l'option `-%c' est inconnue\n",argv[0], optopt);
+                fprintf(stderr, "%s: l'option `-%c' est inconnue\n",argv[0], optopt);
                 exit(-1);
         }
     }
 
-    sprintf(port_s, "%d", port_n);
-    return port_s;
+    return port_n;
 
 }
 
-int initialisationServeur(char *service) {
+int initialisationServeur(char* service) {
 
     struct addrinfo precisions,*resultat,*origine;
     int statut;
@@ -132,7 +146,6 @@ int initialisationServeur(char *service) {
 
 }
 
-
 int boucleServeur(int ecoute,int (*traitement)(int)) { //Apelle un wrapper de LanceThread pour lancer la fonction de gestion clients
 
     int dialogue;
@@ -143,12 +156,14 @@ int boucleServeur(int ecoute,int (*traitement)(int)) { //Apelle un wrapper de La
         if((dialogue = accept(ecoute,NULL,NULL)) < 0) return -1;
 
         /* Passage de la socket de dialogue a la fonction de traitement */
-        if(traitement(dialogue) < 0){ shutdown(ecoute,SHUT_RDWR); return 0;}
+        if(traitement(dialogue) < 0){shutdown(ecoute,SHUT_RDWR); return 0;}
 
     }
+    
 }
 
 void* gestionClient(void* s) { //Fonction effective de gestion des clients qui va être threaded
+
     int socket = *((int*)(((thread_param_t*)s)->arg));
     /* Obtient une structure de fichier */
     FILE *dialogue = fdopen(socket,"a+");
@@ -167,21 +182,25 @@ void* gestionClient(void* s) { //Fonction effective de gestion des clients qui v
     free(((thread_param_t*)s)->arg);
     free(s);
     return 0;
+    
 }
 
-int Tcp_connexion(int socket){
+int TCP_connexion(int socket) {
+
     int* arg = (int*)malloc(sizeof(int));
     *arg = socket;
     return lanceThread(gestionClient, (void*)arg, sizeof(int));
+    
 }
-
-
 
 int main(int argc, char *argv[]) {
 
     int s;
     /* Lecture des arguments de la commande */
-    char* port = traiter_options(argc,argv);
+    int port = traiter_options(argc,argv);
+    char port_s[6];
+    sprintf(port_s, "%d", port);
+    
     /* Initialisation du serveur */
     if((s = initialisationServeur(port)) < 0 ) {
         fprintf(stderr,"Initialisation du serveur impossible, êtes vous root ?\n");
@@ -193,5 +212,5 @@ int main(int argc, char *argv[]) {
         fprintf(stderr,"Connexion avec le client impossible\n");
         exit(-1);
     }
-    free(port);
+    
 }
