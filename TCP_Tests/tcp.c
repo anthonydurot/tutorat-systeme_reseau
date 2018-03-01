@@ -64,12 +64,7 @@ int traiter_options(int argc, char** argv) {
         {NULL, 0, NULL, 0}
     };
 
-    if(argc == 1) {
-        fprintf(stderr,"Usage du programme : %s [-p port] [--port port]\n",argv[0]);
-        exit(-1);
-    }
-
-    while ((ch = getopt_long(argc, argv, ":p:", long_options, NULL)) != -1)
+    while ((ch = getopt_long(argc, argv, "p:", long_options, NULL)) != -1)
     {
         switch (ch)
         {
