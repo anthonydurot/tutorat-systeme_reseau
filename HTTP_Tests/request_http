@@ -1,0 +1,15 @@
+GET /images/voiture.jpg HTTP/1.1
+Host: rex.plil.fr
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://rex.plil.fr/Admin/AccueilWeb/accueil001.html
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+If-Modified-Since: Wed, 31 Jan 2018 20:14:31 GMT
+If-None-Match: "115eb-56418208b5c4d-gzip"
+Cache-Control: max-age=0
+
+
+
