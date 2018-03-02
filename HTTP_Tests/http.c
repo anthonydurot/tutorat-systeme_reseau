@@ -5,10 +5,15 @@
 #include <sys/stat.h>
 #include <time.h>
 
-#define MAX_BUFFER 1024
-#define DEFAULT_PAGE "index.html"
-#define WEB_DIR "./www"
-#define NOT_FOUND_PAGE "404.html"
+#define SERVER_NAME     "Choctaw HTTP Server"
+#define MAX_BUFFER      1024
+#define DEFAULT_PAGE 	"index.html"
+#define WEB_DIR         "./www"
+#define NOT_FOUND_PAGE  "404.html"
+#define IS_FILE         0
+#define IS_DIR          1
+#define OK              200
+#define NOT_FOUND       404
 
 typedef struct http_info_s {
 	
@@ -16,6 +21,7 @@ typedef struct http_info_s {
 	char* methode;
 	char* cible;
 	char* version;
+	int type; // Fichier ou dossier
 	// Réponse
 	char* serveur;
 	char* contenu_type;
@@ -32,6 +38,7 @@ char* analyser_format(char* format) {
 	*/
 
 	if(!strcmp(format,"none")) return strdup("application/octet-stream"); // Type par défaut
+	if(!strcmp(format,"dir")) return strdup("text/html"); // Une page HTML listant les fichiers sera retournée
 	if(!strcmp(format,"txt")) return strdup("text/plain");
 	if(!strcmp(format,"html")) return strdup("text/html");
 	if(!strcmp(format,"css")) return strdup("text/css");
@@ -61,7 +68,7 @@ char* date_actuelle(void) {
 / > socket : pointeur de FILE* représentant le socket (on pourra changer en int pour juste le fd)
 / > req : pointeur de http_info_req permettant le stockage des infos de la requète et de la réponse
 / Retour :
-/ > int : 1 (OK), 0 fichier non présent
+/ > int : 1 (OK), 0 sinon
 */
 
 int traiter_requete(FILE* socket, http_info_t* req) {
@@ -85,19 +92,35 @@ int traiter_requete(FILE* socket, http_info_t* req) {
 	sprintf(chemin,"%s%s",WEB_DIR,cible);
 	
   	if(stat(chemin,&fstat) != 0 || !S_ISREG(fstat.st_mode)) {
-    	sprintf(chemin,"%s/%s",WEB_DIR,NOT_FOUND_PAGE);
-    	strcpy(cible,NOT_FOUND_PAGE);
-    	code = 404;
+  	
+  		if(S_ISDIR(fstat.st_mode)) { // Si ce n'est pas un fichier c'est peut être un dossier
+  			req->type = IS_DIR;
+  			code = OK;
+  		}
+  		
+    	else { // Sinon, erreur 404
+			sprintf(chemin,"%s/%s",WEB_DIR,NOT_FOUND_PAGE);
+			strcpy(cible,NOT_FOUND_PAGE);
+			req->type = IS_FILE;
+			code = NOT_FOUND;
+    	}
     }
+    
     else {
- 		code = 200;
+    	code = OK;
+    	req->type = IS_FILE;
     }
 
 	// Analyse du type de contenu
 
-	if((temp = strrchr(cible,'.')) != NULL) {
+	if(((temp = strrchr(cible,'.')) != NULL) && (req->type != IS_DIR)) {
 		format = temp+1;
 	}
+	
+	else if (req->type == IS_DIR) {
+		format = "dir";
+	}
+	
 	else {
 		format = "none";
 	}
@@ -108,7 +131,7 @@ int traiter_requete(FILE* socket, http_info_t* req) {
 	req->methode = strdup(methode);
 	req->cible = strdup(chemin);
 	req->version = strdup(version);
-	req->serveur = strdup("Choctaw HTTP Server");
+	req->serveur = strdup(SERVER_NAME);
 	req->contenu_type = analyser_format(format);
 	req->date = date_actuelle();
 	
@@ -141,7 +164,7 @@ int main(void) {
 	traiter_requete(s,&req);
 	
 	printf("---------------------------\n");
-	printf("Methode\t: %s\nCible\t: %s\nVersion\t: %s\nServeur\t: %s\nFormat\t: %s\nDate\t: %s\nCode\t: %d\n",req.methode,req.cible,req.version,req.serveur,req.contenu_type,req.date,req.code);
+	printf("Methode\t: %s\nCible\t: %s\nVersion\t: %s\nServeur\t: %s\nFormat\t: %s\nDate\t: %s\nCode\t: %d\nType\t: %d\n",req.methode,req.cible,req.version,req.serveur,req.contenu_type,req.date,req.code,req.type);
 	
 	free_http_info(&req);
 
