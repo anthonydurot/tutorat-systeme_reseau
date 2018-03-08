@@ -78,51 +78,56 @@ int traiter_requete(FILE* socket, http_info_t* req) {
 	char cible[128];
 	char version[16];
 	char chemin[128];
-	char* temp;
-	char* format;
+	char* temp = NULL;
+	char* format = NULL;
 	int code;
 	struct stat fstat;
 	
-	if(fgets(buffer,MAX_BUFFER,socket) == NULL) return 0;
-	if(sscanf(buffer,"%s %s %s",methode,cible,version) != 3) return 0;
+	if(fgets(buffer,MAX_BUFFER,socket) == NULL) return 1;
+	if(sscanf(buffer,"%s %s %s",methode,cible,version) != 3) return 1;
 	if(strcmp(cible,"/") == 0) sprintf(cible,"/%s",DEFAULT_PAGE);
 	
 	// On vérifie la présence du fichier
 	
 	sprintf(chemin,"%s%s",WEB_DIR,cible);
 	
-  	if(stat(chemin,&fstat) != 0 || !S_ISREG(fstat.st_mode)) {
-  	
-  		if(S_ISDIR(fstat.st_mode)) { // Si ce n'est pas un fichier c'est peut être un dossier
+  	if(stat(chemin,&fstat) != 0) {
+        sprintf(chemin,"%s/%s",WEB_DIR,NOT_FOUND_PAGE);
+        strcpy(cible,NOT_FOUND_PAGE);
+        req->type = IS_FILE;
+        code = NOT_FOUND;
+    }
+    else {
+        if(S_ISREG(fstat.st_mode)){
+            req->type = IS_FILE;
+            code = OK;
+        }
+  		else if(S_ISDIR(fstat.st_mode)) { // Si ce n'est pas un fichier c'est peut être un dossier
   			req->type = IS_DIR;
   			code = OK;
   		}
   		
-    	else { // Sinon, erreur 404
+        else { // Sinon, erreur 404
 			sprintf(chemin,"%s/%s",WEB_DIR,NOT_FOUND_PAGE);
 			strcpy(cible,NOT_FOUND_PAGE);
 			req->type = IS_FILE;
 			code = NOT_FOUND;
-    	}
+        }
     }
     
-    else {
-    	code = OK;
-    	req->type = IS_FILE;
-    }
-
 	// Analyse du type de contenu
 
 	if(((temp = strrchr(cible,'.')) != NULL) && (req->type != IS_DIR)) {
+        /* Recupère le format de fichier sans le point */
 		format = temp+1;
 	}
 	
 	else if (req->type == IS_DIR) {
-		format = "dir";
+        strcpy(format,"dir");
 	}
 	
 	else {
-		format = "none";
+        strcpy(format,"none");
 	}
 	
 	// Affectation à la structure
@@ -142,7 +147,7 @@ int traiter_requete(FILE* socket, http_info_t* req) {
 		printf("%s",buffer);
 	}
 	
-	return 1;
+	return 0;
 
 }
 
@@ -161,12 +166,13 @@ int main(void) {
 
 	FILE* s = fopen("request_http","r");
 	http_info_t req;
-	traiter_requete(s,&req);
-	
-	printf("---------------------------\n");
-	printf("Methode\t: %s\nCible\t: %s\nVersion\t: %s\nServeur\t: %s\nFormat\t: %s\nDate\t: %s\nCode\t: %d\nType\t: %d\n",req.methode,req.cible,req.version,req.serveur,req.contenu_type,req.date,req.code,req.type);
-	
-	free_http_info(&req);
+	if(!traiter_requete(s,&req)){
+        printf("---------------------------\n");
+        printf("Methode\t: %s\nCible\t: %s\nVersion\t: %s\nServeur\t: %s\nFormat\t: %s\nDate\t: %s\nCode\t: %d\nType\t: %d\n",req.methode,req.cible,req.version,req.serveur,req.contenu_type,req.date,req.code,req.type);
+
+        free_http_info(&req);
+    }
+    //TODO : Else : BAD REQUEST
 
 	return 0;
 	
