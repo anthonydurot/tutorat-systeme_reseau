@@ -1,5 +1,5 @@
 #
-# Makefile du jeu des chaises musicales
+# Makefile du T-Shirt connecté
 #
 
 #

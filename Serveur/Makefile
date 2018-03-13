@@ -1,5 +1,5 @@
 #
-# Makefile pour generer le serveur 
+# Makefile pour generer le serveur
 #
 
 OBJS = serveur.o
@@ -18,7 +18,7 @@ all: serveur
 # La cible de nettoyage
 #
 
-clean: 
+clean:
 	rm -f core *.o serveur
 
 #

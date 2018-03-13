@@ -9,3 +9,9 @@
 /** Structures **/
 
 /** Variables publiques  **/
+
+/** Prototypes **/
+
+/* Fonction permettant de récupérer la valeur de l'unique option -p / --port */
+
+int traiter_options(int argc, char **argv);

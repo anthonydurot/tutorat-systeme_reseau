@@ -1,12 +1,22 @@
 #
-# Makefile pour generer la bibliotheque de threads
+# Makefile pour generer la bibliotheque des threads
 #
 
-all:
+all: libthrd.a
 
 #
 # La cible de nettoyage
 #
 
-clean: 
+clean:
+	rm -f core *.o libthrd.a
 
+#
+# Les cibles pour la bibliotheque
+#
+
+libthrd.o: libthrd.c libthrd.h
+
+libthrd.a: libthrd.o
+	rm -f $@
+	$(CLIB) $@ $+
