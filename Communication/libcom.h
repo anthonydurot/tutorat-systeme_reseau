@@ -8,6 +8,7 @@
 /**** Constantes ****/
 
 #define MAX_UDP_MESSAGE 500
+#define MAX_TCP_CONNEXION 500
 
 /**** Fonctions ****/
 
@@ -19,7 +20,7 @@ int initialisationServeur(char *);
 
 /* Cette foncton prend en paramètre le port sur lequel il faut écouter et retourne la socket de lecture. Il vous est demandé d'activer l'option de réutilisation d'adresse sur la socket d'écoute (fonction setsockopt) */
 
-int boucleServeur(int, void (*)(int));
+int boucleServeur(int, int (*)(int));
 
 /* Cette fonction effectue l'écoute sur la socket passée en premier argument et lors d'une connexion, exécute la fonction passée en second argument. Cette fonction passée en argument doit être une fonction qui prend une socket en unique paramètre. Lors d'une connexion de clien, la fonction boucleServeur lance donc cette fonction avec la socket de dialogue en paramètre. */
 
@@ -27,7 +28,7 @@ int boucleServeur(int, void (*)(int));
 /**** UDP ***/
 
 
-void serveurMessages(char *, void (*)(unsigned char*, int));
+void serveurMessages(char *, int (*)(unsigned char*, int));
 
 /* Cette fonction prend en paramètre le service sur lequel lancer un serveur UDP et la fonction de traitement des messages recus */
 

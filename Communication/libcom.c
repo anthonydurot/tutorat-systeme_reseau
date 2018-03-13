@@ -79,7 +79,7 @@ int initialisationServeur(char *service)
     freeaddrinfo(origine);
 
     /* Taille de la queue d'attente */
-    statut = listen(s,connexions);
+    statut = listen(s,MAX_TCP_CONNEXION);
     if(statut < 0) return -1;
 
     return s;
@@ -102,7 +102,7 @@ int boucleServeur(int ecoute,int (*traitement)(int))
 }
 
 
-void serveurMessages(char* service, void (*traitement_udp)(unsigned char *, int)){
+void serveurMessages(char* service, int (*traitement_udp)(unsigned char *, int)){
     struct sockaddr_in adresseServeur;
     socklen_t tailleServeur = sizeof(adresseServeur);
     socket_udp = socket(AF_INET,SOCK_DGRAM,0);
@@ -118,7 +118,7 @@ void serveurMessages(char* service, void (*traitement_udp)(unsigned char *, int)
         perror("bind");
         exit(-1);
     }
- while(1){
+while(1){
      struct sockaddr_in adresseClient;
      socklen_t tailleClient = sizeof(adresseClient);
      int nboctets;
@@ -126,7 +126,7 @@ void serveurMessages(char* service, void (*traitement_udp)(unsigned char *, int)
      nboctets = recvfrom(socket_udp, message, MAX_TAMPON-1, 0, (struct sockaddr*)&adresseClient,&tailleClient);
      message[nboctets] = '\0';
      printf("Données recues : %s\n",message);
-     if(traitement(message,nboctets)<0){
+     if(traitement_udp(message,nboctets)<0){
         /* TODO : Fonction traitement du message */
         break;
      }
