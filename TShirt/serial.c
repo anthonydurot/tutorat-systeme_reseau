@@ -6,7 +6,7 @@
 #include "serial.h"
 
 static int send_serial_printf(char c, FILE *stream);
-static FILE mystdout=FDEV_SETUP_STREAM(send_serial_printf, NULL, _FDEV_SETUP_WRITE);
+static FILE mystdout = FDEV_SETUP_STREAM(send_serial_printf, NULL, _FDEV_SETUP_WRITE);
 
 void init_serial(unsigned long int speed) {
 

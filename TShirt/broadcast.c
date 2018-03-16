@@ -9,43 +9,21 @@
 #include "analog.h"
 #include "broadcast.h"
 
-#define ID_TSHIRT    3
 
-// Define pour IP
-#define VERSION 	 0x04
-#define L_ENTETE     0x05
-#define TOS			 0x00
-#define ID			 0x0000
-#define FLAGS        0x02
-#define OFFSET       0x0000
-#define TTL          0x40
-#define PROTOCOLE    0x11
-#define IP_SOURCE    "172.26.79.205"
-#define IP_DEST      "172.26.79.204"
+uint16_t swap_uint16(uint16_t val) {
 
-// Define pour UDP
-#define PORT_SOURCE  4269
-#define PORT_DEST    80
-
-// Define pour SLIP
-#define END			 0xC0
-#define ESC			 0xDB
-#define ESC_END		 0xDC
-#define ESC_ESC      0xDD
-
-uint16_t swap_uint16(uint16_t val)
-{
     return (val << 8) | (val >> 8 );
+
 }
 
-void forger_trameUDP(TrameUDP* trame, uint8_t* v_capteurs) {
+void forger_trameUDP(TrameUDP *trame, uint8_t *v_capteurs) {
 
 	DataUDP data;
 
-	trame->port_source = swap_uint16((uint16_t)PORT_SOURCE);
-	trame->port_destination = swap_uint16((uint16_t)PORT_DEST);
-	trame->longueur = swap_uint16((uint16_t)sizeof(TrameUDP));
-	trame->checksum = swap_uint16(0x0000);
+	trame->port_source = (uint16_t)PORT_SOURCE;
+	trame->port_destination = (uint16_t)PORT_DEST;
+	trame->longueur = (uint16_t)sizeof(TrameUDP);
+	trame->checksum = 0x0000;
 
 	data.id_tshirt = (uint8_t)ID_TSHIRT;
 	data.accel_x = v_capteurs[0];
@@ -57,7 +35,7 @@ void forger_trameUDP(TrameUDP* trame, uint8_t* v_capteurs) {
 
 }
 
-void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
+void forger_trameIP(TrameIP *trame, uint8_t *v_capteurs) {
 
 	trame->c0 = (uint16_t)TOS;
 	uint16_t vl = (uint16_t)L_ENTETE | (uint16_t)VERSION<<4;
@@ -67,33 +45,31 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 	trame->c3 = (uint16_t)OFFSET;
 	trame->c3 = (trame->c3) | (uint16_t)FLAGS<<13;
 	trame->c4 = (uint16_t)PROTOCOLE | (uint16_t)TTL<<8;
-	trame->c5 = 0x0000; // Futur checksum
+	trame->c5 = 0x0000; // Checksum
 
-	char* ips = strdup(IP_SOURCE);
-	char* ipd = strdup(IP_DEST);
-	char *token1, *token2;
-	uint8_t adr_source[4], adr_destination[4], i = 0;
+    char ips[32];
+	strcpy(ips, IP_SOURCE);
+	char ipd[32];
+	strcpy(ipd, IP_DEST);
+	int adr_source[4], adr_destination[4], i = 0;
 
-	while((token1 = strtok_r(ips, ".", &ips)) && (token2 = strtok_r(ipd, ".", &ipd)))
-	{
-		adr_source[i] = (uint8_t)atoi(token1);
-		adr_destination[i] = (uint8_t)atoi(token2);
-		i++;
-	}
+	sscanf(ips,"%d.%d.%d.%d",&adr_source[0],&adr_source[1],&adr_source[2],&adr_source[3]);
+	sscanf(ipd,"%d.%d.%d.%d",&adr_destination[0],&adr_destination[1],&adr_destination[2],&adr_destination[3]);
 
-	trame->c6 = (uint16_t)adr_source[1] | (uint16_t)adr_source[0]<<8;
-	trame->c7 = (uint16_t)adr_source[3] | (uint16_t)adr_source[2]<<8;
-	trame->c8 = (uint16_t)adr_destination[1] | (uint16_t)adr_destination[0]<<8;
-	trame->c9 = (uint16_t)adr_destination[3] | (uint16_t)adr_destination[2]<<8;
+	trame->c6 = (uint16_t)adr_source[1] | ((uint16_t)adr_source[0])<<8;
+	trame->c7 = (uint16_t)adr_source[3] | ((uint16_t)adr_source[2])<<8;
+	trame->c8 = (uint16_t)adr_destination[1] | ((uint16_t)adr_destination[0])<<8;
+	trame->c9 = (uint16_t)adr_destination[3] | ((uint16_t)adr_destination[2])<<8;
 
-	free(ips);
-	free(ipd);
+	TrameUDP trameU;
+	forger_trameUDP(&trameU, v_capteurs);
+	trame->data = trameU;
 
-	// Ici on calculera le checksum
-
+    // Calcul des checksum
     calcul_checksum_ip(trame);
+    calcul_checksum_udp(trame);
 
-	// Little Endian to Big Endian
+    // Little Endian to Big Endian
 	trame->c0 = swap_uint16(trame->c0);
 	trame->c1 = swap_uint16(trame->c1);
 	trame->c2 = swap_uint16(trame->c2);
@@ -104,41 +80,80 @@ void forger_trameIP(TrameIP* trame, uint8_t* v_capteurs) {
 	trame->c7 = swap_uint16(trame->c7);
 	trame->c8 = swap_uint16(trame->c8);
 	trame->c9 = swap_uint16(trame->c9);
-
-	TrameUDP trameU;
-	forger_trameUDP(&trameU, v_capteurs);
-	trame->data = trameU;
+    (trame->data).port_source = swap_uint16((trame->data).port_source);
+    (trame->data).port_destination = swap_uint16((trame->data).port_destination);
+    (trame->data).longueur = swap_uint16((trame->data).longueur);
+    (trame->data).checksum = swap_uint16((trame->data).checksum);
 
 }
 
-void calcul_checksum_ip(TrameIP* trame) {
+void calcul_checksum_udp(TrameIP *trame) {
 
-    uint32_t somme = 0;
-    uint16_t carry = 0;
-    uint16_t* ptr = (uint16_t*)trame;
-    uint8_t i = 0;
-    for(i=0;i<((sizeof(TrameIP)-sizeof(TrameUDP))/sizeof(uint16_t));i++){
-            if(i!=5){
-                somme += *ptr;
-            }
-            ptr++;
+    uint32_t somme;
+    uint16_t carry;
+    uint16_t *ptr = (uint16_t *)trame;
+    uint8_t *ptr2;
+    uint8_t i;
+    uint8_t dataSize = sizeof((trame->data).data);
+
+    somme = (uint32_t)trame->c6 + (uint32_t)trame->c7 + (uint32_t)trame->c8 + (uint32_t)trame->c9 + (uint32_t)PROTOCOLE + (uint32_t)((trame->data).longueur);
+    somme += (uint32_t)((trame->data).port_source) + (uint32_t)((trame->data).port_destination) + (uint32_t)((trame->data).longueur);
+    ptr += (sizeof(TrameIP)-sizeof(DataUDP))/sizeof(uint16_t);
+
+    for(i = 0; i < (uint8_t)(dataSize/2); i++) {
+        somme += (uint32_t)swap_uint16(*ptr);
+        ptr++;
     }
-    carry = (uint16_t)(somme & 0xffff0000)>>16;
+
+    if(dataSize%2 != 0) {
+        ptr2 = ((uint8_t *)ptr);
+        somme += ((uint16_t)*ptr2)<<8;
+    }
+
+    carry = (uint16_t)((somme & 0xffff0000)>>16);
+
     while(carry != 0){
         somme &= 0x0000ffff;
         somme += carry;
-        carry = (uint16_t)(somme & 0xffff000)>>16;
+        carry = (uint16_t)((somme & 0xffff000)>>16);
     }
-    trame->c5 = ~(uint16_t)somme;
+
+    (trame->data).checksum = ~((uint16_t)somme);
 
 }
 
-void envoyer_trame(TrameIP* trame) {
+void calcul_checksum_ip(TrameIP *trame) {
 
-	uint8_t* buffer = (uint8_t*)trame;
+    uint32_t somme = 0;
+    uint16_t carry = 0;
+    uint16_t *ptr = (uint16_t *)trame;
+    uint8_t i;
+
+    for(i = 0; i < ((sizeof(TrameIP)-sizeof(TrameUDP))/sizeof(uint16_t)); i++) {
+            if(i != 5) {
+                somme += (uint32_t)*ptr;
+            }
+            ptr++;
+    }
+
+    carry = (uint16_t)((somme & 0xffff0000)>>16);
+
+    while(carry != 0){
+        somme &= 0x0000ffff;
+        somme += carry;
+        carry = (uint16_t)((somme & 0xffff000)>>16);
+    }
+
+    trame->c5 = ~((uint16_t)somme);
+
+}
+
+void envoyer_trame(TrameIP *trame) {
+
+	uint8_t *buffer = (uint8_t *)trame;
 	uint8_t i;
 	send_serial(END);
-	for(i = 0; i < sizeof(TrameIP); buffer++,i++) {
+	for(i = 0; i < sizeof(TrameIP); buffer++, i++) {
 		if(*buffer == END) {
         send_serial(ESC);
         send_serial(ESC_END);
@@ -154,7 +169,6 @@ void envoyer_trame(TrameIP* trame) {
 	send_serial(END);
 
 }
-
 
 int main(void) {
 
@@ -184,5 +198,5 @@ int main(void) {
 
 */
     return 0;
-    
+
 }

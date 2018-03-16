@@ -29,13 +29,13 @@
 /**** Structures ****/
 
 typedef struct http_info_s {
-	char* methode;
-	char* cible;
-	char* version;
+	char *methode;
+	char *cible;
+	char *version;
 	int type; // Fichier ou dossier
-	char* serveur;
-	char* contenu_type;
-	char* date;
+	char *serveur;
+	char *contenu_type;
+	char *date;
 	int code;
 } http_info_t;
 

@@ -68,6 +68,7 @@ typedef struct trameIP { // Sur 16 bits pour faciliter le checksum
 /**** Prototypes ****/
 
 void calcul_checksum_ip(TrameIP *);
+void calcul_checksum_udp(TrameIP *);
 uint16_t swap_uint16(uint16_t);
 void forger_trameUDP(TrameUDP *, uint8_t *);
 void forger_trameIP(TrameIP *, uint8_t *);
