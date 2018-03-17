@@ -50,7 +50,7 @@ int TCP_connexion(int);
 /* Cette fonction prend en paramètre le service sur lequel lancer un serveur
 UDP et la fonction de traitement des messages recus */
 
-void serveurMessages(char *, int (*)(unsigned char *, int));
+void serveurMessages(char * /*, int (*)(unsigned char *, int)*/);
 
 /* Il s'agit de la fonction complémentaire, permettant d'envoyer un message
 UDP en diffusion totale. Le premier argument est le service UDP ciblé, le
@@ -65,6 +65,6 @@ int envoiMessage(char *, unsigned char *, int);
 UDP ciblé, le second est le nom de la machine de destination, le troisième
 est le paquet à envoyer et enfin le dernier est la taille du paquet */
 
-int envoiMessageUnicast(char *, char *, unsigned char *);
+int envoiMessageUnicast(char *, char *, unsigned char *, int taille);
 
 #endif
