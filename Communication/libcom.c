@@ -162,14 +162,13 @@ int envoiMessageUnicast(char *service, char *machine, unsigned char *message, in
     int unicast = 0;
     struct sockaddr_in adresseClient;
     struct addrinfo precisions, *resultat, *origine;
-    socklen_t tailleClient = sizeof(adresseClient);
     memset(&precisions, 0, sizeof(precisions));
     precisions.ai_family = AF_INET;
     precisions.ai_socktype = SOCK_DGRAM;
     setsockopt(socket_udp, SOL_SOCKET, SO_BROADCAST, &unicast, sizeof(unicast));
     if(getaddrinfo(machine, service, &precisions, &origine) != 0){
         if(origine != NULL){
-            sendto(socket_udp, message, strlen(message), 0, origine->ai_addr, tailleClient);
+            sendto(socket_udp, message, strlen(message), 0, origine->ai_addr, origine->ai_addrlen);
             freeaddrinfo(origine);
             return 0;
         }
