@@ -25,6 +25,8 @@
 #define IS_DIR          1
 #define OK              200
 #define NOT_FOUND       404
+#define FOUND           302
+#define FORBIDDEN       403
 
 /**** Structures ****/
 
@@ -32,18 +34,29 @@ typedef struct http_info_s {
 	char *methode;
 	char *cible;
 	char *version;
-	int type; // Fichier ou dossier
+	int type; // Fichier (0) ou dossier (1)
 	char *serveur;
 	char *contenu_type;
+    char *donnees;
 	char *date;
+    int contenu_taille;
 	int code;
 } http_info_t;
 
 /***** Prototypes ****/
 
+char *ip_machine(void);
 char *analyser_format(char *format);
 char *date_actuelle(void);
 int traiter_requete(FILE *socket, http_info_t *req);
+int reponse_header(FILE *socket, http_info_t *req);
+int ecriture_reponse(FILE *socket, http_info_t *req);
 void free_http_info(http_info_t *r);
+int envoyer_localisation(FILE *socket, http_info_t *req);
+int envoyer_interdit(FILE *socket, http_info_t *req);
+int in_the_list(char *format, const char *list[]);
+void icon_format(char *buf, char *icon, int type);
+void readable_fs(double size, char *buf);
+int html_dir(FILE *socket, http_info_t *req);
 
 #endif

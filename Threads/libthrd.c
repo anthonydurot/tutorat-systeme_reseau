@@ -15,6 +15,7 @@
 #include <pthread.h>
 #include <errno.h>
 #include "libthrd.h"
+#include "../Serveur/http.h"
 
 /**
  * \fn static int lanceThread(void (*fonction)(void*), void* arg, int taille)
@@ -67,5 +68,57 @@ void lanceThreadWEB(void* arg) {
     if(pthread_create(&tid, &attr, gestionClient, arg) != 0){
        perror("lanceThread.pthread_create");
     }
+
+}
+
+void* gestionClient(void* s) {
+
+    int socket = *((int *)(((thread_param_t *)s)->arg));
+    /* Obtient une structure de fichier */
+    FILE *dialogue = fdopen(socket, "a+");
+    if(dialogue == NULL){ perror("gestionClient.fdopen"); exit(EXIT_FAILURE); }
+    http_info_t req;
+
+    if(traiter_requete(dialogue, &req)) {
+        errno = ENOENT;
+        perror("gestionClient.traiter_requete");
+        fclose(dialogue);
+        free(((thread_param_t *)s)->arg);
+        free(s);
+        return NULL;
+    }
+
+    printf("######### Code : %d\n", req.code);
+    if(req.donnees) printf("######### Donnees : %s\n", req.donnees);
+
+    if(req.code == FORBIDDEN) {
+        envoyer_interdit(dialogue, &req);
+    }
+
+    else if(req.code == FOUND) {
+        envoyer_localisation(dialogue, &req);
+    }
+
+    else {
+
+        if(req.type == IS_DIR) {
+            html_dir(dialogue, &req);
+        }
+
+        else {
+            if(ecriture_reponse(dialogue, &req)) {
+                errno = ENOENT;
+                perror("gestionClient.ecriture_reponse");
+            }
+        }
+    }
+
+    printf("------------------------------------------------------------\n");
+    fclose(dialogue);
+    free(((thread_param_t *)s)->arg);
+    free(s);
+    free_http_info(&req);
+
+    return NULL;
 
 }

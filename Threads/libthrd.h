@@ -35,6 +35,7 @@ typedef struct thread_param {
 /**** Prototypes ****/
 
 int lanceThread(void (*)(void *), void *, int);
-void lanceThreadWEB(void *)
+void lanceThreadWEB(void *);
+void *gestionClient(void *);
 
 #endif

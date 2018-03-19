@@ -6,12 +6,17 @@
 
 /** Fichiers d'inclusion **/
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <unistd.h>
+#include "../Communication/libcom.h"
 
 /** Constantes **/
 
 /** Variables publiques **/
+
+int http_port;
 
 /** Variables statiques **/
 
@@ -66,9 +71,24 @@ int traiter_options(int argc, char **argv) {
 
 /** Procedure principale **/
 
-int main(int argc,char **argv)
-{
+int main(int argc,char **argv) {
 
-    return 0;
+    int s;
+    /* Lecture des arguments de la commande */
+    http_port = traiter_options(argc,argv);
+    char port_s[6];
+    sprintf(port_s, "%d", http_port);
+
+    /* Initialisation du serveur */
+    if((s = initialisationServeur(port_s)) < 0 ) {
+        fprintf(stderr,"Initialisation du serveur impossible, êtes vous root ?\n");
+        exit(-1);
+    }
+
+    /* Lancement de la boucle d'ecoute */
+    if(boucleServeur(s,TCP_connexion) <= 0) {
+        fprintf(stderr, "Connexion avec le client impossible\n");
+        exit(-1);
+    }
 
 }
