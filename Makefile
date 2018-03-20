@@ -15,7 +15,7 @@ export CFLAGS = -g -Wall -DDEBUG
 # Constantes liees au projet
 #
 
-DIRS=Communication Threads Serveur
+DIRS = Threads Communication Serveur
 
 #
 # La cible generale

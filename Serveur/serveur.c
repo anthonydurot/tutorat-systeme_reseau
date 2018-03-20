@@ -10,7 +10,9 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <unistd.h>
-#include "../Communication/libcom.h"
+#include <errno.h>
+#include <libcom.h>
+#include <http.h>
 
 /** Constantes **/
 
@@ -22,12 +24,61 @@ int http_port;
 
 /** Fonctions propres au serveur **/
 
+void gestionClient(void *s) {
+
+    int socket = *((int *)s);
+    /* Obtient une structure de fichier */
+    FILE *dialogue = fdopen(socket, "a+");
+    if(dialogue == NULL){ perror("gestionClient.fdopen"); exit(EXIT_FAILURE); }
+    http_info_t req;
+
+    if(traiter_requete(dialogue, &req)) {
+        errno = ENOENT;
+        perror("gestionClient.traiter_requete");
+        fclose(dialogue);
+        
+        return;
+    }
+
+    printf("######### Code : %d\n", req.code);
+    if(req.donnees) printf("######### Donnees : %s\n", req.donnees);
+
+    if(req.code == FORBIDDEN) {
+        envoyer_interdit(dialogue, &req);
+    }
+
+    else if(req.code == FOUND) {
+        envoyer_localisation(dialogue, &req);
+    }
+
+    else {
+
+        if(req.type == IS_DIR) {
+            html_dir(dialogue, &req);
+        }
+
+        else {
+            if(ecriture_reponse(dialogue, &req)) {
+                errno = ENOENT;
+                perror("gestionClient.ecriture_reponse");
+            }
+        }
+    }
+
+    printf("------------------------------------------------------------\n");
+    fclose(dialogue);
+    free_http_info(&req);
+
+    return;
+
+}
+
 int traiter_options(int argc, char **argv) {
 
     int ch, port_n;
-	uint8_t option_presente = 0;
+	int option_presente = 0;
 
-	for(uint8_t i = 0; i < argc; i++) {
+	for(int i = 0; i < argc; i++) {
 		if(*argv[i] == '-') { option_presente = 1; }
 	}
 

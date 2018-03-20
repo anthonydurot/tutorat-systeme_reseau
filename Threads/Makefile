@@ -16,6 +16,7 @@ clean:
 #
 
 libthrd.o: libthrd.c libthrd.h
+	$(CC) -c $@ $< $(CFLAGS)
 
 libthrd.a: libthrd.o
 	rm -f $@

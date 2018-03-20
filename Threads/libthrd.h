@@ -27,15 +27,13 @@
 
 typedef struct thread_param {
 
-    void *arg; /*!< Pointeur générique */
-    int taille; /*!< Taille de la donnée pointée par arg */
+    void *arg;
+    void (*fonction)(void*);
 
 } thread_param_t;
 
 /**** Prototypes ****/
 
 int lanceThread(void (*)(void *), void *, int);
-void lanceThreadWEB(void *);
-void *gestionClient(void *);
 
 #endif

@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <errno.h>
-#include "libthrd.h"
-#include "../Serveur/http.h"
+#include <string.h>
+#include <libthrd.h>
 
 /**
  * \fn static int lanceThread(void (*fonction)(void*), void* arg, int taille)
@@ -27,98 +27,50 @@
  * \return 0 si aucune erreur, -1 sinon.
  */
 
-int lanceThread(void (*fonction)(void*), void* arg, int taille) {
+/*** Prototype local ***/
+void *_lanceThread(void *arg);
 
-	thread_param_t* arguments = (thread_param_t*)malloc(sizeof(thread_param_t));
+int lanceThread(void (*fonction)(void *), void *arg, int taille) {
 
-	if(arguments == NULL){
+    thread_param_t *arguments = (thread_param_t *)malloc(sizeof(thread_param_t));
+
+    if(arguments == NULL){
         perror("lanceThread.malloc");
         return -1;
     }
 
-    arguments->arg = arg;
-    arguments->taille = taille;
-	fonction((void*)arguments);
-
-	return 0;
-
-}
-
-/**
- * \fn lanceThreadWEB(void* arg)
- * \brief Fonction wrapper du thread pour la gestion d'un client
- *
- * \param arg Pointeur sur thread_param_t coercé génériquement
- * \return void
- */
-
-void lanceThreadWEB(void* arg) {
+    arguments->arg = malloc(taille);
+    memcpy(arguments->arg, arg, taille);
+    arguments->fonction = fonction;
 
     pthread_t tid;
     pthread_attr_t attr;
 
-    if(pthread_attr_init(&attr) != 0){
+    if(pthread_attr_init(&attr) != 0) {
         perror("lanceThread.pthread_attr_init");
     }
 
-    if(pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED) != 0){
+    if(pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED) != 0) {
         perror("lanceThread.pthread_attr_setdetachstate");
     }
 
-    if(pthread_create(&tid, &attr, gestionClient, arg) != 0){
+    if(pthread_create(&tid, &attr, _lanceThread, arguments) != 0) {
        perror("lanceThread.pthread_create");
     }
 
+
+    return 0;
+
 }
 
-void* gestionClient(void* s) {
 
-    int socket = *((int *)(((thread_param_t *)s)->arg));
-    /* Obtient une structure de fichier */
-    FILE *dialogue = fdopen(socket, "a+");
-    if(dialogue == NULL){ perror("gestionClient.fdopen"); exit(EXIT_FAILURE); }
-    http_info_t req;
+void *_lanceThread(void *arg) {
 
-    if(traiter_requete(dialogue, &req)) {
-        errno = ENOENT;
-        perror("gestionClient.traiter_requete");
-        fclose(dialogue);
-        free(((thread_param_t *)s)->arg);
-        free(s);
-        return NULL;
-    }
-
-    printf("######### Code : %d\n", req.code);
-    if(req.donnees) printf("######### Donnees : %s\n", req.donnees);
-
-    if(req.code == FORBIDDEN) {
-        envoyer_interdit(dialogue, &req);
-    }
-
-    else if(req.code == FOUND) {
-        envoyer_localisation(dialogue, &req);
-    }
-
-    else {
-
-        if(req.type == IS_DIR) {
-            html_dir(dialogue, &req);
-        }
-
-        else {
-            if(ecriture_reponse(dialogue, &req)) {
-                errno = ENOENT;
-                perror("gestionClient.ecriture_reponse");
-            }
-        }
-    }
-
-    printf("------------------------------------------------------------\n");
-    fclose(dialogue);
-    free(((thread_param_t *)s)->arg);
-    free(s);
-    free_http_info(&req);
-
+    thread_param_t *arguments = (thread_param_t *)arg;
+    arguments->fonction(arguments->arg);
+    free(arguments->arg);
+    free(arguments);
+    
     return NULL;
 
 }

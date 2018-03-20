@@ -24,8 +24,8 @@
 #include <arpa/inet.h>
 #include <fcntl.h>
 
-#include "libcom.h"
-#include "../Threads/libthrd.h"
+#include <libcom.h>
+#include <libthrd.h>
 
 /**** Constantes ****/
 
@@ -100,10 +100,7 @@ int boucleServeur(int ecoute, int (*traitement)(int)) {
 
 int TCP_connexion(int socket) {
 
-    int *arg = (int *)malloc(sizeof(int));
-    *arg = socket;
-
-    return lanceThread(lanceThreadWEB, (void *)arg, sizeof(int));
+    return lanceThread(gestionClient, (void *)&socket, sizeof(int));
 
 }
 

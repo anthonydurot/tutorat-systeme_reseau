@@ -16,7 +16,6 @@ clean:
 #
 
 libcom.o: libcom.c libcom.h
- 
 libcom.a: libcom.o
 	rm -f $@
 	$(CLIB) $@ $+
