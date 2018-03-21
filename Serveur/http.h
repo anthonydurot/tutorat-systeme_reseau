@@ -14,6 +14,8 @@
 #ifndef LIBHTTP_H
 #define LIBHTTP_H
 
+extern int http_port;
+
 /**** Constantes ****/
 
 #define SERVER_NAME     "Choctaw HTTP Server"

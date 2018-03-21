@@ -28,7 +28,7 @@
 typedef struct thread_param {
 
     void *arg;
-    void (*fonction)(void*);
+    void (*fonction)(void *);
 
 } thread_param_t;
 

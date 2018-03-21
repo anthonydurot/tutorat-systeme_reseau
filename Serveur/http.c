@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <time.h>
@@ -18,6 +19,8 @@
 #include <errno.h>
 #include <stdint.h>
 #include <dirent.h>
+#include <libcom.h>
+#include "http.h"
 
 /**** Constantes ****/
 
@@ -25,27 +28,6 @@
 
 /**** Fonctions de gestion des requetes HTTP ****/
 
-// Autres
-
-char *ip_machine(void) {
-
-    char hostname[256];
-    char *ip_adr;
-
-    if (!gethostname(hostname, sizeof(hostname))) {
-
-        struct hostent *host= gethostbyname(hostname);
-        if (host != NULL) {
-            struct in_addr **adr;
-            for (adr = (struct in_addr **)host->h_addr_list; *adr; adr++) {
-                ip_adr = inet_ntoa(**adr);
-            }
-        }
-
-        return strdup(ip_adr);
-
-    }
-} // A modifier
 
 // Requetes HTTP
 
@@ -201,6 +183,8 @@ int reponse_header(FILE *socket, http_info_t *req) {
     fprintf(socket, "Content-length: %d\r\n", req->contenu_taille);
     fprintf(socket, "\r\n");
     fflush(socket);
+
+    return 0;
 
 }
 
@@ -362,7 +346,7 @@ int html_dir(FILE *socket, http_info_t *req) {
 	char *temp;
     FILE *tmp = tmpfile();
     DIR *rep;
-    int cpt = 0, counter = 0;
+    int cpt = 0;
     int s = fileno(socket);
     int tmp_fd = fileno(tmp);
     int bytes;

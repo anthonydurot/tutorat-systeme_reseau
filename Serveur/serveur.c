@@ -12,7 +12,8 @@
 #include <unistd.h>
 #include <errno.h>
 #include <libcom.h>
-#include <http.h>
+#include <libthrd.h>
+#include "http.h"
 
 /** Constantes **/
 
@@ -36,7 +37,7 @@ void gestionClient(void *s) {
         errno = ENOENT;
         perror("gestionClient.traiter_requete");
         fclose(dialogue);
-        
+
         return;
     }
 
@@ -120,13 +121,22 @@ int traiter_options(int argc, char **argv) {
 
 }
 
+void nouveauClient(int dialogue) {
+
+    if(lanceThread(gestionClient, (void *)&dialogue, sizeof(int))) {
+            perror("nouveauClient.lanceThread");
+            exit(-1);
+    }
+
+}
+
 /** Procedure principale **/
 
-int main(int argc,char **argv) {
+int main(int argc, char **argv) {
 
     int s;
     /* Lecture des arguments de la commande */
-    http_port = traiter_options(argc,argv);
+    http_port = traiter_options(argc, argv);
     char port_s[6];
     sprintf(port_s, "%d", http_port);
 
@@ -137,7 +147,7 @@ int main(int argc,char **argv) {
     }
 
     /* Lancement de la boucle d'ecoute */
-    if(boucleServeur(s,TCP_connexion) <= 0) {
+    if(boucleServeur(s, nouveauClient) <= 0) {
         fprintf(stderr, "Connexion avec le client impossible\n");
         exit(-1);
     }

@@ -15,7 +15,7 @@
 #include <pthread.h>
 #include <errno.h>
 #include <string.h>
-#include <libthrd.h>
+#include "libthrd.h"
 
 /**
  * \fn static int lanceThread(void (*fonction)(void*), void* arg, int taille)
@@ -36,7 +36,7 @@ int lanceThread(void (*fonction)(void *), void *arg, int taille) {
 
     if(arguments == NULL){
         perror("lanceThread.malloc");
-        return -1;
+        return 1;
     }
 
     arguments->arg = malloc(taille);
@@ -48,14 +48,17 @@ int lanceThread(void (*fonction)(void *), void *arg, int taille) {
 
     if(pthread_attr_init(&attr) != 0) {
         perror("lanceThread.pthread_attr_init");
+        return 1;
     }
 
     if(pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED) != 0) {
         perror("lanceThread.pthread_attr_setdetachstate");
+        return 1;
     }
 
     if(pthread_create(&tid, &attr, _lanceThread, arguments) != 0) {
        perror("lanceThread.pthread_create");
+       return 1;
     }
 
 
@@ -70,7 +73,7 @@ void *_lanceThread(void *arg) {
     arguments->fonction(arguments->arg);
     free(arguments->arg);
     free(arguments);
-    
+
     return NULL;
 
 }

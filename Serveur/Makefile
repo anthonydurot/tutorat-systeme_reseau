@@ -2,11 +2,11 @@
 # Makefile pour generer le serveur
 #
 
-OBJS = serveur.o
+OBJS = serveur.o http.o
 LIBS = -lpthread
-LOCAL_LIBS  = -L ../Communication # -L ../Threads
-LOCAL_LIBS += -lcom # -lthrd
-CFLAGS     += -I ../Communication # -I ../Threads
+LOCAL_LIBS  = -L ../Communication -L ../Threads
+LOCAL_LIBS += -lcom -lthrd
+CFLAGS     += -I ../Communication -I ../Threads
 
 #
 # Cible generale
@@ -29,3 +29,5 @@ serveur: $(OBJS)
 	$(CC) $(CFLAGS) -o serveur $(OBJS) $(LOCAL_LIBS) $(LIBS)
 
 serveur.o: serveur.c serveur.h
+
+http.o: http.c http.h

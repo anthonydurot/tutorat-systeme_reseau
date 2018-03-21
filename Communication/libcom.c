@@ -24,8 +24,8 @@
 #include <arpa/inet.h>
 #include <fcntl.h>
 
-#include <libcom.h>
-#include <libthrd.h>
+#include "libcom.h"
+#include "../Threads/libthrd.h"
 
 /**** Constantes ****/
 
@@ -35,8 +35,33 @@ int socket_udp;
 
 /**** Prototype des fonctions locales *****/
 
+
 /**** Fonctions de gestion des sockets ****/
 
+// Autres
+
+char *ip_machine(void) { //TODO : A modifier, déplacer ?
+
+    char hostname[256];
+    char *ip_adr;
+
+    if (!gethostname(hostname, sizeof(hostname))) {
+
+        struct hostent *host = gethostbyname(hostname);
+        if (host != NULL) {
+            struct in_addr **adr;
+            for (adr = (struct in_addr **)host->h_addr_list; *adr; adr++) {
+                ip_adr = inet_ntoa(**adr);
+            }
+        }
+
+        return strdup(ip_adr);
+
+    }
+
+    return NULL;
+
+}
 
 int initialisationServeur(char *service) {
 
@@ -85,7 +110,7 @@ int initialisationServeur(char *service) {
 
 }
 
-int boucleServeur(int ecoute, int (*traitement)(int)) {
+int boucleServeur(int ecoute, void (*traitement)(int)) {
 
     int dialogue;
 
@@ -93,19 +118,11 @@ int boucleServeur(int ecoute, int (*traitement)(int)) {
         /*Attente d'une connexion*/
         if((dialogue = accept(ecoute, NULL, NULL)) < 0) return -1;
         /*Passage de la socket de dialogue a la fonction de traitement*/
-        if(traitement(dialogue) < 0){ shutdown(ecoute, SHUT_RDWR); return 0;}
+        traitement(dialogue);
     }
-
 }
 
-int TCP_connexion(int socket) {
-
-    return lanceThread(gestionClient, (void *)&socket, sizeof(int));
-
-}
-
-
-void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int)) {
+void serveurMessages(char *service) {//, int (*traitement_udp)(unsigned char *, int)) {
 
     struct sockaddr_in adresseServeur;
     socklen_t tailleServeur = sizeof(adresseServeur);

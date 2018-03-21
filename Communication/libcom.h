@@ -37,13 +37,13 @@ socket en unique paramètre. Lors d'une connexion de clien, la fonction
 boucleServeur lance donc cette fonction avec la socket de dialogue
 en paramètre. */
 
-int boucleServeur(int, int (*)(int));
+int boucleServeur(int, void (*)(int));
 
 /* Cette fonction est un wrapper faisant un appel à la fonction de lancement
 des threads. Elle a également pour rôle d'allouer de la mémoire pour
 garder de manière pérenne le socket de dialogue */
 
-int TCP_connexion(int);
+//void TCP_connexion(int);
 
 /************************ UDP ************************/
 
