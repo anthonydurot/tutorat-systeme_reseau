@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <avr/interrupt.h>
 
 #include "serial.h"
 #include "analog.h"
@@ -12,7 +13,7 @@
 
 uint16_t swap_uint16(uint16_t val) {
 
-    return (val << 8) | (val >> 8 );
+    return (val << 8) | (val >> 8);
 
 }
 
@@ -51,10 +52,10 @@ void forger_trameIP(TrameIP *trame, uint8_t *v_capteurs) {
 	strcpy(ips, IP_SOURCE);
 	char ipd[32];
 	strcpy(ipd, IP_DEST);
-	int adr_source[4], adr_destination[4], i = 0;
+	int adr_source[4], adr_destination[4];
 
-	sscanf(ips,"%d.%d.%d.%d",&adr_source[0],&adr_source[1],&adr_source[2],&adr_source[3]);
-	sscanf(ipd,"%d.%d.%d.%d",&adr_destination[0],&adr_destination[1],&adr_destination[2],&adr_destination[3]);
+	sscanf(ips, "%d.%d.%d.%d", &adr_source[0], &adr_source[1], &adr_source[2], &adr_source[3]);
+	sscanf(ipd, "%d.%d.%d.%d", &adr_destination[0], &adr_destination[1], &adr_destination[2], &adr_destination[3]);
 
 	trame->c6 = (uint16_t)adr_source[1] | ((uint16_t)adr_source[0])<<8;
 	trame->c7 = (uint16_t)adr_source[3] | ((uint16_t)adr_source[2])<<8;
@@ -112,7 +113,7 @@ void calcul_checksum_udp(TrameIP *trame) {
 
     carry = (uint16_t)((somme & 0xffff0000)>>16);
 
-    while(carry != 0){
+    while(carry != 0) {
         somme &= 0x0000ffff;
         somme += carry;
         carry = (uint16_t)((somme & 0xffff000)>>16);
@@ -170,18 +171,32 @@ void envoyer_trame(TrameIP *trame) {
 
 }
 
+uint8_t ready = 0;
+int8_t dummy;
+
+ISR(USART_RX_vect) { //TODO : to complete
+    if(UDR0 == 0xC0){
+        ready = 1;
+    }
+}
+
 int main(void) {
 
     //init_printf();
     init_serial(9600);
-    uint8_t v_capteurs[4];
-    TrameIP trame;
-    v_capteurs[0] = 26;
-    v_capteurs[1] = 13;
-    v_capteurs[2] = 76;
-    v_capteurs[3] = 75;
-    forger_trameIP(&trame, v_capteurs);
-    envoyer_trame(&trame);
+    sei();
+    //uint8_t v_capteurs[4];
+    //TrameIP trame;
+    //v_capteurs[0] = 26;
+    //v_capteurs[1] = 13;
+    //v_capteurs[2] = 76;
+    //v_capteurs[3] = 75;
+    //forger_trameIP(&trame, v_capteurs);
+    //envoyer_trame(&trame);
+    while(1) { // TODO : to complete
+        if(ready) {
+            
+        }
 
 /*
 

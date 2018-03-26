@@ -142,7 +142,7 @@ int main(int argc, char **argv) {
 
     /* Initialisation du serveur */
     if((s = initialisationServeur(port_s)) < 0 ) {
-        fprintf(stderr,"Initialisation du serveur impossible, êtes vous root ?\n");
+        fprintf(stderr, "Initialisation du serveur impossible, êtes vous root ?\n");
         exit(-1);
     }
 

@@ -73,8 +73,8 @@ int traiter_requete(FILE *socket, http_info_t *req) {
 	char chemin[128];
     char chemin_lock[128];
     char donnees[512];
-	char* temp = NULL;
-	char* format = NULL;
+	char *temp = NULL;
+	char *format = NULL;
     int content_length = 0;
 	int code;
 	struct stat fstat;
@@ -96,7 +96,7 @@ int traiter_requete(FILE *socket, http_info_t *req) {
 
     else {
 
-        if(S_ISREG(fstat.st_mode)){
+        if(S_ISREG(fstat.st_mode)) {
             req->type = IS_FILE;
             code = OK;
         }
@@ -104,11 +104,11 @@ int traiter_requete(FILE *socket, http_info_t *req) {
   		else if(S_ISDIR(fstat.st_mode)) { // Si ce n'est pas un fichier c'est peut être un dossier
   			req->type = IS_DIR;
   			code = OK;
-            strcpy(chemin_lock,chemin);
-            strcat(chemin_lock,".lock");
+            strcpy(chemin_lock, chemin);
+            strcat(chemin_lock, ".lock");
             if(cible[strlen(cible)-1] != '/') {
-                strcat(cible,"/");
-                strcpy(chemin,cible);
+                strcat(cible, "/");
+                strcpy(chemin, cible);
                 code = FOUND;
             }
             else if(!stat(chemin_lock, &fstat)) {
@@ -195,7 +195,7 @@ int ecriture_reponse(FILE *socket, http_info_t *req) {
     char buffer[MAX_BUFFER];
     int s = fileno(socket);
     struct stat fstat;
-    stat(req->cible,&fstat);
+    stat(req->cible, &fstat);
     req->contenu_taille = fstat.st_size;
 
     reponse_header(socket, req);
@@ -383,7 +383,7 @@ int html_dir(FILE *socket, http_info_t *req) {
 	\t\t\t<th>Size</th>\n\
 	\t\t\t<th>Description</th>\n\
 	\t\t</tr>\n");
-	fprintf(tmp,"\t\t\t<tr><th colspan=\"5\"><hr></th></tr>\n");
+	fprintf(tmp, "\t\t\t<tr><th colspan=\"5\"><hr></th></tr>\n");
 	fprintf(tmp,
 	"\t\t\t<tr>\n\
 	\t\t\t<td valign=\"top\"><img src=\"/icons/back.gif\"></td>\n\
@@ -402,7 +402,7 @@ int html_dir(FILE *socket, http_info_t *req) {
 			if(!S_ISDIR(attrib.st_mode)) {
 				 readable_fs(attrib.st_size, size);
 				 icon_format(lecture->d_name, icon, 0);
-                 strcpy(f_name,lecture->d_name);
+                 strcpy(f_name, lecture->d_name);
 			}
 			else {
 				strcpy(size, "-");

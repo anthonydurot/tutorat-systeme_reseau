@@ -151,8 +151,8 @@ void serveurMessages(char *service) {//, int (*traitement_udp)(unsigned char *, 
         nboctets = recvfrom(socket_udp, message, MAX_TAMPON-1, 0, (struct sockaddr*)&adresseClient, &tailleClient);
         message[nboctets] = '\0';
         printf("Données recues : %s\n", message);
-        envoiMessage("5000","coucou", sizeof("coucou"));
-        envoiMessageUnicast("80", "plil.fr", "coucou-unicast", sizeof("coucou-unicast"));
+        //envoiMessage("5000","coucou", sizeof("coucou"));
+        //envoiMessageUnicast("80", "plil.fr", "coucou-unicast", sizeof("coucou-unicast"));
         //if(traitement_udp(message, nboctets) < 0) {
         /* TODO : Fonction traitement du message */
         //    break;
@@ -170,7 +170,7 @@ int envoiMessage(char *service, unsigned char *message, int taille) {
     adresseBroadcast.sin_family = AF_INET;
     adresseBroadcast.sin_port = htons(atoi(service));
     adresseBroadcast.sin_addr.s_addr = htonl(INADDR_BROADCAST);
-    sendto(socket_udp, message, strlen(message), 0, (struct sockaddr *)&adresseBroadcast, tailleBroadcast);
+    sendto(socket_udp, message, taille, 0, (struct sockaddr *)&adresseBroadcast, tailleBroadcast);
 
     return 0;
 
@@ -179,8 +179,7 @@ int envoiMessage(char *service, unsigned char *message, int taille) {
 int envoiMessageUnicast(char *service, char *machine, unsigned char *message, int taille) {
 
     int unicast = 0;
-    struct sockaddr_in adresseClient;
-    struct addrinfo precisions, *resultat, *origine;
+    struct addrinfo precisions, *origine;
 
     memset(&precisions, 0, sizeof(precisions));
     precisions.ai_family = AF_INET;
@@ -188,7 +187,7 @@ int envoiMessageUnicast(char *service, char *machine, unsigned char *message, in
     setsockopt(socket_udp, SOL_SOCKET, SO_BROADCAST, &unicast, sizeof(unicast));
     if(getaddrinfo(machine, service, &precisions, &origine) != 0) {
         if(origine != NULL) {
-            sendto(socket_udp, message, strlen(message), 0, origine->ai_addr, origine->ai_addrlen);
+            sendto(socket_udp, message, taille, 0, origine->ai_addr, origine->ai_addrlen);
             freeaddrinfo(origine);
             return 0;
         }

@@ -14,7 +14,7 @@ void ad_init(unsigned char channel) {
 unsigned int ad_sample(void) {
 
     ADCSRA |= (1<<ADSC); //Start conversion
-    while(bit_is_set(ADCSRA, ADSC)); //Attends la fin de la conversion
+    while(bit_is_set(ADCSRA, ADSC)); //Attend la fin de la conversion
 
     return ADCH; //Retourne le registre 8 bits en virant les 2 de poids faible
 

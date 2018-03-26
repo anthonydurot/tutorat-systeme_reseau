@@ -13,7 +13,7 @@ void init_serial(unsigned long int speed) {
     /* Set baud rate */
     UBRR0 = F_CPU/(speed<<4)-1;
     /* Enable transmitter & receiver */
-    UCSR0B = (1<<TXEN0 | 1<<RXEN0);
+    UCSR0B = (1<<RXCIE0 | 1<<TXEN0 | 1<<RXEN0);
     /* Set 8 bits character and 1 stop bit */
     UCSR0C = (1<<UCSZ01 | 1<<UCSZ00);
 

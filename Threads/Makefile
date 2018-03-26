@@ -16,7 +16,6 @@ clean:
 #
 
 libthrd.o: libthrd.c libthrd.h
-	gcc -o libthrd.o -c libthrd.c
 
 libthrd.a: libthrd.o
 	rm -f $@
