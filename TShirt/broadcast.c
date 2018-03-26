@@ -10,6 +10,11 @@
 #include "analog.h"
 #include "broadcast.h"
 
+/* Varaibles globales */
+
+uint8_t rx_complete = 1;
+
+/* Fonctions */
 
 uint16_t swap_uint16(uint16_t val) {
 
@@ -26,11 +31,11 @@ void forger_trameUDP(TrameUDP *trame, uint8_t *v_capteurs) {
 	trame->longueur = (uint16_t)sizeof(TrameUDP);
 	trame->checksum = 0x0000;
 
-	data.id_tshirt = (uint8_t)ID_TSHIRT;
-	data.accel_x = v_capteurs[0];
-	data.accel_y = v_capteurs[1];
-	data.accel_z = v_capteurs[2];
-	data.temp = v_capteurs[3];
+	data.TX.id_tshirt = (uint8_t)ID_TSHIRT;
+	data.TX.accel_x = v_capteurs[0];
+	data.TX.accel_y = v_capteurs[1];
+	data.TX.accel_z = v_capteurs[2];
+	data.TX.temp = v_capteurs[3];
 
 	trame->data = data;
 
@@ -156,8 +161,8 @@ void envoyer_trame(TrameIP *trame) {
 	send_serial(END);
 	for(i = 0; i < sizeof(TrameIP); buffer++, i++) {
 		if(*buffer == END) {
-        send_serial(ESC);
-        send_serial(ESC_END);
+            send_serial(ESC);
+            send_serial(ESC_END);
 		}
 		else if(*buffer == ESC) {
 			send_serial(ESC);
@@ -171,33 +176,64 @@ void envoyer_trame(TrameIP *trame) {
 
 }
 
-uint8_t ready = 0;
-int8_t dummy;
+void recevoir_udp(char *rx_buffer) {
 
-ISR(USART_RX_vect) { //TODO : to complete
-    if(UDR0 == 0xC0){
-        ready = 1;
+    char c;
+    int cpt = 0;
+
+    cli();
+    while(1) {
+        c = get_serial();
+        if(c == END || cpt > 1023) {
+            if(cpt != 0) {
+                rx_complete = 1;
+                break;
+            }
+        }
+        else if(c == ESC) {
+            c = get_serial();
+            if(c == ESC_END) {
+                rx_buffer[cpt] = (char)END;
+            }
+            else if(c == ESC_ESC) {
+                rx_buffer[cpt] = (char)ESC;
+            }
+        }
+        else {
+            rx_buffer[cpt] = c;
+        }   
+        cpt++;
     }
+    sei();
+
+}
+
+ISR(USART_RX_vect) {
+
+    rx_complete = 0;
+    
 }
 
 int main(void) {
 
-    //init_printf();
     init_serial(9600);
     sei();
-    //uint8_t v_capteurs[4];
-    //TrameIP trame;
-    //v_capteurs[0] = 26;
-    //v_capteurs[1] = 13;
-    //v_capteurs[2] = 76;
-    //v_capteurs[3] = 75;
-    //forger_trameIP(&trame, v_capteurs);
-    //envoyer_trame(&trame);
-    while(1) { // TODO : to complete
-        if(ready) {
-            
-        }
+    uint8_t v_capteurs[4];
+    char rx_buffer[1024];
+    TrameIP trame;
+    
+    v_capteurs[0] = 26;
+    v_capteurs[1] = 13;
+    v_capteurs[2] = 76;
+    v_capteurs[3] = 75;
+    forger_trameIP(&trame, v_capteurs);
+    envoyer_trame(&trame);
 
+    while(1) {
+        if(!rx_complete) {
+            recevoir_udp(rx_buffer);
+        }
+    }
 /*
 
     while(1) {
@@ -207,8 +243,10 @@ int main(void) {
             v_capteurs[i] = ad_sample();
         }
 
+        cli();
         forger_trame(&trame, v_capteurs);
         envoyer_trame(&trame);
+        sei();
     }
 
 */

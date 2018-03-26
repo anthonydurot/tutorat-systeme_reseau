@@ -33,12 +33,23 @@
 
 #pragma pack(push, 1)
 
-typedef struct dataUDP {
+typedef struct dataUDP_RX {
+    uint8_t 	id_tshirt;
+    uint8_t     instruction;
+    uint8_t     valeur;
+} DataUDP_RX;
+
+typedef struct dataUDP_TX {
     uint8_t 	id_tshirt;
     uint8_t 	accel_x;
     uint8_t 	accel_y;
     uint8_t 	accel_z;
     uint8_t 	temp;
+} DataUDP_TX;
+
+typedef union dataUDP {
+    DataUDP_TX  TX;  
+    DataUDP_RX  RX;
 } DataUDP;
 
 typedef struct trameUDP {
