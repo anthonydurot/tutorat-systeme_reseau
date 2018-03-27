@@ -13,6 +13,7 @@
 /* Varaibles globales */
 
 uint8_t rx_complete = 1;
+uint8_t ID_tshirt = 3;
 
 /* Fonctions */
 
@@ -31,7 +32,7 @@ void forger_trameUDP(TrameUDP *trame, uint8_t *v_capteurs) {
 	trame->longueur = (uint16_t)sizeof(TrameUDP);
 	trame->checksum = 0x0000;
 
-	data.TX.id_tshirt = (uint8_t)ID_TSHIRT;
+	data.TX.id_tshirt = (uint8_t)ID_tshirt;
 	data.TX.accel_x = v_capteurs[0];
 	data.TX.accel_y = v_capteurs[1];
 	data.TX.accel_z = v_capteurs[2];
@@ -136,10 +137,10 @@ void calcul_checksum_ip(TrameIP *trame) {
     uint8_t i;
 
     for(i = 0; i < ((sizeof(TrameIP)-sizeof(TrameUDP))/sizeof(uint16_t)); i++) {
-            if(i != 5) {
-                somme += (uint32_t)*ptr;
-            }
-            ptr++;
+        if(i != 5) {
+            somme += (uint32_t)*ptr;
+        }
+        ptr++;
     }
 
     carry = (uint16_t)((somme & 0xffff0000)>>16);
@@ -176,7 +177,7 @@ void envoyer_trame(TrameIP *trame) {
 
 }
 
-void recevoir_udp(char *rx_buffer) {
+void recevoir_UDP(char *rx_buffer) {
 
     char c;
     int cpt = 0;
@@ -208,6 +209,30 @@ void recevoir_udp(char *rx_buffer) {
 
 }
 
+void traitement_UDP(char *rx_buffer, TrameIP *trame) {
+
+    trame = (TrameIP *)rx_buffer;
+    trame->c0 = swap_uint16(trame->c0);
+	trame->c1 = swap_uint16(trame->c1);
+	trame->c2 = swap_uint16(trame->c2);
+	trame->c3 = swap_uint16(trame->c3);
+	trame->c4 = swap_uint16(trame->c4);
+	trame->c5 = swap_uint16(trame->c5);
+	trame->c6 = swap_uint16(trame->c6);
+	trame->c7 = swap_uint16(trame->c7);
+	trame->c8 = swap_uint16(trame->c8);
+	trame->c9 = swap_uint16(trame->c9);
+	(trame->data).port_source = swap_uint16((trame->data).port_source);
+    (trame->data).port_destination = swap_uint16((trame->data).port_destination);
+    (trame->data).longueur = swap_uint16((trame->data).longueur);
+    (trame->data).checksum = swap_uint16((trame->data).checksum);
+    
+    if((trame->data).data.RX.instruction == 2) {
+        ID_tshirt = (trame->data).data.RX.valeur;
+    }
+    
+}
+
 ISR(USART_RX_vect) {
 
     rx_complete = 0;
@@ -219,26 +244,14 @@ int main(void) {
     init_serial(9600);
     sei();
     uint8_t v_capteurs[4];
+    uint8_t i;
     char rx_buffer[1024];
     TrameIP trame;
-    
-    v_capteurs[0] = 26;
-    v_capteurs[1] = 13;
-    v_capteurs[2] = 76;
-    v_capteurs[3] = 75;
-    forger_trameIP(&trame, v_capteurs);
-    envoyer_trame(&trame);
+    TrameIP trame_rx;
 
     while(1) {
-        if(!rx_complete) {
-            recevoir_udp(rx_buffer);
-        }
-    }
-/*
-
-    while(1) {
-
-        for(int i = 0; i <= 3; i++) {
+   
+        for(i = 0; i <= 3; i++) {
             ad_init(i);
             v_capteurs[i] = ad_sample();
         }
@@ -247,9 +260,13 @@ int main(void) {
         forger_trame(&trame, v_capteurs);
         envoyer_trame(&trame);
         sei();
+    
+        if(!rx_complete) {
+            recevoir_UDP(rx_buffer);
+            traitement_UDP(rx_buffer, &trame_rx);
+        }
     }
-
-*/
+    
     return 0;
 
 }

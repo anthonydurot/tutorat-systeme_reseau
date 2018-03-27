@@ -5,8 +5,6 @@
 
 /**** Constantes ****/
 
-#define ID_TSHIRT    3
-
 // Define pour IP
 #define VERSION 	 0x04
 #define L_ENTETE     0x05
