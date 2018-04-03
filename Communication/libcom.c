@@ -1,3 +1,17 @@
+/**
+ * \file libcom.c
+ * \brief Bibliothèque des fonctions réseaux.
+ * \author Antoine D
+ * \author Anthony D
+ * \version 0.1
+ * \date 26 Mars 2018
+ *
+ * Bibliothèque regroupant l'ensemble des fonctions nécessaires pour la communication au sein du projet.
+ *
+ */
+
+
+
 /** fichier libcom.c **/
 
 /*****************************************/
@@ -62,6 +76,14 @@ char *ip_machine(void) { //TODO : A modifier, déplacer ?
     return NULL;
 
 }
+/**
+ * \fn int initialisationServeur(char *service)
+ * \brief Fonction d'initialisation d'un serveur TCP.
+ *
+ * \param service Port sur lequel doit écouter le serveur TCP.
+ * 
+ * \return Descripteur de fichier de la socket si aucune erreur, -1 sinon.
+ */
 
 int initialisationServeur(char *service) {
 
@@ -110,6 +132,16 @@ int initialisationServeur(char *service) {
 
 }
 
+/**
+ * \fn boucleServeur(int ecoute, void (*traitement)(int))
+ * \brief Fonction boucle du serveur gérant les connexions entrantes des clients.
+ *
+ * \param ecoute Socket d'écoute correspondant à la socket TCP bind.
+ * \param traitement Fonction de traitement de la socket de connexion du client.
+ * 
+ * \return 0 si aucune érreur, -1 sinon.
+ */
+
 int boucleServeur(int ecoute, void (*traitement)(int)) {
 
     int dialogue;
@@ -120,10 +152,19 @@ int boucleServeur(int ecoute, void (*traitement)(int)) {
         /*Passage de la socket de dialogue a la fonction de traitement*/
         traitement(dialogue);
     }
+    return 0;
+    
 }
 
 void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int)) {
 
+/**
+ * \fn serveurMessages(char *service)
+ * \brief Fonction d'initialisation d'un serveur UDP.
+ *
+ * \param service Port sur lequel doit écouter le serveur UDP.
+ * 
+ */
     struct sockaddr_in adresseServeur;
     socklen_t tailleServeur = sizeof(adresseServeur);
     socket_udp = socket(AF_INET, SOCK_DGRAM, 0);
@@ -151,12 +192,23 @@ void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int))
         nboctets = recvfrom(socket_udp, message, MAX_TAMPON-1, 0, (struct sockaddr*)&adresseClient, &tailleClient);
         message[nboctets] = '\0';
         //printf("Données recues : %s\n", message);
-        if(traitement_udp(message, nboctets)) {
+        if(traitement_udp((unsigned char*)message, nboctets)) {
             perror("serveurMessages.traitement_udp");
             exit(-1);            
         }
     }
 }
+
+/**
+ * \fn envoiMessage(char *service, unsigned char *message, int taille)
+ * \brief Fonction d'envoi d'une chaine de caractères en broadcast UDP.
+ *
+ * \param service Port sur lequel envoyer le message UDP.
+ * \param message Chaine de caractères à envoyer.
+ * \param taille Taille du message à envoyer en octets.
+ * 
+ * \return 0 si aucune erreur, -1 sinon.
+ */
 
 int envoiMessage(char *service, unsigned char *message, int taille) {
 
@@ -173,6 +225,19 @@ int envoiMessage(char *service, unsigned char *message, int taille) {
     return 0;
 
 }
+
+
+/**
+ * \fn envoiMessageUnicast(char *service, char *machine, unsigned char *message, int taille)
+ * \brief Fonction d'envoi d'une chaine de caractères en unicast UDP.
+ *
+ * \param service Port sur lequel envoyer le message UDP.
+ * \param machine Nom d'hôte sur laquelle envoyer le message UDP.
+ * \param message Chaine de caractères à envoyer.
+ * \param taille Taille du message à envoyer en octets.
+ * 
+ * \return 0 si aucune erreur, -1 sinon.
+ */
 
 int envoiMessageUnicast(char *service, char *machine, unsigned char *message, int taille) {
 

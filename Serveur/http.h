@@ -33,16 +33,16 @@ extern int http_port;
 /**** Structures ****/
 
 typedef struct http_info_s {
-	char *methode;
-	char *cible;
-	char *version;
-	int type; // Fichier (0) ou dossier (1)
-	char *serveur;
-	char *contenu_type;
+    char *methode;
+    char *cible;
+    char *version;
+    int type; // Fichier (0) ou dossier (1)
+    char *serveur;
+    char *contenu_type;
     char *donnees;
-	char *date;
+    char *date;
     int contenu_taille;
-	int code;
+    int code;
 } http_info_t;
 
 /***** Prototypes ****/

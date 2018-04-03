@@ -17,19 +17,19 @@
 #include <string.h>
 #include "libthrd.h"
 
-/**
- * \fn static int lanceThread(void (*fonction)(void*), void* arg, int taille)
- * \brief Fonction de lancement de thread
- *
- * \param fonction Pointeur de fonction de la fonction wrapper
- * \param arg Pointeur générique représentant la donnée à passer au thread
- * \param taille Taille de la valeur pointée par arg
- * \return 0 si aucune erreur, -1 sinon.
- */
-
 /*** Prototype local ***/
 void *_lanceThread(void *arg);
 
+
+/**
+ * \fn int lanceThread(void (*fonction)(void*), void* arg, int taille)
+ * \brief Fonction de lancement de thread.
+ *
+ * \param fonction Pointeur de fonction de la fonction à executer.
+ * \param arg Pointeur générique représentant la donnée à passer au thread.
+ * \param taille Taille de la valeur pointée par arg.
+ * \return 0 si aucune erreur, -1 sinon.
+ */
 int lanceThread(void (*fonction)(void *), void *arg, int taille) {
 
     thread_param_t *arguments = (thread_param_t *)malloc(sizeof(thread_param_t));
@@ -66,7 +66,7 @@ int lanceThread(void (*fonction)(void *), void *arg, int taille) {
 
 }
 
-
+/* Fonction invisible pour l'utilisateur => Non documentée dans doxygen */
 void *_lanceThread(void *arg) {
 
     thread_param_t *arguments = (thread_param_t *)arg;

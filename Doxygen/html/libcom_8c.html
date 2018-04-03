@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Tutorat Système Réseaux: Référence du fichier Communication/libcom.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Tutorat Système Réseaux
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Membres&#160;de&#160;fichier</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_9c84df62130b51884dc356818c6ad5d1.html">Communication</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier libcom.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Bibliothèque des fonctions réseaux.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;fcntl.h&gt;</code><br />
+<code>#include &lt;errno.h&gt;</code><br />
+<code>#include &lt;netdb.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
+<code>#include &lt;sys/socket.h&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
+<code>#include &lt;netinet/in.h&gt;</code><br />
+<code>#include &lt;netinet/tcp.h&gt;</code><br />
+<code>#include &lt;arpa/inet.h&gt;</code><br />
+<code>#include &quot;libcom.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="libthrd_8h_source.html">../Threads/libthrd.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de libcom.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="libcom_8c__incl.png" border="0" usemap="#_communication_2libcom_8c" alt=""/></div>
+<map name="_communication_2libcom_8c" id="_communication_2libcom_8c">
+<area shape="rect" id="node16" href="libcom_8h_source.html" title="libcom.h" alt="" coords="1394,80,1465,107"/>
+<area shape="rect" id="node17" href="libthrd_8h.html" title="Bibliothèque pour threads. " alt="" coords="1488,80,1619,107"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:ab6b5ed09db4da9aa82fac851ca9f3adc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6b5ed09db4da9aa82fac851ca9f3adc"></a>
+char *&#160;</td><td class="memItemRight" valign="bottom"><b>ip_machine</b> (void)</td></tr>
+<tr class="separator:ab6b5ed09db4da9aa82fac851ca9f3adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8fc82289fde095c6acbb4ae6625ef24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libcom_8c.html#ad8fc82289fde095c6acbb4ae6625ef24">initialisationServeur</a> (char *service)</td></tr>
+<tr class="memdesc:ad8fc82289fde095c6acbb4ae6625ef24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction d'initialisation d'un serveur TCP.  <a href="#ad8fc82289fde095c6acbb4ae6625ef24">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ad8fc82289fde095c6acbb4ae6625ef24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22ba7dc1eb2eb5441ac7c9b7f04936d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libcom_8c.html#a22ba7dc1eb2eb5441ac7c9b7f04936d4">boucleServeur</a> (int ecoute, void(*traitement)(int))</td></tr>
+<tr class="memdesc:a22ba7dc1eb2eb5441ac7c9b7f04936d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction boucle du serveur gérant les connexions entrantes des clients.  <a href="#a22ba7dc1eb2eb5441ac7c9b7f04936d4">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a22ba7dc1eb2eb5441ac7c9b7f04936d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc20844814d76a37dc29eebb37bafe0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libcom_8c.html#abc20844814d76a37dc29eebb37bafe0a">serveurMessages</a> (char *service)</td></tr>
+<tr class="memdesc:abc20844814d76a37dc29eebb37bafe0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction d'initialisation d'un serveur UDP.  <a href="#abc20844814d76a37dc29eebb37bafe0a">Plus de détails...</a><br /></td></tr>
+<tr class="separator:abc20844814d76a37dc29eebb37bafe0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c2bdfb1881d6cbe3151e09cd0f190e8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libcom_8c.html#a4c2bdfb1881d6cbe3151e09cd0f190e8">envoiMessage</a> (char *service, unsigned char *message, int taille)</td></tr>
+<tr class="memdesc:a4c2bdfb1881d6cbe3151e09cd0f190e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction d'envoi d'une chaine de caractères en broadcast UDP.  <a href="#a4c2bdfb1881d6cbe3151e09cd0f190e8">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a4c2bdfb1881d6cbe3151e09cd0f190e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eba91d560b6f246b83456d06591c25d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libcom_8c.html#a5eba91d560b6f246b83456d06591c25d">envoiMessageUnicast</a> (char *service, char *machine, unsigned char *message, int taille)</td></tr>
+<tr class="memdesc:a5eba91d560b6f246b83456d06591c25d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction d'envoi d'une chaine de caractères en unicast UDP.  <a href="#a5eba91d560b6f246b83456d06591c25d">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a5eba91d560b6f246b83456d06591c25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a9b966bb3f7321f54054df1ff7e6590d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libcom_8c.html#a9b966bb3f7321f54054df1ff7e6590d4">socket_udp</a></td></tr>
+<tr class="separator:a9b966bb3f7321f54054df1ff7e6590d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Bibliothèque des fonctions réseaux. </p>
+<dl class="section author"><dt>Auteur</dt><dd>Antoine D &ndash; Anthony D </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>26 Mars 2018</dd></dl>
+<p>Bibliothèque regroupant l'ensemble des fonctions nécessaires pour la communication au sein du projet. </p>
+</div><h2 class="groupheader">Documentation des fonctions</h2>
+<a class="anchor" id="a22ba7dc1eb2eb5441ac7c9b7f04936d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boucleServeur </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ecoute</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(int)&#160;</td>
+          <td class="paramname"><em>traitement</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction boucle du serveur gérant les connexions entrantes des clients. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ecoute</td><td>Socket d'écoute correspondant à la socket TCP bind. </td></tr>
+    <tr><td class="paramname">traitement</td><td>Fonction de traitement de la socket de connexion du client.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 si aucune érreur, -1 sinon. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4c2bdfb1881d6cbe3151e09cd0f190e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">envoiMessage </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>service</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char *&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>taille</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction d'envoi d'une chaine de caractères en broadcast UDP. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">service</td><td>Port sur lequel envoyer le message UDP. </td></tr>
+    <tr><td class="paramname">message</td><td>Chaine de caractères à envoyer. </td></tr>
+    <tr><td class="paramname">taille</td><td>Taille du message à envoyer en octets.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 si aucune erreur, -1 sinon. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5eba91d560b6f246b83456d06591c25d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">envoiMessageUnicast </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>service</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>machine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char *&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>taille</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction d'envoi d'une chaine de caractères en unicast UDP. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">service</td><td>Port sur lequel envoyer le message UDP. </td></tr>
+    <tr><td class="paramname">machine</td><td>Nom d'hôte sur laquelle envoyer le message UDP. </td></tr>
+    <tr><td class="paramname">message</td><td>Chaine de caractères à envoyer. </td></tr>
+    <tr><td class="paramname">taille</td><td>Taille du message à envoyer en octets.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 si aucune erreur, -1 sinon. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad8fc82289fde095c6acbb4ae6625ef24"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int initialisationServeur </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>service</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction d'initialisation d'un serveur TCP. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">service</td><td>Port sur lequel doit écouter le serveur TCP.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Descripteur de fichier de la socket si aucune erreur, -1 sinon. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abc20844814d76a37dc29eebb37bafe0a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">serveurMessages </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>service</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction d'initialisation d'un serveur UDP. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">service</td><td>Port sur lequel doit écouter le serveur UDP. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des variables</h2>
+<a class="anchor" id="a9b966bb3f7321f54054df1ff7e6590d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int socket_udp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>fichier <a class="el" href="libcom_8c.html" title="Bibliothèque des fonctions réseaux. ">libcom.c</a> Ce fichier contient des fonctions concernant les sockets. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

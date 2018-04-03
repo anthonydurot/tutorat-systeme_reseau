@@ -20,8 +20,6 @@ extern int socket_udp;
 
 /**** Fonctions ****/
 
-/* TODO : Doc au format doxygene */
-
 /************************ TCP ************************/
 
 /* Cette foncton prend en paramètre le port sur lequel il faut écouter
@@ -33,7 +31,7 @@ int initialisationServeur(char *);
 /* Cette fonction effectue l'écoute sur la socket passée en premier argument
 et lors d'une connexion, exécute la fonction passée en second argument.
 Cette fonction passée en argument doit être une fonction qui prend une
-socket en unique paramètre. Lors d'une connexion de clien, la fonction
+socket en unique paramètre. Lors d'une connexion de client, la fonction
 boucleServeur lance donc cette fonction avec la socket de dialogue
 en paramètre. */
 
