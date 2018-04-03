@@ -122,7 +122,7 @@ int boucleServeur(int ecoute, void (*traitement)(int)) {
     }
 }
 
-void serveurMessages(char *service) {//, int (*traitement_udp)(unsigned char *, int)) {
+void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int)) {
 
     struct sockaddr_in adresseServeur;
     socklen_t tailleServeur = sizeof(adresseServeur);
@@ -150,13 +150,11 @@ void serveurMessages(char *service) {//, int (*traitement_udp)(unsigned char *, 
         char message[MAX_UDP_MESSAGE];
         nboctets = recvfrom(socket_udp, message, MAX_TAMPON-1, 0, (struct sockaddr*)&adresseClient, &tailleClient);
         message[nboctets] = '\0';
-        printf("Données recues : %s\n", message);
-        //envoiMessage("5000","coucou", sizeof("coucou"));
-        //envoiMessageUnicast("80", "plil.fr", "coucou-unicast", sizeof("coucou-unicast"));
-        //if(traitement_udp(message, nboctets) < 0) {
-        /* TODO : Fonction traitement du message */
-        //    break;
-        //}
+        //printf("Données recues : %s\n", message);
+        if(traitement_udp(message, nboctets)) {
+            perror("serveurMessages.traitement_udp");
+            exit(-1);            
+        }
     }
 }
 

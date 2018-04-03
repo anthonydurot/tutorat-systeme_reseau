@@ -14,6 +14,7 @@
 #include <libcom.h>
 #include <libthrd.h>
 #include "http.h"
+#include "capteurs.h"
 
 /** Constantes **/
 
@@ -130,6 +131,12 @@ void nouveauClient(int dialogue) {
 
 }
 
+void _serveurMessages(void *arg) {
+
+    serveurMessages("4000", traitement_udp);
+
+}
+
 /** Procedure principale **/
 
 int main(int argc, char **argv) {
@@ -143,6 +150,12 @@ int main(int argc, char **argv) {
     /* Initialisation du serveur */
     if((s = initialisationServeur(port_s)) < 0 ) {
         fprintf(stderr, "Initialisation du serveur impossible, êtes vous root ?\n");
+        exit(-1);
+    }
+    
+    /* Lancement du serveur de messages UDP */
+    if(lanceThread(_serveurMessages, NULL, 0)) {
+        perror("nouveauClient.lanceThread");
         exit(-1);
     }
 

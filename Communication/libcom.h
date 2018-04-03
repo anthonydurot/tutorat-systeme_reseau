@@ -50,7 +50,7 @@ garder de manière pérenne le socket de dialogue */
 /* Cette fonction prend en paramètre le service sur lequel lancer un serveur
 UDP et la fonction de traitement des messages recus */
 
-void serveurMessages(char * /*, int (*)(unsigned char *, int)*/);
+void serveurMessages(char *, int (*)(unsigned char *, int));
 
 /* Il s'agit de la fonction complémentaire, permettant d'envoyer un message
 UDP en diffusion totale. Le premier argument est le service UDP ciblé, le
