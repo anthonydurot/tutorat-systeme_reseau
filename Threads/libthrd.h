@@ -36,4 +36,8 @@ typedef struct thread_param {
 
 int lanceThread(void (*)(void *), void *, int);
 
+void P(pthread_mutex_t);
+
+void V(pthread_mutex_t);
+
 #endif

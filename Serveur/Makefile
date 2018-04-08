@@ -7,12 +7,18 @@ LIBS = -lpthread
 LOCAL_LIBS  = -L ../Communication -L ../Threads
 LOCAL_LIBS += -lcom -lthrd
 CFLAGS     += -I ../Communication -I ../Threads
+DFLAGS = -g -DDEBUG
+
+
+SRCS = serveur.c http.c capteurs.c
+OBJS = $(SRCS:.c=.o)
 
 #
 # Cible generale
 #
 
 all: serveur
+debug: serveurdebug
 
 #
 # La cible de nettoyage
@@ -26,9 +32,7 @@ clean:
 #
 
 serveur: $(OBJS)
-	$(CC) $(CFLAGS) -o serveur $(OBJS) $(LOCAL_LIBS) $(LIBS)
+	$(CC) $(CFLAGS) -o serveur $^ $(LOCAL_LIBS) $(LIBS)
 
-serveur.o: serveur.c serveur.h
-http.o: http.c http.h
-capteurs.o: capteurs.c capteurs.h
-
+%.o: %.c %.h
+	 $(CC) -c $(CFLAGS) -o $@ $<
