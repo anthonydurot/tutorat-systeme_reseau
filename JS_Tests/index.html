@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Graphiques</title>
+        <script src="Chart.min.js"></script>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+
+    <body>
+
+		<div class="w3-container w3-teal w3-padding-16">
+	
+			<form class="w3-container" style="width:50%" name="monFormulaire">
+				<h2>Choix du groupe</h2>
+				<select class="w3-select" name="myselect" id="myselecjt">
+					<option value=""></option>
+				</select>
+				<select class="w3-select" name="myselect2" id="myselecjt2">
+					<option value="accel">Accéléromètre</option>
+					<option value="temp">Température</option>
+				</select>
+				<button class="w3-button w3-black" type='button' onclick="afficher_graphique();">Afficher</button> 
+			</form>
+
+		</div>	
+		
+		<div class="chart-container" style="position: relative; height:10vh; width:78vw; padding: 30px">
+			<canvas id="line-chart"></canvas>
+		</div>
+		
+
+    </body>
+
+</html>
+
+<canvas id="line-chart" width="800" height="450"></canvas>
+
+<script>
+
+    function httpGet(url) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", url, false);
+	    xmlHttp.overrideMimeType("text/plain; charset=x-user-defined");
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+    }
+
+    function afficher_graphique() {
+        var choix = document.getElementById("myselecjt").value;
+        var choix2 = document.getElementById("myselecjt2").value;
+        console.log("Choix : "+choix+" / "+choix2);
+        
+        if(choix2 == "temp") {
+            var nom_fichier = "TID_"+choix;
+			var f_temp = httpGet(nom_fichier).split('\n');
+			f_temp.pop();
+			new Chart(document.getElementById("line-chart"), {
+				type: 'line',
+				data: {
+					labels: [1,2,3,4], //heure, date, numero ??
+					datasets: [
+						{ 
+							data: f_temp,
+							label: "Groupe "+choix,
+							borderColor: 'rgb(230, 126, 34)',
+							fill: false
+						}
+					]
+				},
+				options: {
+					title: {
+						display: true,
+						text: 'Température - Gr.'+choix
+					}
+				}
+			});
+			
+        }
+        else if(choix2 == "accel") {
+            var nom_fichier2 = "AID_"+choix;
+			var f_accel = httpGet(nom_fichier2).split('\n');
+			f_accel.pop();
+			console.log(f_accel);
+			var x = [], y = [], z = [];
+			for(var i = 0; i < f_accel.length; i++) {
+				x.push(f_accel[i].split(',')[0]);
+				y.push(f_accel[i].split(',')[1]);
+				z.push(f_accel[i].split(',')[2]);
+			}
+			new Chart(document.getElementById("line-chart"), {
+				type: 'line',
+				data: {
+					labels: [1,2,3,4], //heure, date, numero ??
+					datasets: [
+						{ 
+							data: x,
+							label: "Axe x",
+							fill: false,
+							borderColor: 'rgb(231, 76, 60)'
+						},
+						{ 
+							data: y,
+							label: "Axe y",
+							fill: false,
+							borderColor: 'rgb(39, 174, 96)'
+						},
+						{ 
+							data: z,
+							label: "Axe z",
+							fill: false,
+							borderColor: 'rgb(41, 128, 185)'
+						}						
+					]
+				},
+				options: {
+					title: {
+						display: true,
+						text: 'Accéléromètre - Gr.'+choix
+					}
+				}
+			});
+			
+        }
+
+
+    }
+    
+    var data = httpGet("list_ID").split('\n');
+    data.pop();
+    console.log(data);
+    document.monFormulaire.myselect.options.length = data.length;
+    for (var j = 0; j < data.length; j++) {
+          document.monFormulaire.myselect.options[j].value = data[j];
+          document.monFormulaire.myselect.options[j].text = data[j];
+    }
+
+</script>
+
+
