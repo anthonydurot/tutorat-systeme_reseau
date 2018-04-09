@@ -1,11 +1,9 @@
 #include <stdio.h>
-#include <pthread.h> //A virer
 #include <libthrd.h>
 #include "capteurs.h"
 #include <stdlib.h>
 #include <string.h>
-
-pthread_mutex_t sem; //A virer
+#include "serveur.h"
 
 int traitement_udp(unsigned char *message, int size) {
 
@@ -16,7 +14,9 @@ int traitement_udp(unsigned char *message, int size) {
         perror("traitement_udp");
         return 1;
     }
-    
+    P(MUTEX_THREAD);
+    nombre_thread_udp++;
+    V(MUTEX_THREAD);
     return 0;
 }
 
@@ -34,7 +34,9 @@ void traitement_message(void *arg) {
 
     sprintf(nom_fichier1, "data/%d_temp.txt", (int)id);
     sprintf(nom_fichier2, "data/%d_accel.txt", (int)id);
-    P(sem);
+    printf("0");
+    P(MUTEX_FICHIER);
+    printf("1");
     fp1 = fopen(nom_fichier1,"a");
     fp2 = fopen(nom_fichier2,"a");
     //TODO : Ajouter la date dans le fichier ?
@@ -42,8 +44,10 @@ void traitement_message(void *arg) {
     fprintf(fp2, "%d,%d,%d", x, y, z);
     fclose(fp1);
     fclose(fp2);
-    V(sem);
+    V(MUTEX_FICHIER);
     free(arguments->message);
-    //free(arguments); Cause un segfault
-    
+    P(MUTEX_THREAD);
+    nombre_thread_udp--;
+    V(MUTEX_THREAD);
+
 }

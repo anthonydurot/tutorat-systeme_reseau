@@ -13,14 +13,33 @@
 #include <errno.h>
 #include <libcom.h>
 #include <libthrd.h>
+#include <signal.h>
 #include "http.h"
 #include "capteurs.h"
+#include "serveur.h"
 
 /** Constantes **/
 
 /** Variables publiques **/
 
+int nombre_thread_tcp;
+int nombre_thread_udp;
 int http_port;
+struct sigaction action;
+
+void hand(int sig){
+
+    if(sig == SIGINT){
+        DEBUG_PRINT(("SIGINT\n"));
+        while(nombre_thread_tcp != 0){}
+        DEBUG_PRINT(("%d threads tcp\n", nombre_thread_tcp));
+        while(nombre_thread_udp != 1){}
+        DEBUG_PRINT(("%d threads udp\n", nombre_thread_udp));
+        //TODO Trouver un moyen de kill le serveurMessages, garder son tid ?
+        DEBUG_PRINT(("Threads terminés\n"));
+        exit(SIGINT);
+    }
+}
 
 /** Variables statiques **/
 
@@ -69,7 +88,9 @@ void gestionClient(void *s) {
     printf("------------------------------------------------------------\n");
     fclose(dialogue);
     free_http_info(&req);
-
+    P(MUTEX_THREAD);
+    nombre_thread_tcp--;
+    V(MUTEX_THREAD);
     return;
 
 }
@@ -123,16 +144,22 @@ int traiter_options(int argc, char **argv) {
 
 void nouveauClient(int dialogue) {
 
-    if(lanceThread(gestionClient, (void *)&dialogue, sizeof(int))) {
-            perror("nouveauClient.lanceThread");
-            exit(-1);
+    if(lanceThread(gestionClient, (void *)&dialogue, sizeof(int))){
+        perror("nouveauClient.lanceThread");
+        exit(-1);
     }
+    P(MUTEX_THREAD);
+    nombre_thread_tcp++;
+    V(MUTEX_THREAD);
 
 }
 
 void _serveurMessages(void *arg) {
 
     serveurMessages("4000", traitement_udp);
+    P(MUTEX_THREAD);
+    nombre_thread_tcp--;
+    V(MUTEX_THREAD);
 
 }
 
@@ -141,6 +168,10 @@ void _serveurMessages(void *arg) {
 int main(int argc, char **argv) {
 
     int s;
+    action.sa_handler = hand;
+    sigaction(SIGINT, &action, NULL);
+    nombre_thread_tcp = 0;
+    nombre_thread_udp = 0;
     /* Lecture des arguments de la commande */
     http_port = traiter_options(argc, argv);
     char port_s[6];
@@ -151,12 +182,15 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Initialisation du serveur impossible, êtes vous root ?\n");
         exit(-1);
     }
-    
+
     /* Lancement du serveur de messages UDP */
     if(lanceThread(_serveurMessages, NULL, 0)) {
         perror("nouveauClient.lanceThread");
         exit(-1);
     }
+    P(MUTEX_THREAD);
+    nombre_thread_udp++;
+    V(MUTEX_THREAD);
 
     /* Lancement de la boucle d'ecoute */
     if(boucleServeur(s, nouveauClient) <= 0) {

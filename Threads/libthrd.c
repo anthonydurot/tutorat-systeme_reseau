@@ -18,6 +18,7 @@
 #include "libthrd.h"
 
 //const int sem;
+pthread_mutex_t liste_mutex[2];
 
 /*** Prototype local ***/
 void *_lanceThread(void *arg);
@@ -80,11 +81,10 @@ void *_lanceThread(void *arg) {
 
 }
 
-/* TODO : P et V doivent prendre un int */
-void P(pthread_mutex_t sem) {
-    pthread_mutex_lock(&sem);
+void P(int sem) {
+    pthread_mutex_lock(&liste_mutex[sem]);
 }
 
-void V(pthread_mutex_t sem) {
-    pthread_mutex_unlock(&sem);
+void V(int sem) {
+    pthread_mutex_unlock(&liste_mutex[sem]);
 }

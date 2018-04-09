@@ -6,9 +6,18 @@
 
 /** Constantes **/
 
+#ifdef DEBUG
+# define DEBUG_PRINT(x) printf x
+#else
+# define DEBUG_PRINT(x) do {} while (0)
+#endif
+
 /** Structures **/
 
 /** Variables publiques  **/
+
+extern int nombre_thread_tcp;
+extern int nombre_thread_udp;
 
 /** Prototypes **/
 

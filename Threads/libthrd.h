@@ -14,6 +14,9 @@
 #ifndef LIBTHRD_H
 #define LIBTHRD_H
 
+#define MUTEX_FICHIER 0
+#define MUTEX_THREAD 1
+
 /**** Structures ****/
 
 /**
@@ -36,8 +39,8 @@ typedef struct thread_param {
 
 int lanceThread(void (*)(void *), void *, int);
 
-void P(pthread_mutex_t);
+void P(int);
 
-void V(pthread_mutex_t);
+void V(int);
 
 #endif
