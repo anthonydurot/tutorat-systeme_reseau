@@ -81,10 +81,10 @@ void *_lanceThread(void *arg) {
 }
 
 /* TODO : P et V doivent prendre un int */
-void P(pthread_mutex_t sem){
+void P(pthread_mutex_t sem) {
     pthread_mutex_lock(&sem);
 }
 
-void V(pthread_mutex_t sem){
+void V(pthread_mutex_t sem) {
     pthread_mutex_unlock(&sem);
 }
