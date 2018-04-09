@@ -38,7 +38,6 @@ void gestionClient(void *s) {
         errno = ENOENT;
         perror("gestionClient.traiter_requete");
         fclose(dialogue);
-
         return;
     }
 
@@ -80,14 +79,14 @@ int traiter_options(int argc, char **argv) {
     int ch, port_n;
 	int option_presente = 0;
 
-	for(int i = 0; i < argc; i++) {
-		if(*argv[i] == '-') { option_presente = 1; }
-	}
+    for(int i = 0; i < argc; i++) {
+        if(*argv[i] == '-') { option_presente = 1; }
+    }
 
-	if(!option_presente) {
+    if(!option_presente) {
         fprintf(stderr,"Usage du programme : %s [-p port] [--port port]\n", argv[0]);
         exit(-1);
-	}
+    }
 
     static struct option long_options[] =
     {

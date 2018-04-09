@@ -246,6 +246,7 @@ int ecriture_reponse(FILE *socket, http_info_t *req) {
     }
 
     close(toSend);
+
     return 0;
 
 }
@@ -511,7 +512,7 @@ int html_dir(FILE *socket, http_info_t *req) {
     }
 
     fclose(tmp);
-	closedir(rep);
+    closedir(rep);
 
 	return 0;
 
