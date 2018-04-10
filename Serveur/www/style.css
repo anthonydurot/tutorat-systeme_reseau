@@ -31,7 +31,8 @@ html,body {
   border:1px solid #CBCBCB;
   padding:15px;
   font-size:1.5em;
-  width:400px;
+  width:20%;
+  min-width:300px;
   text-transform:uppercase;
   background-color:#FFFFFF;
 
@@ -124,4 +125,3 @@ a {
 	padding:50px;
 
 }
-

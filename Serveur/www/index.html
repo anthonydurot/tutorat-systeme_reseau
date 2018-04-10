@@ -17,25 +17,47 @@
   <div id="sensor_container">
     <div class="sensor_box">
       <div class="sensor_id">X</div>
-      <div class="sensor_value" style="background-color:#55E6C1">{{ACCEL_X}}g</div>
+      <div id="accel_x" class="sensor_value" style="background-color:#55E6C1">g</div>
     </div>
     <div class="sensor_box">
       <div class="sensor_id">Y</div>
-      <div class="sensor_value" style="background-color:#58B19F">{{ACCEL_Y}}g</div>
+      <div id="accel_y" class="sensor_value" style="background-color:#58B19F">g</div>
     </div>
     <div class="sensor_box">
       <div class="sensor_id">Z</div>
-      <div class="sensor_value" style="background-color:#9AECDB">{{ACCEL_Z}}g</div>
+      <div id="accel_z" class="sensor_value" style="background-color:#9AECDB">g</div>
     </div>
     <div class="sensor_box">
       <div class="sensor_id">T°</div>
-      <div class="sensor_value" style="background-color:#FD7272">{{TEMP}}°C</div>
+      <div id="temp" class="sensor_value" style="background-color:#FD7272">°C</div>
     </div>
   </div>
 
   <div class="title">Valeurs temporelles</div>
-  <a href="stat.html"><div id="stat_button">Voir la page</div></a>
+  <a href="stats.html"><div id="stat_button">Voir la page</div></a>
 
   </body>
 
 </html>
+
+<script>
+
+    function httpGet(url) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", url, false);
+	    xmlHttp.overrideMimeType("text/plain; charset=x-user-defined");
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+    }
+
+    var accel = httpGet("data/AID_97").split('\n');
+    var temp = httpGet("data/TID_97").split('\n');
+    accel.pop();
+    temp.pop();
+
+    document.getElementById("temp").innerHTML = temp[temp.length-1]+"°C";
+    document.getElementById("accel_x").innerHTML = accel[accel.length-1].split(',')[0]+" g";
+    document.getElementById("accel_y").innerHTML = accel[accel.length-1].split(',')[1]+" g";
+    document.getElementById("accel_z").innerHTML = accel[accel.length-1].split(',')[2]+" g";
+
+</script>

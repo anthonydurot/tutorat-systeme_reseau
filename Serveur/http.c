@@ -36,7 +36,7 @@
  * \brief Fonction qui renvoie le format normalisé HTTP en fonction de l'extention passée en paramètre.
  *
  * \param format Extention de fichier à traiter.
- * 
+ *
  * \return Chaine de caractère allouée correspondant au format normalisé HTTP.
  */
 char *analyser_format(char *format) {
@@ -64,7 +64,7 @@ char *analyser_format(char *format) {
  * \fn char *date_actuelle(void)
  * \brief Fonction qui renvoie la date actuelle.
  *
- * 
+ *
  * \return Date actuelle.
  */
 char *date_actuelle(void) {
@@ -85,7 +85,7 @@ char *date_actuelle(void) {
  *
  * \param socket Socket TCP ouverte en tant que fichier contenant la requête HTTP.
  * \param req Structure dans laquelle les informations de la requête seront stockées.
- * 
+ *
  * \return 0 si aucune érreur.
  */
 int traiter_requete(FILE *socket, http_info_t *req) {
@@ -175,6 +175,8 @@ int traiter_requete(FILE *socket, http_info_t *req) {
     req->donnees = NULL;
     free(format);
 
+	// Lecture des en-tetes + gestion POST
+
     while(fgets(buffer, MAX_BUFFER, socket) != NULL) {
         if(strcmp(buffer, "\r\n") == 0) break;
         if((temp = strstr(buffer, "Content-Length:")) != NULL) {
@@ -203,7 +205,7 @@ int traiter_requete(FILE *socket, http_info_t *req) {
  *
  * \param socket Socket ouverte en fichier de la connexion TCP avec le client.
  * \param req Structure comportant les informations de la requête du client.
- * 
+ *
  * \return 0 si aucune érreur.
  */
 int reponse_header(FILE *socket, http_info_t *req) {
@@ -226,7 +228,7 @@ int reponse_header(FILE *socket, http_info_t *req) {
  *
  * \param socket Socket ouverte en fichier de la connexion TCP avec le client.
  * \param req Structure comportant les informations de la requête du client.
- * 
+ *
  * \return 0 si aucune érreur.
  */
 int ecriture_reponse(FILE *socket, http_info_t *req) {
@@ -257,7 +259,7 @@ int ecriture_reponse(FILE *socket, http_info_t *req) {
  * \brief Fonction qui libère l'espace mémoire alloué lors du traitement de la requête du client.
  *
  * \param r Structure requête à désalouer.
- * 
+ *
  * \return 0 si aucune érreur.
  */
 void free_http_info(http_info_t *r) {
@@ -279,7 +281,7 @@ void free_http_info(http_info_t *r) {
  *
  * \param socket Socket ouverte en fichier de la connexion TCP avec le client.
  * \param req Structure comportant les informations de la requête du client.
- * 
+ *
  * \return 0 si aucune érreur.
  */
 int envoyer_localisation(FILE *socket, http_info_t *req) {
@@ -301,7 +303,7 @@ int envoyer_localisation(FILE *socket, http_info_t *req) {
  *
  * \param socket Socket ouverte en fichier de la connexion TCP avec le client.
  * \param req Structure comportant les informations de la requête du client.
- * 
+ *
  * \return 0 si aucune erreur.
  */
 int envoyer_interdit(FILE *socket, http_info_t *req) {
@@ -424,12 +426,12 @@ int html_dir(FILE *socket, http_info_t *req) {
     sprintf(path, "%s", req->cible);
     rep = opendir(req->cible);
     temp = strtok(path, "/");
-    
+
     while(temp != NULL) {
         tab[cpt++] = temp;
         temp = strtok(NULL, "/");
     }
-    
+
     *parent = 0;
     *courant = 0;
 

@@ -73,9 +73,11 @@ int lanceThread(void (*fonction)(void *), void *arg, int taille) {
 void *_lanceThread(void *arg) {
 
     thread_param_t *arguments = (thread_param_t *)arg;
+    DEBUG_PRINT(("[+] New thread\n"));
     arguments->fonction(arguments->arg);
     free(arguments->arg);
     free(arguments);
+    DEBUG_PRINT(("[-] End of thread\n"));
 
     return NULL;
 

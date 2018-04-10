@@ -26,14 +26,15 @@ int nombre_thread_tcp;
 int nombre_thread_udp;
 int http_port;
 struct sigaction action;
+list_ID_t list_ID;
 
-void hand(int sig){
+void hand(int sig) {
 
-    if(sig == SIGINT){
+    if(sig == SIGINT) {
         DEBUG_PRINT(("SIGINT\n"));
-        while(nombre_thread_tcp != 0){}
+        while(nombre_thread_tcp != 0) {}
         DEBUG_PRINT(("%d threads tcp\n", nombre_thread_tcp));
-        while(nombre_thread_udp != 1){}
+        while(nombre_thread_udp != 1) {}
         DEBUG_PRINT(("%d threads udp\n", nombre_thread_udp));
         //TODO Trouver un moyen de kill le serveurMessages, garder son tid ?
         DEBUG_PRINT(("Threads terminés\n"));
@@ -57,6 +58,9 @@ void gestionClient(void *s) {
         errno = ENOENT;
         perror("gestionClient.traiter_requete");
         fclose(dialogue);
+        P(MUTEX_THREAD);
+        nombre_thread_tcp--;
+        V(MUTEX_THREAD);
         return;
     }
 
@@ -91,6 +95,7 @@ void gestionClient(void *s) {
     P(MUTEX_THREAD);
     nombre_thread_tcp--;
     V(MUTEX_THREAD);
+
     return;
 
 }
@@ -144,7 +149,7 @@ int traiter_options(int argc, char **argv) {
 
 void nouveauClient(int dialogue) {
 
-    if(lanceThread(gestionClient, (void *)&dialogue, sizeof(int))){
+    if(lanceThread(gestionClient, (void *)&dialogue, sizeof(int))) {
         perror("nouveauClient.lanceThread");
         exit(-1);
     }
@@ -156,10 +161,24 @@ void nouveauClient(int dialogue) {
 
 void _serveurMessages(void *arg) {
 
+    (void)arg;
     serveurMessages("4000", traitement_udp);
     P(MUTEX_THREAD);
     nombre_thread_tcp--;
     V(MUTEX_THREAD);
+
+}
+
+void maj_list() {
+
+    FILE *fp = fopen("www/data/list_ID", "a+");
+    char buffer[32];
+    int id;
+    while(fgets(buffer, 32, fp) != NULL) {
+        sscanf(buffer, "%d", &id);
+        list_ID.list[++list_ID.last] = id;
+    }
+    fclose(fp);
 
 }
 
@@ -172,6 +191,8 @@ int main(int argc, char **argv) {
     sigaction(SIGINT, &action, NULL);
     nombre_thread_tcp = 0;
     nombre_thread_udp = 0;
+    list_ID.last = -1;
+    maj_list();
     /* Lecture des arguments de la commande */
     http_port = traiter_options(argc, argv);
     char port_s[6];

@@ -14,10 +14,16 @@
 
 /** Structures **/
 
+typedef struct list_ID {
+    int list[MAX_ID];
+    int last;
+} list_ID_t;
+
 /** Variables publiques  **/
 
 extern int nombre_thread_tcp;
 extern int nombre_thread_udp;
+extern list_ID_t list_ID;
 
 /** Prototypes **/
 

@@ -15,7 +15,13 @@
 #define LIBTHRD_H
 
 #define MUTEX_FICHIER 0
-#define MUTEX_THREAD 1
+#define MUTEX_THREAD  1
+
+#ifdef DEBUG
+# define DEBUG_PRINT(x) printf x
+#else
+# define DEBUG_PRINT(x) do {} while (0)
+#endif
 
 /**** Structures ****/
 
@@ -29,10 +35,8 @@
  */
 
 typedef struct thread_param {
-
     void *arg;
     void (*fonction)(void *);
-
 } thread_param_t;
 
 /**** Prototypes ****/

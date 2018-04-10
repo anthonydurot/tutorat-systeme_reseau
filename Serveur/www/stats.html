@@ -9,32 +9,29 @@
 
     <body>
 
-		<div class="w3-container w3-teal w3-padding-16">
-	
+		<div class="w3-container w3-padding-32" style="background-color:#6D214F">
+
 			<form class="w3-container" style="width:50%" name="monFormulaire">
-				<h2>Choix du groupe</h2>
-				<select class="w3-select" name="myselect" id="myselecjt">
+				<h2 style="color:#FFFFFF">Choix du groupe</h2>
+				<select class="w3-select" name="myselect" id="myselecjt" onchange="afficher_graphique();">
 					<option value=""></option>
 				</select>
-				<select class="w3-select" name="myselect2" id="myselecjt2">
+				<select class="w3-select" name="myselect2" id="myselecjt2" onchange="afficher_graphique();">
 					<option value="accel">Accéléromètre</option>
 					<option value="temp">Température</option>
 				</select>
-				<button class="w3-button w3-black" type='button' onclick="afficher_graphique();">Afficher</button> 
 			</form>
 
-		</div>	
-		
-		<div class="chart-container" style="position: relative; height:10vh; width:78vw; padding: 30px">
+		</div>
+
+		<div class="chart-container" style="position: relative; height:10vh; width:60vw; padding: 30px">
 			<canvas id="line-chart"></canvas>
 		</div>
-		
+
 
     </body>
 
 </html>
-
-<canvas id="line-chart" width="800" height="450"></canvas>
 
 <script>
 
@@ -50,17 +47,17 @@
         var choix = document.getElementById("myselecjt").value;
         var choix2 = document.getElementById("myselecjt2").value;
         console.log("Choix : "+choix+" / "+choix2);
-        
+
         if(choix2 == "temp") {
             var nom_fichier = "TID_"+choix;
-			var f_temp = httpGet(nom_fichier).split('\n');
+			var f_temp = httpGet("data/"+nom_fichier).split('\n');
 			f_temp.pop();
 			new Chart(document.getElementById("line-chart"), {
 				type: 'line',
 				data: {
 					labels: [1,2,3,4], //heure, date, numero ??
 					datasets: [
-						{ 
+						{
 							data: f_temp,
 							label: "Groupe "+choix,
 							borderColor: 'rgb(230, 126, 34)',
@@ -75,13 +72,12 @@
 					}
 				}
 			});
-			
+
         }
         else if(choix2 == "accel") {
             var nom_fichier2 = "AID_"+choix;
-			var f_accel = httpGet(nom_fichier2).split('\n');
+			var f_accel = httpGet("data/"+nom_fichier2).split('\n');
 			f_accel.pop();
-			console.log(f_accel);
 			var x = [], y = [], z = [];
 			for(var i = 0; i < f_accel.length; i++) {
 				x.push(f_accel[i].split(',')[0]);
@@ -93,24 +89,24 @@
 				data: {
 					labels: [1,2,3,4], //heure, date, numero ??
 					datasets: [
-						{ 
+						{
 							data: x,
 							label: "Axe x",
 							fill: false,
 							borderColor: 'rgb(231, 76, 60)'
 						},
-						{ 
+						{
 							data: y,
 							label: "Axe y",
 							fill: false,
 							borderColor: 'rgb(39, 174, 96)'
 						},
-						{ 
+						{
 							data: z,
 							label: "Axe z",
 							fill: false,
 							borderColor: 'rgb(41, 128, 185)'
-						}						
+						}
 					]
 				},
 				options: {
@@ -120,21 +116,34 @@
 					}
 				}
 			});
-			
+
         }
 
 
     }
-    
-    var data = httpGet("list_ID").split('\n');
+
+    var data = httpGet("data/list_ID").split('\n');
     data.pop();
-    console.log(data);
     document.monFormulaire.myselect.options.length = data.length;
     for (var j = 0; j < data.length; j++) {
           document.monFormulaire.myselect.options[j].value = data[j];
           document.monFormulaire.myselect.options[j].text = data[j];
     }
 
+    afficher_graphique();
+
+
+
+    window.setInterval(function(){
+        var data2 = httpGet("data/list_ID").split('\n');
+        data2.pop();
+        if(data.join() != data2.join()) {
+            console.log(data);
+            console.log(data2);
+            location.reload();
+        }
+    }, 2000);
+
+
+
 </script>
-
-
