@@ -102,11 +102,17 @@ int traiter_requete(FILE *socket, http_info_t *req) {
     int content_length = 0;
     int code;
     struct stat fstat;
+	req->donnees = NULL;
 
     if(fgets(buffer, MAX_BUFFER, socket) == NULL) return 1;
     if(sscanf(buffer, "%s %s %s", methode, cible, version) != 3) return 1;
     printf("%s", buffer);
     if(strcmp(cible, "/") == 0) sprintf(cible, "/%s", DEFAULT_PAGE);
+	if((temp = strchr(cible, '?')) != NULL) {
+		*temp = '\0';
+		temp++;
+		req->donnees = strdup(temp);
+	}
 
     // On vérifie la présence du fichier
 
@@ -172,7 +178,6 @@ int traiter_requete(FILE *socket, http_info_t *req) {
     req->serveur = strdup(SERVER_NAME);
     req->contenu_type = analyser_format(format);
     req->date = date_actuelle();
-    req->donnees = NULL;
     free(format);
 
 	// Lecture des en-tetes + gestion POST
@@ -192,8 +197,8 @@ int traiter_requete(FILE *socket, http_info_t *req) {
         for(int i = 0; i < content_length; i++) {
             donnees[i] = fgetc(socket);;
         }
-    donnees[content_length] = '\0';
-    req->donnees = strdup(donnees);
+    	donnees[content_length] = '\0';
+    	req->donnees = strdup(donnees);
     }
 
     return 0;
@@ -233,21 +238,33 @@ int reponse_header(FILE *socket, http_info_t *req) {
  */
 int ecriture_reponse(FILE *socket, http_info_t *req) {
 
-    int toSend = open(req->cible, O_RDONLY);
     int bytes;
     char buffer[MAX_BUFFER];
     int s = fileno(socket);
     struct stat fstat;
     stat(req->cible, &fstat);
     req->contenu_taille = fstat.st_size;
+	int toSend = open(req->cible, O_RDONLY);
 
-    reponse_header(socket, req);
+	if(req->donnees != NULL) {
+		if(!strcmp(req->donnees,"getLast")) {
+			FILE *fv = fopen(req->cible, "r");
+			while(fgets(buffer, MAX_BUFFER, fv));
+			req->contenu_taille = (int)strlen(buffer);
+			reponse_header(socket, req);
+			fprintf(socket,"%s",buffer);
+			fflush(socket);
+			fclose(fv);
+			return 0;
+		}
+	}
 
+	reponse_header(socket, req);
     while((bytes = read(toSend, buffer, MAX_BUFFER)) > 0) {
         write(s, buffer, bytes);
     }
-
-    close(toSend);
+	fprintf(socket,"antoine\n");
+	close(toSend);
 
     return 0;
 

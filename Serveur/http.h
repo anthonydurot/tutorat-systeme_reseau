@@ -20,7 +20,7 @@ extern int http_port;
 
 #define SERVER_NAME     "Choctaw HTTP Server"
 #define MAX_BUFFER      1024
-#define DEFAULT_PAGE 	"index.html"
+#define DEFAULT_PAGE 	"valeurs.html"
 #define WEB_DIR         "./www"
 #define NOT_FOUND_PAGE  "404.html"
 #define IS_FILE         0

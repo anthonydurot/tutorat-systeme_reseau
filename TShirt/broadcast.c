@@ -202,7 +202,7 @@ void recevoir_UDP(char *rx_buffer) {
         }
         else {
             rx_buffer[cpt] = c;
-        }   
+        }
         cpt++;
     }
     sei();
@@ -226,47 +226,47 @@ void traitement_UDP(char *rx_buffer, TrameIP *trame) {
     (trame->data).port_destination = swap_uint16((trame->data).port_destination);
     (trame->data).longueur = swap_uint16((trame->data).longueur);
     (trame->data).checksum = swap_uint16((trame->data).checksum);
-    
+
     if((trame->data).data.RX.instruction == 2) {
         ID_tshirt = (trame->data).data.RX.valeur;
     }
-    
+
 }
 
 ISR(USART_RX_vect) {
 
     rx_complete = 0;
-    
+
 }
 
 int main(void) {
 
     init_serial(9600);
     sei();
-    uint8_t v_capteurs[4];
+    uint8_t v_capteurs[4] = {64,65,66,67};
     uint8_t i;
     char rx_buffer[1024];
     TrameIP trame;
     TrameIP trame_rx;
 
     while(1) {
-   
+/*
         for(i = 0; i <= 3; i++) {
             ad_init(i);
             v_capteurs[i] = ad_sample();
         }
-
+*/
         cli();
-        forger_trame(&trame, v_capteurs);
+        forger_trameIP(&trame, v_capteurs);
         envoyer_trame(&trame);
         sei();
-    
+
         if(!rx_complete) {
             recevoir_UDP(rx_buffer);
             traitement_UDP(rx_buffer, &trame_rx);
         }
     }
-    
+
     return 0;
 
 }
