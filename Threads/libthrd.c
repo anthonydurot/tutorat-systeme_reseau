@@ -17,8 +17,7 @@
 #include <string.h>
 #include "libthrd.h"
 
-//const int sem;
-pthread_mutex_t liste_mutex[2];
+pthread_mutex_t liste_mutex[MAX_MUTEX]; //Valeur à changer par la suite !
 
 /*** Prototype local ***/
 void *_lanceThread(void *arg);
@@ -78,15 +77,22 @@ void *_lanceThread(void *arg) {
     free(arguments->arg);
     free(arguments);
     DEBUG_PRINT(("[-] End of thread\n"));
+    DEBUG_PRINT(("------------------------------------------------------------\n"));
 
     return NULL;
 
 }
 
 void P(int sem) {
+
+    DEBUG_PRINT(("[+] Mutex %d\n",sem));
     pthread_mutex_lock(&liste_mutex[sem]);
+
 }
 
 void V(int sem) {
+
+    DEBUG_PRINT(("[-] Mutex %d\n",sem));
     pthread_mutex_unlock(&liste_mutex[sem]);
+
 }

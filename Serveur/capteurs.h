@@ -1,5 +1,4 @@
 #define MON_ID 3
-#define MAX_ID 32
 
 typedef struct param_udp {
     unsigned char *message;

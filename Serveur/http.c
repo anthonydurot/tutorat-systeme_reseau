@@ -20,6 +20,7 @@
 #include <stdint.h>
 #include <dirent.h>
 #include <libcom.h>
+#include <libthrd.h>
 #include "http.h"
 
 /**** Constantes ****/
@@ -41,11 +42,6 @@
  */
 char *analyser_format(char *format) {
 
-	/*
-	/ On pourrait également analyser le fichier ciblé s'il existe pour savoir si c'est du texte ou du binaire. Une facon simple est de répéré la présence de \n et la non présence de \n
-	/ Fichier de config avec les MIME pris en charge ?
-	*/
-
 	if(!strcmp(format,"none")) return strdup("application/octet-stream"); // Type par défaut
 	if(!strcmp(format,"dir")) return strdup("text/html"); // Une page HTML listant les fichiers sera retournée
 	if(!strcmp(format,"txt")) return strdup("text/plain");
@@ -58,6 +54,7 @@ char *analyser_format(char *format) {
 	if(!strcmp(format,"pdf")) return strdup("application/pdf");
 
 	return strdup("application/octet-stream");
+
 }
 
 /**
@@ -106,7 +103,7 @@ int traiter_requete(FILE *socket, http_info_t *req) {
 
     if(fgets(buffer, MAX_BUFFER, socket) == NULL) return 1;
     if(sscanf(buffer, "%s %s %s", methode, cible, version) != 3) return 1;
-    printf("%s", buffer);
+    DEBUG_PRINT(("%s", buffer));
     if(strcmp(cible, "/") == 0) sprintf(cible, "/%s", DEFAULT_PAGE);
 	if((temp = strchr(cible, '?')) != NULL) {
 		*temp = '\0';
@@ -187,11 +184,11 @@ int traiter_requete(FILE *socket, http_info_t *req) {
         if((temp = strstr(buffer, "Content-Length:")) != NULL) {
             content_length = atoi(temp+16);
         }
-        printf("%s", buffer);
+        DEBUG_PRINT(("%s", buffer));
         fflush(stdout);
     }
 
-    printf("######### Taille du contenu : %d\n", content_length);
+    DEBUG_PRINT(("######### Taille du contenu : %d\n", content_length));
 
     if(content_length > 0) {
         for(int i = 0; i < content_length; i++) {
@@ -238,33 +235,48 @@ int reponse_header(FILE *socket, http_info_t *req) {
  */
 int ecriture_reponse(FILE *socket, http_info_t *req) {
 
-    int bytes;
+    int bytes, id = 0;
     char buffer[MAX_BUFFER];
     int s = fileno(socket);
     struct stat fstat;
     stat(req->cible, &fstat);
     req->contenu_taille = fstat.st_size;
-	int toSend = open(req->cible, O_RDONLY);
+
+	if(strstr(req->cible,"/data/") != NULL) {
+		char *ids = strrchr(req->cible, '_');
+		ids++;
+		if(!strcmp(ids,"ID")) {
+			id = MAX_MUTEX-1;
+		}
+		else {
+			id = atoi(ids);
+		}
+	}
 
 	if(req->donnees != NULL) {
 		if(!strcmp(req->donnees,"getLast")) {
+			P(id);
 			FILE *fv = fopen(req->cible, "r");
 			while(fgets(buffer, MAX_BUFFER, fv));
+			fclose(fv);
+			V(id);
 			req->contenu_taille = (int)strlen(buffer);
 			reponse_header(socket, req);
 			fprintf(socket,"%s",buffer);
 			fflush(socket);
-			fclose(fv);
 			return 0;
 		}
 	}
 
 	reponse_header(socket, req);
+
+	if(id) {P(id);}
+	int toSend = open(req->cible, O_RDONLY);
     while((bytes = read(toSend, buffer, MAX_BUFFER)) > 0) {
         write(s, buffer, bytes);
     }
-	fprintf(socket,"antoine\n");
 	close(toSend);
+	if(id) {V(id);}
 
     return 0;
 

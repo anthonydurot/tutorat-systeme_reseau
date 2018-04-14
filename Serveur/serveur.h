@@ -6,6 +6,8 @@
 
 /** Constantes **/
 
+#define MAX_ID 16
+
 #ifdef DEBUG
 # define DEBUG_PRINT(x) printf x
 #else

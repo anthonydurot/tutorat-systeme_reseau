@@ -14,8 +14,8 @@
 #ifndef LIBTHRD_H
 #define LIBTHRD_H
 
-#define MUTEX_FICHIER 0
-#define MUTEX_THREAD  1
+#define MAX_MUTEX     128
+#define MUTEX_THREAD  0
 
 #ifdef DEBUG
 # define DEBUG_PRINT(x) printf x
@@ -42,9 +42,7 @@ typedef struct thread_param {
 /**** Prototypes ****/
 
 int lanceThread(void (*)(void *), void *, int);
-
 void P(int);
-
 void V(int);
 
 #endif

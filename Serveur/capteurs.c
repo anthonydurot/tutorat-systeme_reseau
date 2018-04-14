@@ -55,7 +55,7 @@ void traitement_message(void *arg) {
 
     sprintf(nom_fichier1, "www/data/TID_%d", (int)id);
     sprintf(nom_fichier2, "www/data/AID_%d", (int)id);
-    P(MUTEX_FICHIER);
+    P((int)id);
     fp1 = fopen(nom_fichier1, "a");
     fp2 = fopen(nom_fichier2, "a");
     if(ajouter_id_list(id)) {
@@ -68,7 +68,7 @@ void traitement_message(void *arg) {
     fprintf(fp2, "%d,%d,%d\n", (int)x, (int)y, (int)z);
     fclose(fp1);
     fclose(fp2);
-    V(MUTEX_FICHIER);
+    V((int)id);
     free(arguments->message);
     P(MUTEX_THREAD);
     nombre_thread_udp--;

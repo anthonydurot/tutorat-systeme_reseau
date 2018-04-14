@@ -64,8 +64,8 @@ void gestionClient(void *s) {
         return;
     }
 
-    printf("######### Code : %d\n", req.code);
-    if(req.donnees) printf("######### Donnees : %s\n", req.donnees);
+    DEBUG_PRINT(("######### Code : %d\n", req.code));
+    if(req.donnees) DEBUG_PRINT(("######### Donnees : %s\n", req.donnees));
 
     if(req.code == FORBIDDEN) {
         envoyer_interdit(dialogue, &req);
@@ -89,7 +89,6 @@ void gestionClient(void *s) {
         }
     }
 
-    printf("------------------------------------------------------------\n");
     fclose(dialogue);
     free_http_info(&req);
     P(MUTEX_THREAD);
