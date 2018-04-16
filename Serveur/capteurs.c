@@ -19,9 +19,10 @@
 int traitement_udp(unsigned char *message, int size) {
 
     param_udp_t *arguments = malloc(sizeof(param_udp_t));
-    arguments->message = (unsigned char *)strdup((const char *)message);
+    arguments->message = (unsigned char *)malloc(size);
+    memcpy(arguments->message, message, size);
     arguments->size = size;
-    if(lanceThread(traitement_message, (void *)arguments, sizeof(arguments))) {
+    if(lanceThread(traitement_message, (void *)arguments, sizeof(param_udp_t))) {
         perror("traitement_udp");
         return 1;
     }
