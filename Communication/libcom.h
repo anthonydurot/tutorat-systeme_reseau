@@ -20,6 +20,10 @@ extern int socket_udp;
 
 /**** Fonctions ****/
 
+/************************ AUTRES ************************/
+
+char *ip_machine(void);
+
 /************************ TCP ************************/
 
 /* Cette foncton prend en paramètre le port sur lequel il faut écouter
@@ -36,12 +40,6 @@ boucleServeur lance donc cette fonction avec la socket de dialogue
 en paramètre. */
 
 int boucleServeur(int, void (*)(int));
-
-/* Cette fonction est un wrapper faisant un appel à la fonction de lancement
-des threads. Elle a également pour rôle d'allouer de la mémoire pour
-garder de manière pérenne le socket de dialogue */
-
-//void TCP_connexion(int);
 
 /************************ UDP ************************/
 

@@ -11,7 +11,6 @@
  */
 
 
-
 /** fichier libcom.c **/
 
 /*****************************************/
@@ -52,8 +51,12 @@ int socket_udp;
 
 /**** Fonctions de gestion des sockets ****/
 
-// Autres
-
+/**
+ * \fn char *ip_machine(void)
+ * \brief Fonction qui retourne l'IP sur laquelle le serveur est lancée.
+ *
+ * \return char*
+ */
 char *ip_machine(void) { //TODO : A modifier, déplacer ?
 
     char hostname[256];
@@ -156,15 +159,16 @@ int boucleServeur(int ecoute, void (*traitement)(int)) {
     
 }
 
-void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int)) {
-
 /**
  * \fn serveurMessages(char *service)
- * \brief Fonction d'initialisation d'un serveur UDP.
+ * \brief Fonction créant un serveur UDP.
  *
  * \param service Port sur lequel doit écouter le serveur UDP.
+ * \param traitement_udp Fonction qui va traiter les requêtes UDP entrantes.
  * 
  */
+void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int)) {
+
     struct sockaddr_in adresseServeur;
     socklen_t tailleServeur = sizeof(adresseServeur);
     socket_udp = socket(AF_INET, SOCK_DGRAM, 0);
@@ -191,7 +195,6 @@ void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int))
         char message[MAX_UDP_MESSAGE];
         nboctets = recvfrom(socket_udp, message, MAX_TAMPON-1, 0, (struct sockaddr*)&adresseClient, &tailleClient);
         message[nboctets] = '\0';
-        //printf("Données recues : %s\n", message);
         if(traitement_udp((unsigned char*)message, nboctets)) {
             perror("serveurMessages.traitement_udp");
             exit(-1);            

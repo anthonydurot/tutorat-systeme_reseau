@@ -34,7 +34,7 @@
 
 /**
  * \fn char *analyser_format(char *format)
- * \brief Fonction qui renvoie le format normalisé HTTP en fonction de l'extention passée en paramètre.
+ * \brief Fonction qui renvoie le format normalisé HTTP (MIME) en fonction de l'extention passée en paramètre.
  *
  * \param format Extention de fichier à traiter.
  *
@@ -83,7 +83,7 @@ char *date_actuelle(void) {
  * \param socket Socket TCP ouverte en tant que fichier contenant la requête HTTP.
  * \param req Structure dans laquelle les informations de la requête seront stockées.
  *
- * \return 0 si aucune érreur.
+ * \return 0 si aucune erreur.
  */
 int traiter_requete(FILE *socket, http_info_t *req) {
 
@@ -306,7 +306,7 @@ void free_http_info(http_info_t *r) {
 
 /**
  * \fn envoyer_localisation(FILE *socket, http_info_t *req)
- * \brief Fonction qui envoie la localisation au client.
+ * \brief Fonction qui envoie la localisation de la page demandée au client (redirection).
  *
  * \param socket Socket ouverte en fichier de la connexion TCP avec le client.
  * \param req Structure comportant les informations de la requête du client.
@@ -378,6 +378,15 @@ int envoyer_interdit(FILE *socket, http_info_t *req) {
 
 // Fonctions pour les répertoires
 
+/**
+ * \fn int in_the_list(char *format, const char *list[])
+ * \brief Fonction vérifiant la présence ou non d'une chaîne de caractères dans une liste.
+ *
+ * \param format Chaine de caractères à chercher.
+ * \param list Liste dans laquelle chercher.
+ *
+ * \return 0 si aucune érreur.
+ */
 int in_the_list(char *format, const char *list[]) {
 
 	char c = *list[0];
@@ -392,6 +401,16 @@ int in_the_list(char *format, const char *list[]) {
 
 }
 
+/**
+ * \fn int in_the_list(char *format, const char *list[])
+ * \brief Fonction vérifiant la présence ou non d'une chaîne de caractères dans une liste.
+ *
+ * \param buf Nom du fichier/dossier.
+ * \param icon Emplacement de l'icone correspondant. 
+ * \param type 0 pour fichier, 1 pour dossier.
+ *
+ * \return void
+ */
 void icon_format(char *buf, char *icon, int type) {
 
 	char *format;
@@ -418,6 +437,15 @@ void icon_format(char *buf, char *icon, int type) {
 	}
 }
 
+/**
+ * \fn void readable_fs(double size, char *buf)
+ * \brief Fonction qui transforme une taille en octet en un format lisible.
+ *
+ * \param double Nombre d'octets.
+ * \param buf Chaine de caractères de sortie.
+ *
+ * \return void
+ */
 void readable_fs(double size, char *buf) {
 
     int i = 0;
@@ -430,6 +458,15 @@ void readable_fs(double size, char *buf) {
 
 }
 
+/**
+ * \fn html_dir(FILE *socket, http_info_t *req)
+ * \brief Fonction qui envoie une page HTML affichant la liste des fichiers/dossiers dans un dossier.
+ *
+ * \param socket Socket ouverte en fichier de la connexion TCP avec le client.
+ * \param req Structure comportant les informations de la requête du client.
+ *
+ * \return 0 si aucune erreur.
+ */
 int html_dir(FILE *socket, http_info_t *req) {
 
     struct dirent *lecture;

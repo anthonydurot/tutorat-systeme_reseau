@@ -20,14 +20,25 @@
 
 /** Constantes **/
 
+/** Variables globales **/
+
+int http_port;
+struct sigaction action;
+
 /** Variables publiques **/
 
 int nombre_thread_tcp;
 int nombre_thread_udp;
-int http_port;
-struct sigaction action;
 list_ID_t list_ID;
 
+/**
+ * \fn void hand(int sig)
+ * \brief Fonction permettant de traiter les signaux SIGINT
+ *
+ * \param sig Type du signal.
+ *
+ * \return void
+ */
 void hand(int sig) {
 
     if(sig == SIGINT) {
@@ -40,12 +51,19 @@ void hand(int sig) {
         DEBUG_PRINT(("Threads terminés\n"));
         exit(SIGINT);
     }
+    
 }
-
-/** Variables statiques **/
 
 /** Fonctions propres au serveur **/
 
+/**
+ * \fn void gestionClient(void *s)
+ * \brief Fonction passé en paramètre de lanceThread() pour traiter les paquets TCP entrant
+ *
+ * \param s Pointeur générique transportant une socket.
+ *
+ * \return void
+ */
 void gestionClient(void *s) {
 
     int socket = *((int *)s);
@@ -99,6 +117,15 @@ void gestionClient(void *s) {
 
 }
 
+/**
+ * \fn traiter_options(int argc, char **argv)
+ * \brief Fonction qui traite les options passées au programme.
+ *
+ * \param argc Nombre d'arguments (+1) passée au programme.
+ * \param argv Liste comprenant le nom du programme et les arguments passés.
+ *
+ * \return int Le numéro du port sur lequel lancer le serveur TCP.
+ */
 int traiter_options(int argc, char **argv) {
 
     int ch, port_n;
@@ -146,6 +173,14 @@ int traiter_options(int argc, char **argv) {
 
 }
 
+/**
+ * \fn nouveauClient(int dialogue)
+ * \brief Fonction passée en paramètre de boucleServeur() qui lance un thread pour chaque client.
+ *
+ * \param dialogue Socket de dialogue du client.
+ *
+ * \return void
+ */
 void nouveauClient(int dialogue) {
 
     if(lanceThread(gestionClient, (void *)&dialogue, sizeof(int))) {
@@ -158,17 +193,31 @@ void nouveauClient(int dialogue) {
 
 }
 
+/**
+ * \fn _serveurMessages(void *arg)
+ * \brief Fonction wrapper passée en paramètre de lanceThread() qui va exécuter le serveur UDP
+ *
+ * \param arg Pointeur générique ne transportant rien ici.
+ *
+ * \return void
+ */
 void _serveurMessages(void *arg) {
 
     (void)arg;
-    serveurMessages("4000", traitement_udp);
+    serveurMessages(UDP_ECOUTE, traitement_udp);
     P(MUTEX_THREAD);
-    nombre_thread_tcp--;
+    nombre_thread_udp--;
     V(MUTEX_THREAD);
 
 }
 
-void maj_list() {
+/**
+ * \fn void maj_list(void)
+ * \brief Fonction qui met à jour au démarrage du programme la liste globale des IDs contenus dans le fichier de sauvegarde
+ *
+ * \return void
+ */
+void maj_list(void) {
 
     FILE *fp = fopen("www/data/list_ID", "a+");
     char buffer[32];

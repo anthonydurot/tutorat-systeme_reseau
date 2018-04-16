@@ -6,6 +6,15 @@
 #include "capteurs.h"
 #include "serveur.h"
 
+/**
+ * \fn int traitement_udp(unsigned char *message, int size)
+ * \brief Fonction passée en paramètre de serveurMessages() pour traiter les paquets UDP entrant.
+ *
+ * \param message Donnée UDP.
+ * \param size Taille de la donnée UDP.
+ *
+ * \return 0 si aucune erreur.
+ */
 int traitement_udp(unsigned char *message, int size) {
 
     param_udp_t *arguments = malloc(sizeof(param_udp_t));
@@ -23,6 +32,14 @@ int traitement_udp(unsigned char *message, int size) {
 
 }
 
+/**
+ * \fn int ajouter_id_list(int id)
+ * \brief Fonction qui ajoute un groupe (ID) à liste contigue list_ID globale.
+ *
+ * \param id ID à ajouter à la liste.
+ *
+ * \return 0 si aucune erreur, 1 si liste pleine.
+ */
 int ajouter_id_list(int id) {
 
     int i;
@@ -41,6 +58,14 @@ int ajouter_id_list(int id) {
 
 }
 
+/**
+ * \fn void traitement_message(void *arg)
+ * \brief Fonction passée en paramètre de lanceThread() pour traiter la donnée UDP.
+ *
+ * \param arg Pointeur générique transportant une donnée de type param_udp_t.
+ *
+ * \return void
+ */
 void traitement_message(void *arg) {
 
     param_udp_t *arguments = (param_udp_t *)arg;
@@ -50,9 +75,6 @@ void traitement_message(void *arg) {
     sscanf((char *)arguments->message, "%c%c%c%c%c", &id, &x, &y, &z, &temp);
     DEBUG_PRINT(("ID : %d\nx : %d\ny : %d\nz : %d\nTemp : %d\n", (int)id, (int)x, (int)y, (int)z, (int)temp));
     DEBUG_PRINT(("----------------\n"));
-
-    //Fichiers sous la forme : ID_temp et ID_accel
-
     sprintf(nom_fichier1, "www/data/TID_%d", (int)id);
     sprintf(nom_fichier2, "www/data/AID_%d", (int)id);
     P((int)id);

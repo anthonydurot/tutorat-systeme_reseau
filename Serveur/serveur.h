@@ -6,7 +6,8 @@
 
 /** Constantes **/
 
-#define MAX_ID 16
+#define MAX_ID     16
+#define UDP_ECOUTE "4000"
 
 #ifdef DEBUG
 # define DEBUG_PRINT(x) printf x
@@ -35,3 +36,5 @@ int traiter_options(int argc, char **argv);
 void gestionClient(void *s);
 void nouveauClient(int dialogue);
 void _serveurMessages(void *arg);
+void maj_list(void);
+void hand(int sig);

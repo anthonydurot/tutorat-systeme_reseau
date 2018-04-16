@@ -63,7 +63,6 @@ int lanceThread(void (*fonction)(void *), void *arg, int taille) {
        return 1;
     }
 
-
     return 0;
 
 }
@@ -83,6 +82,14 @@ void *_lanceThread(void *arg) {
 
 }
 
+/**
+ * \fn void P(int sem)
+ * \brief Fonction qui prend une ressource.
+ *
+ * \param sem Indice du mutex dans la liste globale liste_mutex
+ *
+ * \return void
+ */
 void P(int sem) {
 
     DEBUG_PRINT(("[+] Mutex %d\n",sem));
@@ -90,6 +97,14 @@ void P(int sem) {
 
 }
 
+/**
+ * \fn void V(int sem)
+ * \brief Fonction qui libère une ressource.
+ *
+ * \param sem Indice du mutex dans la liste globale liste_mutex
+ *
+ * \return void
+ */
 void V(int sem) {
 
     DEBUG_PRINT(("[-] Mutex %d\n",sem));
