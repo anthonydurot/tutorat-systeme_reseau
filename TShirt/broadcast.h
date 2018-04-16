@@ -14,8 +14,8 @@
 #define OFFSET       0x0000
 #define TTL          0x40
 #define PROTOCOLE    0x11
-#define IP_SOURCE    "192.168.0.27"
-#define IP_DEST      "192.168.0.255"
+#define IP_SOURCE    "172.26.79.205"
+#define IP_DEST      "172.26.79.255"
 
 // Define pour UDP
 #define PORT_SOURCE  4269

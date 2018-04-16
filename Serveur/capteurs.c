@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <stdint.h>
 #include "capteurs.h"
 #include "serveur.h"
 
@@ -69,25 +70,25 @@ int ajouter_id_list(int id) {
 void traitement_message(void *arg) {
 
     param_udp_t *arguments = (param_udp_t *)arg;
-    char id, x, y, z, temp;
+    unsigned char id, x, y, z, temp;
     char nom_fichier1[32], nom_fichier2[32];
     FILE *fp1, *fp2, *fp3;
     sscanf((char *)arguments->message, "%c%c%c%c%c", &id, &x, &y, &z, &temp);
-    DEBUG_PRINT(("ID : %d\nx : %d\ny : %d\nz : %d\nTemp : %d\n", (int)id, (int)x, (int)y, (int)z, (int)temp));
+    DEBUG_PRINT(("ID : %d\nx : %d\ny : %d\nz : %d\nTemp : %d\n", (uint8_t)id, (uint8_t)x, (uint8_t)y, (uint8_t)z, (uint8_t)temp));
     DEBUG_PRINT(("----------------\n"));
-    sprintf(nom_fichier1, "www/data/TID_%d", (int)id);
-    sprintf(nom_fichier2, "www/data/AID_%d", (int)id);
+    sprintf(nom_fichier1, "www/data/TID_%d", id);
+    sprintf(nom_fichier2, "www/data/AID_%d", id);
     P((int)id);
     fp1 = fopen(nom_fichier1, "a");
     fp2 = fopen(nom_fichier2, "a");
     if(ajouter_id_list(id)) {
         fp3 = fopen("www/data/list_ID", "a");
-        fprintf(fp3, "%d\n", (int)id);
+        fprintf(fp3, "%d\n", (uint8_t)id);
         fclose(fp3);
     }
     //TODO : Ajouter la date dans le fichier ?
-    fprintf(fp1, "%d\n", (int)temp);
-    fprintf(fp2, "%d,%d,%d\n", (int)x, (int)y, (int)z);
+    fprintf(fp1, "%d\n", (uint8_t)temp);
+    fprintf(fp2, "%d,%d,%d\n", (uint8_t)x, (uint8_t)y, (uint8_t)z);
     fclose(fp1);
     fclose(fp2);
     V((int)id);
