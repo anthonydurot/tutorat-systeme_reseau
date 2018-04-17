@@ -14,12 +14,12 @@
 #define OFFSET       0x0000
 #define TTL          0x40
 #define PROTOCOLE    0x11
-#define IP_SOURCE    "172.26.79.205"
-#define IP_DEST      "172.26.79.255"
+#define IP_SOURCE    "192.168.0.27" //"172.26.79.205"
+#define IP_DEST      "192.168.0.255" //"172.26.79.255"
 
 // Define pour UDP
-#define PORT_SOURCE  4269
-#define PORT_DEST    4000
+#define PORT_SOURCE  6666
+#define PORT_DEST    4001
 
 // Define pour SLIP
 #define END			 0xC0
@@ -32,7 +32,6 @@
 #pragma pack(push, 1)
 
 typedef struct dataUDP_RX {
-    uint8_t 	id_tshirt;
     uint8_t     instruction;
     uint8_t     valeur;
 } DataUDP_RX;

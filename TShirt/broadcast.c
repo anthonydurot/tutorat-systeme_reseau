@@ -12,8 +12,12 @@
 
 /* Varaibles globales */
 
-uint8_t rx_complete = 1;
+uint8_t rx_complete = 0;
 uint8_t ID_tshirt = 3;
+uint8_t rx_action;
+int rx_cpt = 0;
+int rx_cpt_max = 30;
+char rx_buffer_slip[64];
 
 /* Fonctions */
 
@@ -177,39 +181,7 @@ void envoyer_trame(TrameIP *trame) {
 
 }
 
-void recevoir_UDP(char *rx_buffer) {
-
-    char c;
-    int cpt = 0;
-
-    cli();
-    while(1) {
-        c = get_serial();
-        if(c == END || cpt > 1023) {
-            if(cpt != 0) {
-                rx_complete = 1;
-                break;
-            }
-        }
-        else if(c == ESC) {
-            c = get_serial();
-            if(c == ESC_END) {
-                rx_buffer[cpt] = (char)END;
-            }
-            else if(c == ESC_ESC) {
-                rx_buffer[cpt] = (char)ESC;
-            }
-        }
-        else {
-            rx_buffer[cpt] = c;
-        }
-        cpt++;
-    }
-    sei();
-
-}
-
-void traitement_UDP(char *rx_buffer, TrameIP *trame) {
+void traitement_UDP(char *rx_buffer, TrameIP *trame) { // plus utilisée
 
     trame = (TrameIP *)rx_buffer;
     trame->c0 = swap_uint16(trame->c0);
@@ -227,15 +199,68 @@ void traitement_UDP(char *rx_buffer, TrameIP *trame) {
     (trame->data).longueur = swap_uint16((trame->data).longueur);
     (trame->data).checksum = swap_uint16((trame->data).checksum);
 
-    if((trame->data).data.RX.instruction == 2) {
+    if((trame->data).data.RX.instruction == 0x61) { //ici 0x02 normalement
+        PORTB ^= (1 << PB5);
         ID_tshirt = (trame->data).data.RX.valeur;
+    }
+
+}
+
+void traitement_SLIP(char *buffer_udp) { // plus utilisée
+
+    int i, j = 0;
+    uint8_t c;
+    for(i = 0; i < rx_cpt; i++) {
+        c = rx_buffer_slip[i];
+        if(c != END) {
+            if(c == ESC) {
+                if(rx_buffer_slip[i+1] == ESC_END) {
+                    buffer_udp[j] = (uint8_t)END;
+                    j++;
+                    i++;
+                }
+                else if(rx_buffer_slip[i+1] == ESC_ESC) {
+                    buffer_udp[j] = (uint8_t)ESC;
+                    j++;
+                    i++;
+                }
+            }
+            else {
+                buffer_udp[j] = c;
+                j++;
+            }
+        }
     }
 
 }
 
 ISR(USART_RX_vect) {
 
-    rx_complete = 0;
+    // Méthode qui marche mais moins modulaire
+
+    uint8_t c = UDR0;
+    if(c == ESC) {rx_cpt_max++;}
+    if(c == END && rx_cpt > 0) {rx_cpt_max = 30; rx_cpt = 0; return;}
+    if(rx_cpt == rx_cpt_max-1) {
+        rx_action = c;
+    }
+    else if(rx_cpt == rx_cpt_max) {
+        if(rx_action == 0x41) {
+            ID_tshirt = c;
+        }
+        else if(rx_action == 0x42) {
+            PORTB ^= (1 << PB5);
+        }
+    }
+    rx_cpt++;
+/*
+    PORTB ^= (1 << PB5);
+    rx_buffer_slip[rx_cpt] = UDR0;
+    if(rx_cpt > 0 && (rx_buffer_slip[rx_cpt] == END)) {
+        rx_complete = 1;
+    }
+    rx_cpt++;
+*/
 
 }
 
@@ -244,10 +269,11 @@ int main(void) {
     init_serial(9600);
     sei();
     uint8_t v_capteurs[4] = {64,65,66,67};
-    uint8_t i;
-    char rx_buffer[1024];
+    //char rx_buffer_udp[64];
     TrameIP trame;
-    TrameIP trame_rx;
+    //TrameIP trame_rx;
+
+    DDRB |= (1 << PB5);
 
     while(1) {
 /*
@@ -256,15 +282,23 @@ int main(void) {
             v_capteurs[i] = ad_sample();
         }
 */
-        cli();
-        forger_trameIP(&trame, v_capteurs);
-        envoyer_trame(&trame);
-        sei();
-
-        if(!rx_complete) {
-            recevoir_UDP(rx_buffer);
-            traitement_UDP(rx_buffer, &trame_rx);
+        if(rx_cpt == 0) {
+            cli();
+            forger_trameIP(&trame, v_capteurs);
+            envoyer_trame(&trame);
+            sei();
         }
+
+/*
+        if(rx_complete) {
+            traitement_SLIP(rx_buffer_udp);
+            traitement_UDP(rx_buffer_udp, &trame_rx);
+            rx_cpt = 0;
+            rx_complete = 0;
+        }
+*/
+
+        _delay_ms(2000);
     }
 
     return 0;
