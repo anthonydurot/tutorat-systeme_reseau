@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <libthrd.h>
+#include <libcom.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <stdint.h>
+#include <math.h>
 #include "capteurs.h"
 #include "serveur.h"
 
@@ -19,10 +21,9 @@
 int traitement_udp(unsigned char *message, int size) {
 
     param_udp_t *arguments = malloc(sizeof(param_udp_t));
-    arguments->message = (unsigned char *)malloc(size);
-    memcpy(arguments->message, message, size);
+    arguments->message = (unsigned char *)strdup((const char *)message);
     arguments->size = size;
-    if(lanceThread(traitement_message, (void *)arguments, sizeof(param_udp_t))) {
+    if(lanceThread(traitement_message, (void *)arguments, sizeof(arguments))) {
         perror("traitement_udp");
         return 1;
     }
@@ -76,6 +77,7 @@ void traitement_message(void *arg) {
     FILE *fp1, *fp2, *fp3;
     sscanf((char *)arguments->message, "%c%c%c%c%c", &id, &x, &y, &z, &temp);
     DEBUG_PRINT(("ID : %d\nx : %d\ny : %d\nz : %d\nTemp : %d\n", (uint8_t)id, (uint8_t)x, (uint8_t)y, (uint8_t)z, (uint8_t)temp));
+    compare(x,y,z);
     DEBUG_PRINT(("----------------\n"));
     sprintf(nom_fichier1, "www/data/TID_%d", id);
     sprintf(nom_fichier2, "www/data/AID_%d", id);
@@ -98,4 +100,13 @@ void traitement_message(void *arg) {
     nombre_thread_udp--;
     V(MUTEX_THREAD);
 
+}
+
+
+void compare(unsigned char x, unsigned char y, unsigned char z){
+    if((uint8_t)(sqrt(pow((double)x,(double)2.0)+pow((double)y,(double)2.0)+pow((double)z,(double)2.0))) > SEUIL){
+        DEBUG_PRINT(("Chute !\n"));
+        envoiMessageUnicast(PORT, IP_ARDUINO, (unsigned char *)MESSAGE_CHUTE, sizeof(MESSAGE_CHUTE));
+    }
+    return;
 }

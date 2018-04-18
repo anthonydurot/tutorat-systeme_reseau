@@ -84,7 +84,7 @@ char *ip_machine(void) { //TODO : A modifier, déplacer ?
  * \brief Fonction d'initialisation d'un serveur TCP.
  *
  * \param service Port sur lequel doit écouter le serveur TCP.
- * 
+ *
  * \return Descripteur de fichier de la socket si aucune erreur, -1 sinon.
  */
 
@@ -141,7 +141,7 @@ int initialisationServeur(char *service) {
  *
  * \param ecoute Socket d'écoute correspondant à la socket TCP bind.
  * \param traitement Fonction de traitement de la socket de connexion du client.
- * 
+ *
  * \return 0 si aucune érreur, -1 sinon.
  */
 
@@ -156,7 +156,7 @@ int boucleServeur(int ecoute, void (*traitement)(int)) {
         traitement(dialogue);
     }
     return 0;
-    
+
 }
 
 /**
@@ -165,7 +165,7 @@ int boucleServeur(int ecoute, void (*traitement)(int)) {
  *
  * \param service Port sur lequel doit écouter le serveur UDP.
  * \param traitement_udp Fonction qui va traiter les requêtes UDP entrantes.
- * 
+ *
  */
 void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int)) {
 
@@ -197,7 +197,7 @@ void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int))
         message[nboctets] = '\0';
         if(traitement_udp((unsigned char*)message, nboctets)) {
             perror("serveurMessages.traitement_udp");
-            exit(-1);            
+            exit(-1);
         }
     }
 }
@@ -209,7 +209,7 @@ void serveurMessages(char *service, int (*traitement_udp)(unsigned char *, int))
  * \param service Port sur lequel envoyer le message UDP.
  * \param message Chaine de caractères à envoyer.
  * \param taille Taille du message à envoyer en octets.
- * 
+ *
  * \return 0 si aucune erreur, -1 sinon.
  */
 
@@ -223,8 +223,9 @@ int envoiMessage(char *service, unsigned char *message, int taille) {
     adresseBroadcast.sin_family = AF_INET;
     adresseBroadcast.sin_port = htons(atoi(service));
     adresseBroadcast.sin_addr.s_addr = htonl(INADDR_BROADCAST);
-    sendto(socket_udp, message, taille, 0, (struct sockaddr *)&adresseBroadcast, tailleBroadcast);
-
+    if(sendto(socket_udp, message, taille, 0, (struct sockaddr *)&adresseBroadcast, tailleBroadcast)==-1){
+        return 1;
+    }
     return 0;
 
 }
@@ -238,27 +239,20 @@ int envoiMessage(char *service, unsigned char *message, int taille) {
  * \param machine Nom d'hôte sur laquelle envoyer le message UDP.
  * \param message Chaine de caractères à envoyer.
  * \param taille Taille du message à envoyer en octets.
- * 
- * \return 0 si aucune erreur, -1 sinon.
+ *
+ * \return 0 si aucune erreur, 1 sinon.
  */
 
 int envoiMessageUnicast(char *service, char *machine, unsigned char *message, int taille) {
 
-    int unicast = 0;
-    struct addrinfo precisions, *origine;
+    struct sockaddr_in dest;
+    dest.sin_family = AF_INET;
+    dest.sin_port = htons(atoi(service));
+    dest.sin_addr.s_addr = inet_addr(machine);
 
-    memset(&precisions, 0, sizeof(precisions));
-    precisions.ai_family = AF_INET;
-    precisions.ai_socktype = SOCK_DGRAM;
-    setsockopt(socket_udp, SOL_SOCKET, SO_BROADCAST, &unicast, sizeof(unicast));
-    if(getaddrinfo(machine, service, &precisions, &origine) != 0) {
-        if(origine != NULL) {
-            sendto(socket_udp, message, taille, 0, origine->ai_addr, origine->ai_addrlen);
-            freeaddrinfo(origine);
-            return 0;
-        }
+    if(sendto(socket_udp, message, taille, 0, (struct sockaddr *)&dest, sizeof(dest))==-1){
+        return 1;
     }
-
-    return 1;
+    return 0;
 
 }

@@ -3,7 +3,7 @@
 #
 
 OBJS = serveur.o http.o capteurs.o
-LIBS = -lpthread
+LIBS = -lpthread -lm
 LOCAL_LIBS  = -L ../Communication -L ../Threads
 LOCAL_LIBS += -lcom -lthrd
 CFLAGS     += -I ../Communication -I ../Threads
