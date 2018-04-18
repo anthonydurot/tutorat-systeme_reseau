@@ -1,7 +1,6 @@
 #define MON_ID 3
 #define SEUIL 1
 #define IP_ARDUINO "10.189.28.15"//"192.168.0.27" //"172.26.79.205"
-#define MESSAGE_CHUTE "Chute !"
 #define PORT "4000"
 
 typedef struct param_udp {

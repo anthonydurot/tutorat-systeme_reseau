@@ -14,6 +14,7 @@
 #include <libcom.h>
 #include <libthrd.h>
 #include <signal.h>
+#include <string.h>
 #include "http.h"
 #include "capteurs.h"
 #include "serveur.h"
@@ -83,7 +84,20 @@ void gestionClient(void *s) {
     }
 
     DEBUG_PRINT(("######### Code : %d\n", req.code));
-    if(req.donnees) DEBUG_PRINT(("######### Donnees : %s\n", req.donnees));
+    if(req.donnees) {
+        if(!strcmp(req.donnees,"getLast")) {
+            DEBUG_PRINT(("######### getLast\n"));
+        }
+        else {
+            char *ids = strrchr(req.donnees,'=');
+            ids++;
+            unsigned char id = atoi(ids);
+            unsigned char idChange[2] = {0x02,0x00};
+            idChange[1] = id;
+            DEBUG_PRINT(("######### Groupe : %d\n", id));
+            envoiMessageUnicast("8889", "127.0.0.1", idChange, 2);
+        }
+    }
 
     if(req.code == FORBIDDEN) {
         envoyer_interdit(dialogue, &req);

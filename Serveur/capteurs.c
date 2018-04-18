@@ -103,10 +103,13 @@ void traitement_message(void *arg) {
 }
 
 
-void compare(unsigned char x, unsigned char y, unsigned char z){
+void compare(unsigned char x, unsigned char y, unsigned char z) {
+    
+    unsigned char chute[2] = {0x01,0xDD}; // 2eme valeur facultative
     if((uint8_t)(sqrt(pow((double)x,(double)2.0)+pow((double)y,(double)2.0)+pow((double)z,(double)2.0))) > SEUIL){
         DEBUG_PRINT(("Chute !\n"));
-        envoiMessageUnicast(PORT, IP_ARDUINO, (unsigned char *)MESSAGE_CHUTE, sizeof(MESSAGE_CHUTE));
+        envoiMessageUnicast(PORT, IP_ARDUINO, chute, 2);
     }
+    
     return;
 }

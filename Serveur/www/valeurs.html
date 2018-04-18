@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="utf-8">
-    <title>T-Shirt connecté - 2</title>
+    <title>T-Shirt connecté</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="icons/favicon.ico" >
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -11,7 +11,14 @@
 
   <body>
 
-  <div id="top_page"><div class="vert_center">T-Shirt connecté - 2</div></div>
+  <div id="top_page">
+    <div class="vert_center">T-Shirt connecté
+    <form method='POST'>
+    <input type="text" name="groupe" value="2">
+    <input type="submit" value="Changer">
+    </form>
+    </div>
+  </div>
 
   <div class="title">Valeurs instantanées</div>
 
@@ -54,7 +61,6 @@
     function rafraichir_valeurs() {
 
         var accel = httpGet("data/AID_97?getLast").split('\n');
-        console.log(accel);
         var temp = httpGet("data/TID_97?getLast").split('\n');
         accel.pop();
         temp.pop();
