@@ -236,7 +236,7 @@ void traitement_SLIP(char *buffer_udp) { // plus utilisée
 
 ISR(USART_RX_vect) {
 
-    // Méthode qui marche mais moins modulaire
+    // Méthode qui fonctionne mais moins modulaire
 
     uint8_t c = UDR0;
     if(c == ESC) {rx_cpt_max++;}
@@ -245,10 +245,10 @@ ISR(USART_RX_vect) {
         rx_action = c;
     }
     else if(rx_cpt == rx_cpt_max) {
-        if(rx_action == 0x41) {
+        if(rx_action == 0x02) {
             ID_tshirt = c;
         }
-        else if(rx_action == 0x42) {
+        else if(rx_action == 0x01) {
             PORTB ^= (1 << PB5);
         }
     }

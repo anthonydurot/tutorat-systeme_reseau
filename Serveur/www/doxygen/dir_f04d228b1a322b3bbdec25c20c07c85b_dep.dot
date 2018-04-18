@@ -1,0 +1,18 @@
+digraph "/home/antoine/tutorat-systeme-reseau" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_f04d228b1a322b3bbdec25c20c07c85b {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_f04d228b1a322b3bbdec25c20c07c85b.html"];
+    dir_f04d228b1a322b3bbdec25c20c07c85b [shape=plaintext label="tutorat-systeme-reseau"];
+    dir_26e2e883ac9d28299dfd1cd40cbf8b45 [shape=box label="Communication" color="black" fillcolor="white" style="filled" URL="dir_26e2e883ac9d28299dfd1cd40cbf8b45.html"];
+    dir_c6ba3c768d785ebea5a9cbad42269358 [shape=box label="HTML_Tests" color="black" fillcolor="white" style="filled" URL="dir_c6ba3c768d785ebea5a9cbad42269358.html"];
+    dir_c2a949693ea518362705dc5b8b9375dd [shape=box label="Serveur" color="red" fillcolor="white" style="filled" URL="dir_c2a949693ea518362705dc5b8b9375dd.html"];
+    dir_1fdaca9831a9b88cc76f929f0a2813aa [shape=box label="Threads" color="black" fillcolor="white" style="filled" URL="dir_1fdaca9831a9b88cc76f929f0a2813aa.html"];
+    dir_4970e3f7ef69ad109d784661e8d6f0e6 [shape=box label="TShirt" color="black" fillcolor="white" style="filled" URL="dir_4970e3f7ef69ad109d784661e8d6f0e6.html"];
+    dir_d099aed2797208aabf9b020be41b670e [shape=box label="XBeeIndep" color="black" fillcolor="white" style="filled" URL="dir_d099aed2797208aabf9b020be41b670e.html"];
+  }
+  dir_c2a949693ea518362705dc5b8b9375dd->dir_26e2e883ac9d28299dfd1cd40cbf8b45 [headlabel="3", labeldistance=1.5 headhref="dir_000003_000001.html"];
+  dir_c2a949693ea518362705dc5b8b9375dd->dir_1fdaca9831a9b88cc76f929f0a2813aa [headlabel="3", labeldistance=1.5 headhref="dir_000003_000009.html"];
+  dir_26e2e883ac9d28299dfd1cd40cbf8b45->dir_1fdaca9831a9b88cc76f929f0a2813aa [headlabel="1", labeldistance=1.5 headhref="dir_000001_000009.html"];
+}

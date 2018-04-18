@@ -1,0 +1,482 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>TShirt: Référence du fichier /home/antoine/tutorat-systeme-reseau/TShirt/broadcast.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">TShirt
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">TShirt connecté</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('broadcast_8c.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier broadcast.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;avr/io.h&gt;</code><br />
+<code>#include &lt;util/delay.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;avr/interrupt.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="serial_8h_source.html">serial.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="analog_8h_source.html">analog.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="broadcast_8h_source.html">broadcast.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de broadcast.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="broadcast_8c__incl.png" border="0" usemap="#_2home_2antoine_2tutorat-systeme-reseau_2_t_shirt_2broadcast_8c" alt=""/></div>
+<map name="_2home_2antoine_2tutorat-systeme-reseau_2_t_shirt_2broadcast_8c" id="_2home_2antoine_2tutorat-systeme-reseau_2_t_shirt_2broadcast_8c">
+</map>
+</div>
+</div>
+<p><a href="broadcast_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a05184e440f8024c3963ca2110a4adcf5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a05184e440f8024c3963ca2110a4adcf5">swap_uint16</a> (uint16_t val)</td></tr>
+<tr class="separator:a05184e440f8024c3963ca2110a4adcf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a33598b0d5bfb1f6c407649167029ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a0a33598b0d5bfb1f6c407649167029ff">forger_trameUDP</a> (<a class="el" href="broadcast_8h.html#aa70e8e67cdce271272a9a2837bca669e">TrameUDP</a> *trame, uint8_t *v_capteurs)</td></tr>
+<tr class="separator:a0a33598b0d5bfb1f6c407649167029ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9b8e3cd3bb1d1605ce307908058bb8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#ab9b8e3cd3bb1d1605ce307908058bb8b">forger_trameIP</a> (<a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *trame, uint8_t *v_capteurs)</td></tr>
+<tr class="separator:ab9b8e3cd3bb1d1605ce307908058bb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc4e16819ca44a16d1d5fbece10091ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#adc4e16819ca44a16d1d5fbece10091ac">calcul_checksum_udp</a> (<a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *trame)</td></tr>
+<tr class="separator:adc4e16819ca44a16d1d5fbece10091ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f30514179901fb1f4434a155a373a32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a8f30514179901fb1f4434a155a373a32">calcul_checksum_ip</a> (<a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *trame)</td></tr>
+<tr class="separator:a8f30514179901fb1f4434a155a373a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af07efd1bf675c3ee97b0ae988645c59a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#af07efd1bf675c3ee97b0ae988645c59a">envoyer_trame</a> (<a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *trame)</td></tr>
+<tr class="separator:af07efd1bf675c3ee97b0ae988645c59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc05e8db896b15dc3b3abb7715f38f0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#acc05e8db896b15dc3b3abb7715f38f0d">traitement_UDP</a> (char *rx_buffer, <a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *trame)</td></tr>
+<tr class="separator:acc05e8db896b15dc3b3abb7715f38f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab91866747a1421d24f2e307c61ac5d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#aab91866747a1421d24f2e307c61ac5d2">traitement_SLIP</a> (char *buffer_udp)</td></tr>
+<tr class="separator:aab91866747a1421d24f2e307c61ac5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ce999e15ad60b8a3f07d08af1946f9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a09ce999e15ad60b8a3f07d08af1946f9">ISR</a> (USART_RX_vect)</td></tr>
+<tr class="separator:a09ce999e15ad60b8a3f07d08af1946f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
+<tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aecf417474af1652b0fde99b93faeed99"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#aecf417474af1652b0fde99b93faeed99">rx_complete</a> = 0</td></tr>
+<tr class="separator:aecf417474af1652b0fde99b93faeed99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4010b624dd2fde83dce85caa76825fbb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a4010b624dd2fde83dce85caa76825fbb">ID_tshirt</a> = 3</td></tr>
+<tr class="separator:a4010b624dd2fde83dce85caa76825fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cf85f219854b1346438eb8feac55c48"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a4cf85f219854b1346438eb8feac55c48">rx_action</a></td></tr>
+<tr class="separator:a4cf85f219854b1346438eb8feac55c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fa7fd6e82e809c2aa3dd0820016d23a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a9fa7fd6e82e809c2aa3dd0820016d23a">rx_cpt</a> = 0</td></tr>
+<tr class="separator:a9fa7fd6e82e809c2aa3dd0820016d23a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f2d20eb0f67080c9519075965125c1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#ab3f2d20eb0f67080c9519075965125c1">rx_cpt_max</a> = 30</td></tr>
+<tr class="separator:ab3f2d20eb0f67080c9519075965125c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94411a477ba5b3ae840ff1188e58714e"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="broadcast_8c.html#a94411a477ba5b3ae840ff1188e58714e">rx_buffer_slip</a> [64]</td></tr>
+<tr class="separator:a94411a477ba5b3ae840ff1188e58714e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a class="anchor" id="a8f30514179901fb1f4434a155a373a32"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void calcul_checksum_ip </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *&#160;</td>
+          <td class="paramname"><em>trame</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00136">136</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adc4e16819ca44a16d1d5fbece10091ac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void calcul_checksum_udp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *&#160;</td>
+          <td class="paramname"><em>trame</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00101">101</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af07efd1bf675c3ee97b0ae988645c59a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void envoyer_trame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *&#160;</td>
+          <td class="paramname"><em>trame</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00162">162</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab9b8e3cd3bb1d1605ce307908058bb8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void forger_trameIP </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *&#160;</td>
+          <td class="paramname"><em>trame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>v_capteurs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00049">49</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0a33598b0d5bfb1f6c407649167029ff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void forger_trameUDP </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="broadcast_8h.html#aa70e8e67cdce271272a9a2837bca669e">TrameUDP</a> *&#160;</td>
+          <td class="paramname"><em>trame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>v_capteurs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00030">30</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a09ce999e15ad60b8a3f07d08af1946f9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ISR </td>
+          <td>(</td>
+          <td class="paramtype">USART_RX_vect&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00237">237</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a840291bc02cba5474a4cb46a9b9566fe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00267">267</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a05184e440f8024c3963ca2110a4adcf5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t swap_uint16 </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00024">24</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aab91866747a1421d24f2e307c61ac5d2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void traitement_SLIP </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>buffer_udp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00209">209</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acc05e8db896b15dc3b3abb7715f38f0d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void traitement_UDP </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>rx_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="broadcast_8h.html#a2a652b8be2cf041bc0d083ed9d0be53a">TrameIP</a> *&#160;</td>
+          <td class="paramname"><em>trame</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00184">184</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des variables</h2>
+<a class="anchor" id="a4010b624dd2fde83dce85caa76825fbb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ID_tshirt = 3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00016">16</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4cf85f219854b1346438eb8feac55c48"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t rx_action</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00017">17</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a94411a477ba5b3ae840ff1188e58714e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char rx_buffer_slip[64]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00020">20</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aecf417474af1652b0fde99b93faeed99"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t rx_complete = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00015">15</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9fa7fd6e82e809c2aa3dd0820016d23a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rx_cpt = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00018">18</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab3f2d20eb0f67080c9519075965125c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rx_cpt_max = 30</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="broadcast_8c_source.html#l00019">19</a> du fichier <a class="el" href="broadcast_8c_source.html">broadcast.c</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_f04d228b1a322b3bbdec25c20c07c85b.html">tutorat-systeme-reseau</a></li><li class="navelem"><a class="el" href="dir_4970e3f7ef69ad109d784661e8d6f0e6.html">TShirt</a></li><li class="navelem"><a class="el" href="broadcast_8c.html">broadcast.c</a></li>
+    <li class="footer">Généré par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
+  </ul>
+</div>
+</body>
+</html>

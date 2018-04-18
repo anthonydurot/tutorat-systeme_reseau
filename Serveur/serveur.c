@@ -52,7 +52,7 @@ void hand(int sig) {
         DEBUG_PRINT(("Threads terminés\n"));
         exit(SIGINT);
     }
-    
+
 }
 
 /** Fonctions propres au serveur **/
@@ -95,7 +95,7 @@ void gestionClient(void *s) {
             unsigned char idChange[2] = {0x02,0x00};
             idChange[1] = id;
             DEBUG_PRINT(("######### Groupe : %d\n", id));
-            envoiMessageUnicast("8889", "127.0.0.1", idChange, 2);
+            envoiMessageUnicast(PORT_ARDUINO, IP_ARDUINO, idChange, 2);
         }
     }
 

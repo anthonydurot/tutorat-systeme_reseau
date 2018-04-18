@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>TShirt:  Fichier source de /home/antoine/tutorat-systeme-reseau/Communication/libcom.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">TShirt
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">TShirt connecté</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('libcom_8h_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">libcom.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="libcom_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/******************************************************************/</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">/******************************************************************/</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef LIBCOM_H</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define LIBCOM_H</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">/**** Constantes ****/</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="libcom_8h.html#af08b7010b53e545fd81bcdc7da6fba2d">   13</a></span>&#160;<span class="preprocessor">#define MAX_UDP_MESSAGE 500</span></div><div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="libcom_8h.html#a0361cce5741548b92c455c3ebbc5f489">   14</a></span>&#160;<span class="preprocessor">#define MAX_TCP_CONNEXION 500</span></div><div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="libcom_8h.html#ae0d79b02587ad66defabf70f11c62aef">   15</a></span>&#160;<span class="preprocessor">#define MAX_TAMPON  1024</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">/**** Variables publiques *****/</span></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="libcom_8h.html#a9b966bb3f7321f54054df1ff7e6590d4">socket_udp</a>;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/**** Fonctions ****/</span></div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">/************************ AUTRES ************************/</span></div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="libcom_8h.html#ab6b5ed09db4da9aa82fac851ca9f3adc">ip_machine</a>(<span class="keywordtype">void</span>);</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">/************************ TCP ************************/</span></div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">/* Cette foncton prend en paramètre le port sur lequel il faut écouter</span></div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">et retourne la socket de lecture. Il vous est demandé d&#39;activer l&#39;option</span></div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">de réutilisation d&#39;adresse sur la socket d&#39;écoute (fonction setsockopt) */</span></div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">int</span> <a class="code" href="libcom_8h.html#a2f57002d89420364fdc6851e30d47a5a">initialisationServeur</a>(<span class="keywordtype">char</span> *);</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">/* Cette fonction effectue l&#39;écoute sur la socket passée en premier argument</span></div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">et lors d&#39;une connexion, exécute la fonction passée en second argument.</span></div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">Cette fonction passée en argument doit être une fonction qui prend une</span></div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">socket en unique paramètre. Lors d&#39;une connexion de client, la fonction</span></div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">boucleServeur lance donc cette fonction avec la socket de dialogue</span></div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">en paramètre. */</span></div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">int</span> <a class="code" href="libcom_8h.html#acb8e4e347a6747b809c58bd0f9dec63f">boucleServeur</a>(<span class="keywordtype">int</span>, <span class="keywordtype">void</span> (*)(<span class="keywordtype">int</span>));</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">/************************ UDP ************************/</span></div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">/* Cette fonction prend en paramètre le service sur lequel lancer un serveur</span></div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">UDP et la fonction de traitement des messages recus */</span></div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="libcom_8h.html#a851e75fb1cee37f1bc6facd3e526247b">serveurMessages</a>(<span class="keywordtype">char</span> *, <span class="keywordtype">int</span> (*)(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *, <span class="keywordtype">int</span>));</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">/* Il s&#39;agit de la fonction complémentaire, permettant d&#39;envoyer un message</span></div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">UDP en diffusion totale. Le premier argument est le service UDP ciblé, le</span></div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">second est le paquet à envoyer et enfin le dernier la taille du paquet.</span></div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">N&#39;oubliez pas d&#39;activer l&#39;option permettant une diffusion</span></div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">totale (fonctionsetsockopt). Notez que le descripteur de socket est celui créé,</span></div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">en variable globale, par la fonction précédente */</span></div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">int</span> <a class="code" href="libcom_8h.html#a0d61114e79f3f0621fb69bcdebf49156">envoiMessage</a>(<span class="keywordtype">char</span> *, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *, <span class="keywordtype">int</span>);</div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">/* Cette fonction envoie un message UDP. Le premier argument est le service</span></div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">UDP ciblé, le second est le nom de la machine de destination, le troisième</span></div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">est le paquet à envoyer et enfin le dernier est la taille du paquet */</span></div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">int</span> <a class="code" href="libcom_8h.html#a426f74d6ebad54f4dde5569267031eee">envoiMessageUnicast</a>(<span class="keywordtype">char</span> *, <span class="keywordtype">char</span> *, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *, <span class="keywordtype">int</span> taille);</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="libcom_8h_html_a9b966bb3f7321f54054df1ff7e6590d4"><div class="ttname"><a href="libcom_8h.html#a9b966bb3f7321f54054df1ff7e6590d4">socket_udp</a></div><div class="ttdeci">int socket_udp</div><div class="ttdef"><b>Definition:</b> <a href="libcom_8c_source.html#l00047">libcom.c:47</a></div></div>
+<div class="ttc" id="libcom_8h_html_acb8e4e347a6747b809c58bd0f9dec63f"><div class="ttname"><a href="libcom_8h.html#acb8e4e347a6747b809c58bd0f9dec63f">boucleServeur</a></div><div class="ttdeci">int boucleServeur(int, void(*)(int))</div><div class="ttdoc">Fonction boucle du serveur gérant les connexions entrantes des clients. </div><div class="ttdef"><b>Definition:</b> <a href="libcom_8c_source.html#l00148">libcom.c:148</a></div></div>
+<div class="ttc" id="libcom_8h_html_a0d61114e79f3f0621fb69bcdebf49156"><div class="ttname"><a href="libcom_8h.html#a0d61114e79f3f0621fb69bcdebf49156">envoiMessage</a></div><div class="ttdeci">int envoiMessage(char *, unsigned char *, int)</div><div class="ttdoc">Fonction d&amp;#39;envoi d&amp;#39;une chaine de caractères en broadcast UDP. </div><div class="ttdef"><b>Definition:</b> <a href="libcom_8c_source.html#l00216">libcom.c:216</a></div></div>
+<div class="ttc" id="libcom_8h_html_a426f74d6ebad54f4dde5569267031eee"><div class="ttname"><a href="libcom_8h.html#a426f74d6ebad54f4dde5569267031eee">envoiMessageUnicast</a></div><div class="ttdeci">int envoiMessageUnicast(char *, char *, unsigned char *, int taille)</div><div class="ttdoc">Fonction d&amp;#39;envoi d&amp;#39;une chaine de caractères en unicast UDP. </div><div class="ttdef"><b>Definition:</b> <a href="libcom_8c_source.html#l00246">libcom.c:246</a></div></div>
+<div class="ttc" id="libcom_8h_html_ab6b5ed09db4da9aa82fac851ca9f3adc"><div class="ttname"><a href="libcom_8h.html#ab6b5ed09db4da9aa82fac851ca9f3adc">ip_machine</a></div><div class="ttdeci">char * ip_machine(void)</div><div class="ttdoc">Fonction qui retourne l&amp;#39;IP sur laquelle le serveur est lancée. </div><div class="ttdef"><b>Definition:</b> <a href="libcom_8c_source.html#l00060">libcom.c:60</a></div></div>
+<div class="ttc" id="libcom_8h_html_a851e75fb1cee37f1bc6facd3e526247b"><div class="ttname"><a href="libcom_8h.html#a851e75fb1cee37f1bc6facd3e526247b">serveurMessages</a></div><div class="ttdeci">void serveurMessages(char *, int(*)(unsigned char *, int))</div><div class="ttdef"><b>Definition:</b> <a href="libcom_8c_source.html#l00170">libcom.c:170</a></div></div>
+<div class="ttc" id="libcom_8h_html_a2f57002d89420364fdc6851e30d47a5a"><div class="ttname"><a href="libcom_8h.html#a2f57002d89420364fdc6851e30d47a5a">initialisationServeur</a></div><div class="ttdeci">int initialisationServeur(char *)</div><div class="ttdoc">Fonction d&amp;#39;initialisation d&amp;#39;un serveur TCP. </div><div class="ttdef"><b>Definition:</b> <a href="libcom_8c_source.html#l00091">libcom.c:91</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_f04d228b1a322b3bbdec25c20c07c85b.html">tutorat-systeme-reseau</a></li><li class="navelem"><a class="el" href="dir_26e2e883ac9d28299dfd1cd40cbf8b45.html">Communication</a></li><li class="navelem"><a class="el" href="libcom_8h.html">libcom.h</a></li>
+    <li class="footer">Généré par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
+  </ul>
+</div>
+</body>
+</html>

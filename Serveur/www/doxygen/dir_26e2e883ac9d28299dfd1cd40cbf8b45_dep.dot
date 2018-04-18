@@ -1,0 +1,11 @@
+digraph "/home/antoine/tutorat-systeme-reseau/Communication" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_f04d228b1a322b3bbdec25c20c07c85b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="tutorat-systeme-reseau" fontname="Helvetica", fontsize="10", URL="dir_f04d228b1a322b3bbdec25c20c07c85b.html"]
+  dir_26e2e883ac9d28299dfd1cd40cbf8b45 [shape=box, label="Communication", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_26e2e883ac9d28299dfd1cd40cbf8b45.html"];
+  }
+  dir_1fdaca9831a9b88cc76f929f0a2813aa [shape=box label="Threads" URL="dir_1fdaca9831a9b88cc76f929f0a2813aa.html"];
+  dir_26e2e883ac9d28299dfd1cd40cbf8b45->dir_1fdaca9831a9b88cc76f929f0a2813aa [headlabel="1", labeldistance=1.5 headhref="dir_000001_000009.html"];
+}

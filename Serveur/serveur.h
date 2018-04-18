@@ -6,8 +6,10 @@
 
 /** Constantes **/
 
-#define MAX_ID     16
+#define MAX_ID     128
 #define UDP_ECOUTE "4000"
+#define IP_ARDUINO "192.168.0.27"
+#define PORT_ARDUINO "5678"
 
 #ifdef DEBUG
 # define DEBUG_PRINT(x) printf x

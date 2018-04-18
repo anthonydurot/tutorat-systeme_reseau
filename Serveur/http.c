@@ -402,11 +402,11 @@ int in_the_list(char *format, const char *list[]) {
 }
 
 /**
- * \fn int in_the_list(char *format, const char *list[])
- * \brief Fonction vérifiant la présence ou non d'une chaîne de caractères dans une liste.
+ * \fn void icon_format(char *buf, char *icon, int type)
+ * \brief Fonction qui retourne l'icone correspondant à un type de fichier.
  *
  * \param buf Nom du fichier/dossier.
- * \param icon Emplacement de l'icone correspondant. 
+ * \param icon Emplacement de l'icone correspondant.
  * \param type 0 pour fichier, 1 pour dossier.
  *
  * \return void

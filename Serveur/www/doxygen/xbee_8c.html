@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>TShirt: Référence du fichier /home/antoine/tutorat-systeme-reseau/XBeeIndep/xbee.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">TShirt
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">TShirt connecté</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('xbee_8c.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier xbee.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;termios.h&gt;</code><br />
+<code>#include &lt;netdb.h&gt;</code><br />
+<code>#include &lt;netinet/in.h&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
+<code>#include &lt;fcntl.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="xbee_a_t_cmd_8h_source.html">xbeeATCmd.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de xbee.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="xbee_8c__incl.png" border="0" usemap="#_2home_2antoine_2tutorat-systeme-reseau_2_x_bee_indep_2xbee_8c" alt=""/></div>
+<map name="_2home_2antoine_2tutorat-systeme-reseau_2_x_bee_indep_2xbee_8c" id="_2home_2antoine_2tutorat-systeme-reseau_2_x_bee_indep_2xbee_8c">
+</map>
+</div>
+</div>
+<p><a href="xbee_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:afac56c00ebaa60823d56b796a7a312e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xbee_8c.html#afac56c00ebaa60823d56b796a7a312e9">SERIALDEV</a>&#160;&#160;&#160;&quot;/dev/ttyUSB0&quot;</td></tr>
+<tr class="separator:afac56c00ebaa60823d56b796a7a312e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a734bbab06e1a9fd2e5522db0221ff6e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xbee_8c.html#a734bbab06e1a9fd2e5522db0221ff6e3">BAUDRATE</a>&#160;&#160;&#160;B9600</td></tr>
+<tr class="separator:a734bbab06e1a9fd2e5522db0221ff6e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a5d765172b2357873fbc00fa0565aaf08"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xbee_8c.html#a5d765172b2357873fbc00fa0565aaf08">ouvertureSerie</a> (char *periph, int vitesse)</td></tr>
+<tr class="separator:a5d765172b2357873fbc00fa0565aaf08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca3f48c8a01b2b4ede612b915cb0f03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xbee_8c.html#afca3f48c8a01b2b4ede612b915cb0f03">fermetureSerie</a> (int df)</td></tr>
+<tr class="separator:afca3f48c8a01b2b4ede612b915cb0f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xbee_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation des macros</h2>
+<a class="anchor" id="a734bbab06e1a9fd2e5522db0221ff6e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BAUDRATE&#160;&#160;&#160;B9600</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="xbee_8c_source.html#l00025">25</a> du fichier <a class="el" href="xbee_8c_source.html">xbee.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afac56c00ebaa60823d56b796a7a312e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERIALDEV&#160;&#160;&#160;&quot;/dev/ttyUSB0&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>fichier <a class="el" href="xbee_8c.html">xbee.c</a> Utilitaire pour configurer les modules XBee. Fichiers d'inclusion Constantes </p>
+
+<p>Définition à la ligne <a class="el" href="xbee_8c_source.html#l00024">24</a> du fichier <a class="el" href="xbee_8c_source.html">xbee.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a class="anchor" id="afca3f48c8a01b2b4ede612b915cb0f03"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void fermetureSerie </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>df</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fermeture d'un port serie </p>
+
+<p>Définition à la ligne <a class="el" href="xbee_8c_source.html#l00055">55</a> du fichier <a class="el" href="xbee_8c_source.html">xbee.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Programme principal </p>
+
+<p>Définition à la ligne <a class="el" href="xbee_8c_source.html#l00063">63</a> du fichier <a class="el" href="xbee_8c_source.html">xbee.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5d765172b2357873fbc00fa0565aaf08"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ouvertureSerie </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>periph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>vitesse</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Ouverture d'un port serie </p>
+
+<p>Définition à la ligne <a class="el" href="xbee_8c_source.html#l00033">33</a> du fichier <a class="el" href="xbee_8c_source.html">xbee.c</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_f04d228b1a322b3bbdec25c20c07c85b.html">tutorat-systeme-reseau</a></li><li class="navelem"><a class="el" href="dir_d099aed2797208aabf9b020be41b670e.html">XBeeIndep</a></li><li class="navelem"><a class="el" href="xbee_8c.html">xbee.c</a></li>
+    <li class="footer">Généré par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
+  </ul>
+</div>
+</body>
+</html>

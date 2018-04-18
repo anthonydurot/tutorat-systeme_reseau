@@ -1,0 +1,18 @@
+digraph "/home/antoine/tutorat-systeme-reseau/Serveur" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_f04d228b1a322b3bbdec25c20c07c85b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="tutorat-systeme-reseau" fontname="Helvetica", fontsize="10", URL="dir_f04d228b1a322b3bbdec25c20c07c85b.html"]
+  subgraph clusterdir_c2a949693ea518362705dc5b8b9375dd {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_c2a949693ea518362705dc5b8b9375dd.html"];
+    dir_c2a949693ea518362705dc5b8b9375dd [shape=plaintext label="Serveur"];
+    dir_31f3f9e7410c8619d5b47d928d7af13b [shape=box label="www" color="red" fillcolor="white" style="filled" URL="dir_31f3f9e7410c8619d5b47d928d7af13b.html"];
+  }
+  }
+  dir_26e2e883ac9d28299dfd1cd40cbf8b45 [shape=box label="Communication" URL="dir_26e2e883ac9d28299dfd1cd40cbf8b45.html"];
+  dir_1fdaca9831a9b88cc76f929f0a2813aa [shape=box label="Threads" URL="dir_1fdaca9831a9b88cc76f929f0a2813aa.html"];
+  dir_c2a949693ea518362705dc5b8b9375dd->dir_26e2e883ac9d28299dfd1cd40cbf8b45 [headlabel="3", labeldistance=1.5 headhref="dir_000003_000001.html"];
+  dir_c2a949693ea518362705dc5b8b9375dd->dir_1fdaca9831a9b88cc76f929f0a2813aa [headlabel="3", labeldistance=1.5 headhref="dir_000003_000009.html"];
+  dir_26e2e883ac9d28299dfd1cd40cbf8b45->dir_1fdaca9831a9b88cc76f929f0a2813aa [headlabel="1", labeldistance=1.5 headhref="dir_000001_000009.html"];
+}

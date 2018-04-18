@@ -1,6 +1,0 @@
-<map id="trameIP" name="trameIP">
-<area shape="rect" id="node2" href="$structtrame_u_d_p.html" title="trameUDP" alt="" coords="77,184,161,211"/>
-<area shape="rect" id="node3" href="$uniondata_u_d_p.html" title="dataUDP" alt="" coords="81,95,157,121"/>
-<area shape="rect" id="node4" href="$structdata_u_d_p___r_x.html" title="dataUDP_RX" alt="" coords="5,5,108,32"/>
-<area shape="rect" id="node5" href="$structdata_u_d_p___t_x.html" title="dataUDP_TX" alt="" coords="132,5,232,32"/>
-</map>

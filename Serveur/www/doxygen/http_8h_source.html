@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>TShirt:  Fichier source de /home/antoine/tutorat-systeme-reseau/Serveur/http.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">TShirt
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">TShirt connecté</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('http_8h_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">http.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="http_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifndef LIBHTTP_H</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define LIBHTTP_H</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="http_8h.html#a3e91bac84ed8e0a200b4833414b631ed">http_port</a>;</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/**** Constantes ****/</span></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="http_8h.html#af00aa3c79fe31d435739c34e4c989835">   21</a></span>&#160;<span class="preprocessor">#define SERVER_NAME     &quot;Choctaw HTTP Server&quot;</span></div><div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="http_8h.html#a1d5dab30b404fab91608086105afc78c">   22</a></span>&#160;<span class="preprocessor">#define MAX_BUFFER      1024</span></div><div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="http_8h.html#acf0b0259d0bf12e5ae2256e192dcb69d">   23</a></span>&#160;<span class="preprocessor">#define DEFAULT_PAGE    &quot;valeurs.html&quot;</span></div><div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="http_8h.html#afa7c6b9219a77fc0039dd3980baf1319">   24</a></span>&#160;<span class="preprocessor">#define WEB_DIR         &quot;./www&quot;</span></div><div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="http_8h.html#af9f10803ac8444821317ed88f9008a20">   25</a></span>&#160;<span class="preprocessor">#define NOT_FOUND_PAGE  &quot;404.html&quot;</span></div><div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="http_8h.html#aff0ff96307266fa6f52def4eb74aec24">   26</a></span>&#160;<span class="preprocessor">#define IS_FILE         0</span></div><div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="http_8h.html#aef8f2d03183c27c4d15cc7c014c01dad">   27</a></span>&#160;<span class="preprocessor">#define IS_DIR          1</span></div><div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="http_8h.html#aba51915c87d64af47fb1cc59348961c9">   28</a></span>&#160;<span class="preprocessor">#define OK              200</span></div><div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="http_8h.html#a33bfc1f995233887a0414369c36936b8">   29</a></span>&#160;<span class="preprocessor">#define NOT_FOUND       404</span></div><div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="http_8h.html#a841b291dedf074d07299e089dc0722e6">   30</a></span>&#160;<span class="preprocessor">#define FOUND           302</span></div><div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="http_8h.html#a5064c29ab2d1e20c2304b3c67562774d">   31</a></span>&#160;<span class="preprocessor">#define FORBIDDEN       403</span></div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">/**** Structures ****/</span></div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div><div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="structhttp__info__s.html">   35</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structhttp__info__s.html">http_info_s</a> {</div><div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#a51ae21f2898f0c54abc419e798c16cd8">   36</a></span>&#160;    <span class="keywordtype">char</span> *<a class="code" href="structhttp__info__s.html#a51ae21f2898f0c54abc419e798c16cd8">methode</a>;</div><div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#a3f73ec792c5fdcf265b93856c849dc54">   37</a></span>&#160;    <span class="keywordtype">char</span> *<a class="code" href="structhttp__info__s.html#a3f73ec792c5fdcf265b93856c849dc54">cible</a>;</div><div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#a56abfaab87c46691c1ef3ad0df23e864">   38</a></span>&#160;    <span class="keywordtype">char</span> *<a class="code" href="structhttp__info__s.html#a56abfaab87c46691c1ef3ad0df23e864">version</a>;</div><div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#ac765329451135abec74c45e1897abf26">   39</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structhttp__info__s.html#ac765329451135abec74c45e1897abf26">type</a>; <span class="comment">// Fichier (0) ou dossier (1)</span></div><div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#a20fc4e9b8a9b87a5cb8071c27156d170">   40</a></span>&#160;    <span class="keywordtype">char</span> *<a class="code" href="structhttp__info__s.html#a20fc4e9b8a9b87a5cb8071c27156d170">serveur</a>;</div><div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#a7cadf627f989b31a3e20172b00e162e0">   41</a></span>&#160;    <span class="keywordtype">char</span> *<a class="code" href="structhttp__info__s.html#a7cadf627f989b31a3e20172b00e162e0">contenu_type</a>;</div><div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#a087848d9b07abed9a9cc140a5fa058c5">   42</a></span>&#160;    <span class="keywordtype">char</span> *<a class="code" href="structhttp__info__s.html#a087848d9b07abed9a9cc140a5fa058c5">donnees</a>;</div><div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#ad0b07447fbda4105cc87a723a82f0ca5">   43</a></span>&#160;    <span class="keywordtype">char</span> *<a class="code" href="structhttp__info__s.html#ad0b07447fbda4105cc87a723a82f0ca5">date</a>;</div><div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#a42335d6d3644df779ada2a982035f46e">   44</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structhttp__info__s.html#a42335d6d3644df779ada2a982035f46e">contenu_taille</a>;</div><div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="structhttp__info__s.html#a45a5b7c00a796a23f01673cef1dbe0a9">   45</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structhttp__info__s.html#a45a5b7c00a796a23f01673cef1dbe0a9">code</a>;</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;} <a class="code" href="http_8h.html#a2a1c12c61d45cc96b0d849a7d81e3e5e">http_info_t</a>;</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">/***** Prototypes ****/</span></div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="http_8h.html#ab6b5ed09db4da9aa82fac851ca9f3adc">ip_machine</a>(<span class="keywordtype">void</span>);</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="http_8h.html#aefd40766864aa8bd8683403c8e017714">analyser_format</a>(<span class="keywordtype">char</span> *format);</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="http_8h.html#aac548aa98377d10daaf268c2c9899b76">date_actuelle</a>(<span class="keywordtype">void</span>);</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">int</span> <a class="code" href="http_8h.html#a555ef4850a376a5a1c6bd1ae90ae6014">traiter_requete</a>(FILE *socket, <a class="code" href="structhttp__info__s.html">http_info_t</a> *req);</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">int</span> <a class="code" href="http_8h.html#abb20c647ce58acf5df91e2cc5ee43198">reponse_header</a>(FILE *socket, <a class="code" href="structhttp__info__s.html">http_info_t</a> *req);</div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">int</span> <a class="code" href="http_8h.html#ad380464a4441ada8cccbda5eadb675ba">ecriture_reponse</a>(FILE *socket, <a class="code" href="structhttp__info__s.html">http_info_t</a> *req);</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> <a class="code" href="http_8h.html#af49561ddbdeba572d64ea566b30259e2">free_http_info</a>(<a class="code" href="structhttp__info__s.html">http_info_t</a> *r);</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">int</span> <a class="code" href="http_8h.html#ab9e022d516014c2bdf207ab732aa5f5b">envoyer_localisation</a>(FILE *socket, <a class="code" href="structhttp__info__s.html">http_info_t</a> *req);</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">int</span> <a class="code" href="http_8h.html#aa2e0622d00e930b7b6a7613053e69429">envoyer_interdit</a>(FILE *socket, <a class="code" href="structhttp__info__s.html">http_info_t</a> *req);</div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">int</span> <a class="code" href="http_8h.html#a97b052e78ebda62429dec4ec7c24fb19">in_the_list</a>(<span class="keywordtype">char</span> *format, <span class="keyword">const</span> <span class="keywordtype">char</span> *list[]);</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> <a class="code" href="http_8h.html#a86be5ecbd339022829ab2b9e60cbea06">icon_format</a>(<span class="keywordtype">char</span> *buf, <span class="keywordtype">char</span> *icon, <span class="keywordtype">int</span> <a class="code" href="structhttp__info__s.html#ac765329451135abec74c45e1897abf26">type</a>);</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">void</span> <a class="code" href="http_8h.html#a830f5c57c349e0a3cfc40de654e74cff">readable_fs</a>(<span class="keywordtype">double</span> size, <span class="keywordtype">char</span> *buf);</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">int</span> <a class="code" href="http_8h.html#a0b6d9ba110659751b8b68594afba7220">html_dir</a>(FILE *socket, <a class="code" href="structhttp__info__s.html">http_info_t</a> *req);</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="http_8h_html_aefd40766864aa8bd8683403c8e017714"><div class="ttname"><a href="http_8h.html#aefd40766864aa8bd8683403c8e017714">analyser_format</a></div><div class="ttdeci">char * analyser_format(char *format)</div><div class="ttdoc">Fonction qui renvoie le format normalisé HTTP (MIME) en fonction de l&amp;#39;extention passée en paramètre...</div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00043">http.c:43</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_ac765329451135abec74c45e1897abf26"><div class="ttname"><a href="structhttp__info__s.html#ac765329451135abec74c45e1897abf26">http_info_s::type</a></div><div class="ttdeci">int type</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00039">http.h:39</a></div></div>
+<div class="ttc" id="http_8h_html_ab6b5ed09db4da9aa82fac851ca9f3adc"><div class="ttname"><a href="http_8h.html#ab6b5ed09db4da9aa82fac851ca9f3adc">ip_machine</a></div><div class="ttdeci">char * ip_machine(void)</div><div class="ttdoc">Fonction qui retourne l&amp;#39;IP sur laquelle le serveur est lancée. </div><div class="ttdef"><b>Definition:</b> <a href="libcom_8c_source.html#l00060">libcom.c:60</a></div></div>
+<div class="ttc" id="http_8h_html_aac548aa98377d10daaf268c2c9899b76"><div class="ttname"><a href="http_8h.html#aac548aa98377d10daaf268c2c9899b76">date_actuelle</a></div><div class="ttdeci">char * date_actuelle(void)</div><div class="ttdoc">Fonction qui renvoie la date actuelle. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00067">http.c:67</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_ad0b07447fbda4105cc87a723a82f0ca5"><div class="ttname"><a href="structhttp__info__s.html#ad0b07447fbda4105cc87a723a82f0ca5">http_info_s::date</a></div><div class="ttdeci">char * date</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00043">http.h:43</a></div></div>
+<div class="ttc" id="http_8h_html_ab9e022d516014c2bdf207ab732aa5f5b"><div class="ttname"><a href="http_8h.html#ab9e022d516014c2bdf207ab732aa5f5b">envoyer_localisation</a></div><div class="ttdeci">int envoyer_localisation(FILE *socket, http_info_t *req)</div><div class="ttdoc">Fonction qui envoie la localisation de la page demandée au client (redirection). </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00316">http.c:316</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_a56abfaab87c46691c1ef3ad0df23e864"><div class="ttname"><a href="structhttp__info__s.html#a56abfaab87c46691c1ef3ad0df23e864">http_info_s::version</a></div><div class="ttdeci">char * version</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00038">http.h:38</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_a3f73ec792c5fdcf265b93856c849dc54"><div class="ttname"><a href="structhttp__info__s.html#a3f73ec792c5fdcf265b93856c849dc54">http_info_s::cible</a></div><div class="ttdeci">char * cible</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00037">http.h:37</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_a087848d9b07abed9a9cc140a5fa058c5"><div class="ttname"><a href="structhttp__info__s.html#a087848d9b07abed9a9cc140a5fa058c5">http_info_s::donnees</a></div><div class="ttdeci">char * donnees</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00042">http.h:42</a></div></div>
+<div class="ttc" id="http_8h_html_a3e91bac84ed8e0a200b4833414b631ed"><div class="ttname"><a href="http_8h.html#a3e91bac84ed8e0a200b4833414b631ed">http_port</a></div><div class="ttdeci">int http_port</div><div class="ttdef"><b>Definition:</b> <a href="serveur_8c_source.html#l00026">serveur.c:26</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_a42335d6d3644df779ada2a982035f46e"><div class="ttname"><a href="structhttp__info__s.html#a42335d6d3644df779ada2a982035f46e">http_info_s::contenu_taille</a></div><div class="ttdeci">int contenu_taille</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00044">http.h:44</a></div></div>
+<div class="ttc" id="structhttp__info__s_html"><div class="ttname"><a href="structhttp__info__s.html">http_info_s</a></div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00035">http.h:35</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_a7cadf627f989b31a3e20172b00e162e0"><div class="ttname"><a href="structhttp__info__s.html#a7cadf627f989b31a3e20172b00e162e0">http_info_s::contenu_type</a></div><div class="ttdeci">char * contenu_type</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00041">http.h:41</a></div></div>
+<div class="ttc" id="http_8h_html_af49561ddbdeba572d64ea566b30259e2"><div class="ttname"><a href="http_8h.html#af49561ddbdeba572d64ea566b30259e2">free_http_info</a></div><div class="ttdeci">void free_http_info(http_info_t *r)</div><div class="ttdoc">Fonction qui libère l&amp;#39;espace mémoire alloué lors du traitement de la requête du client. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00294">http.c:294</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_a51ae21f2898f0c54abc419e798c16cd8"><div class="ttname"><a href="structhttp__info__s.html#a51ae21f2898f0c54abc419e798c16cd8">http_info_s::methode</a></div><div class="ttdeci">char * methode</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00036">http.h:36</a></div></div>
+<div class="ttc" id="http_8h_html_a0b6d9ba110659751b8b68594afba7220"><div class="ttname"><a href="http_8h.html#a0b6d9ba110659751b8b68594afba7220">html_dir</a></div><div class="ttdeci">int html_dir(FILE *socket, http_info_t *req)</div><div class="ttdoc">Fonction qui envoie une page HTML affichant la liste des fichiers/dossiers dans un dossier...</div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00470">http.c:470</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_a45a5b7c00a796a23f01673cef1dbe0a9"><div class="ttname"><a href="structhttp__info__s.html#a45a5b7c00a796a23f01673cef1dbe0a9">http_info_s::code</a></div><div class="ttdeci">int code</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00045">http.h:45</a></div></div>
+<div class="ttc" id="http_8h_html_aa2e0622d00e930b7b6a7613053e69429"><div class="ttname"><a href="http_8h.html#aa2e0622d00e930b7b6a7613053e69429">envoyer_interdit</a></div><div class="ttdeci">int envoyer_interdit(FILE *socket, http_info_t *req)</div><div class="ttdoc">Fonction qui envoie le message d&amp;#39;erreur 403 Forbidden au client. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00338">http.c:338</a></div></div>
+<div class="ttc" id="http_8h_html_a830f5c57c349e0a3cfc40de654e74cff"><div class="ttname"><a href="http_8h.html#a830f5c57c349e0a3cfc40de654e74cff">readable_fs</a></div><div class="ttdeci">void readable_fs(double size, char *buf)</div><div class="ttdoc">Fonction qui transforme une taille en octet en un format lisible. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00449">http.c:449</a></div></div>
+<div class="ttc" id="structhttp__info__s_html_a20fc4e9b8a9b87a5cb8071c27156d170"><div class="ttname"><a href="structhttp__info__s.html#a20fc4e9b8a9b87a5cb8071c27156d170">http_info_s::serveur</a></div><div class="ttdeci">char * serveur</div><div class="ttdef"><b>Definition:</b> <a href="http_8h_source.html#l00040">http.h:40</a></div></div>
+<div class="ttc" id="http_8h_html_a86be5ecbd339022829ab2b9e60cbea06"><div class="ttname"><a href="http_8h.html#a86be5ecbd339022829ab2b9e60cbea06">icon_format</a></div><div class="ttdeci">void icon_format(char *buf, char *icon, int type)</div><div class="ttdoc">Fonction qui retourne l&amp;#39;icone correspondant à un type de fichier. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00414">http.c:414</a></div></div>
+<div class="ttc" id="http_8h_html_a2a1c12c61d45cc96b0d849a7d81e3e5e"><div class="ttname"><a href="http_8h.html#a2a1c12c61d45cc96b0d849a7d81e3e5e">http_info_t</a></div><div class="ttdeci">struct http_info_s http_info_t</div></div>
+<div class="ttc" id="http_8h_html_a97b052e78ebda62429dec4ec7c24fb19"><div class="ttname"><a href="http_8h.html#a97b052e78ebda62429dec4ec7c24fb19">in_the_list</a></div><div class="ttdeci">int in_the_list(char *format, const char *list[])</div><div class="ttdoc">Fonction vérifiant la présence ou non d&amp;#39;une chaîne de caractères dans une liste. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00390">http.c:390</a></div></div>
+<div class="ttc" id="http_8h_html_a555ef4850a376a5a1c6bd1ae90ae6014"><div class="ttname"><a href="http_8h.html#a555ef4850a376a5a1c6bd1ae90ae6014">traiter_requete</a></div><div class="ttdeci">int traiter_requete(FILE *socket, http_info_t *req)</div><div class="ttdoc">Fonction de traitement d&amp;#39;une requête HTTP. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00088">http.c:88</a></div></div>
+<div class="ttc" id="http_8h_html_abb20c647ce58acf5df91e2cc5ee43198"><div class="ttname"><a href="http_8h.html#abb20c647ce58acf5df91e2cc5ee43198">reponse_header</a></div><div class="ttdeci">int reponse_header(FILE *socket, http_info_t *req)</div><div class="ttdoc">Fonction qui envoie le header de la réponse au client. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00213">http.c:213</a></div></div>
+<div class="ttc" id="http_8h_html_ad380464a4441ada8cccbda5eadb675ba"><div class="ttname"><a href="http_8h.html#ad380464a4441ada8cccbda5eadb675ba">ecriture_reponse</a></div><div class="ttdeci">int ecriture_reponse(FILE *socket, http_info_t *req)</div><div class="ttdoc">Fonction de réponse envoyant bit à bit le fichier demandé par le client. </div><div class="ttdef"><b>Definition:</b> <a href="http_8c_source.html#l00236">http.c:236</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_f04d228b1a322b3bbdec25c20c07c85b.html">tutorat-systeme-reseau</a></li><li class="navelem"><a class="el" href="dir_c2a949693ea518362705dc5b8b9375dd.html">Serveur</a></li><li class="navelem"><a class="el" href="http_8h.html">http.h</a></li>
+    <li class="footer">Généré par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
+  </ul>
+</div>
+</body>
+</html>
